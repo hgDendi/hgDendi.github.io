@@ -1,13 +1,15 @@
 ---
 layout: post
-title: "Mermaid Guideline"
+title: "MermaidGuidelines"
 date: 2017-01-04
 categories: tools
-tags: [tools],[design]
+tags: [tools]
 ---
 
- 
+
 > A simple markdown-like script language for generating charts from text via javascript
+>
+> Mermaid 是一种文本图像化的语法，可以在绝大多数MarkDown编辑器中使用。
 >
 > [官方链接](https://knsv.github.io/mermaid/)
 
@@ -60,9 +62,9 @@ tags: [tools],[design]
 
 
 
-## Node
+### Node
 
-### Simple Node
+#### Simple Node
 
 ```
 graph LR
@@ -74,7 +76,7 @@ graph LR
 id1
 ```
 
-### Text
+#### Text
 
 ```
 graph LR
@@ -85,7 +87,7 @@ id1[Text]
 graph LR
 id1[Text]
 ```
-### Round Edge
+#### Round Edge
 
 ```
 graph LR
@@ -96,7 +98,7 @@ id1(Round)
 graph LR
 id1(Round)
 ```
-### Circle
+#### Circle
 
 ```
 graph LR
@@ -108,7 +110,7 @@ graph LR
 id1((Circle))
 ```
 
-### Asymetric Shape
+#### Asymetric Shape
 
 ```
 graph LR
@@ -120,7 +122,7 @@ graph LR
 id1>Asymetric]
 ```
 
-### Asymetric Shape
+#### Asymetric Shape
 
 ```
 graph LR
@@ -132,9 +134,9 @@ graph LR
 id1{rhombus}
 ```
 
-## Links
+### Links
 
-### Arrow head
+#### Arrow head
 
 ```
 graph LR
@@ -146,7 +148,7 @@ graph LR
 A-->B
 ```
 
-### Open Link
+#### Open Link
 
 ```
 graph LR
@@ -157,7 +159,7 @@ A---B
 graph LR
 A---B
 ```
-### Text On Links
+#### Text On Links
 
 ```
 graph LR
@@ -169,7 +171,7 @@ graph LR
 A---|text|B
 ```
 
-### A link with arrow head and text
+#### A link with arrow head and text
 
 ```
 graph LR
@@ -185,7 +187,7 @@ graph LR
 A-->|text|B
 ```
 
-### Dotted link with text
+#### Dotted link with text
 
 ```
 graph LR
@@ -197,7 +199,7 @@ graph LR
 A-.text.->B
 ```
 
-### Thick link
+#### Thick link
 
 ```
 graph LR
@@ -209,7 +211,7 @@ graph LR
 A==>B
 ```
 
-### Thick link with text
+#### Thick link with text
 
 ```
 graph LR
@@ -221,7 +223,7 @@ graph LR
 A==text==>B
 ```
 
-##SubGraphs
+###SubGraphs
 ```
 subgraph title
     graph definition
@@ -255,7 +257,7 @@ graph TB
          c1-->a2
 ```
 
-## Interaction
+### Interaction
 > It is possible to bind a click event to a node, the click can lead to either a javascript callback or to a link which will be opened in a new browser tab.
 
 ```
@@ -275,7 +277,7 @@ graph LR;
     click B "http://www.github.com" "This is a tooltip for a link"
 ```
 
-## Styling
+### Styling
 
 ```
  graph LR
@@ -291,7 +293,7 @@ graph LR
     style id2 fill:#ccf,stroke:#f66,stroke-width:2px,stroke-dasharray: 5, 5;
 ```
 
-## class
+### class
 
 
 ```
