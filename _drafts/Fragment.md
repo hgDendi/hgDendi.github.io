@@ -1,0 +1,192 @@
+# Fragment
+
+> 本质上是view，但会是一个比较重量级的view（具有生命周期）
+
+
+
+## 生命周期
+
+![complete_android_fragment_lifecycle](/Users/dendich/Desktop/complete_android_fragment_lifecycle.png)
+
+
+
+## FragmentManager
+
+> 管理Activity中的所有的fragment
+>
+> 所有fragment被放入一个栈中，每一个fragment都有一个FragmentState实例，相当于snapshot。
+>
+> 内存重启时会把每个Fragment的state存储起来，最终存储到Activity的savedInstanceState中
+
+### FragmentTransaction
+
+```java
+Fragment fragment = new Fragment();
+FragmentTransaction transaction = getFragmentManager().beginTransaction();
+transaction.replace(R.id.fragment_container,fragment)
+  .addToBackStack()
+  .commit();
+```
+
+* addToBackStack表示将此事务压入栈中，在用户按下back键时会进行回退操作
+  * 在上例中表示回到嵌入fragment的状态
+* 执行hide() show()，会调用到onHiddenChanged()
+* add() replace()不要在同一阶级的FragmentManager里混搭使用
+* 此commit为异步操作
+
+
+
+## 与Activity的交互
+
+### Activity -> Fragment
+
+1. 使用argument进行传值
+
+   ```java
+   //in activity
+   fragment.setArguments(Bundle);
+
+   //in fragment
+   getArgument();
+   ```
+
+2. 使用fragmentmanager获取实例
+
+   ```
+   fragmentManager.findFragmnetById();
+   fragmentManager.findFragmentByTag();
+   ```
+
+
+
+### Fragment -> Activity
+
+1. 建立一个callback借口，由Activity来实现。这也是Android模版中的用法。
+
+   也有比较暴力的方法是直接持有Activity引用的，这点一般不会出问题，但是从面向对象角度来说要尽量避免。
+
+   ```Java
+   public class DendiFragment extends Fragment{
+   	private Callbacks mCallbacks;
+
+   	public interface Callbacks{
+   		public void onItemClicked(Integer id);
+   	}
+
+   	@override
+   	public void onAttach(Activity activity){
+   		//TODO
+   		mCallbacks = (Callbacks)activity;
+   	}
+
+   	@override
+   	public void onDetach(){
+   		//TODO
+   		mCallbacks = null;
+   	}
+   }
+   ```
+
+2. getActivity()获得宿主Activity
+
+   **需要注意**，如果当前Fragment已经onDetach()，则此方法会返回null。
+
+   要避免异步任务中getActivity时返回空指针（同样也要注意如果使用引用可能造成的内存泄漏）
+
+
+
+## 内存重启
+
+系统回收会把Activity的状态保存下来，Activity的FragmentManager负责把Activity中的Fragment保存起来。
+
+内存重启时FragmentManager会把每个Fragment的state存储起来，最终存储到Activity的savedInstanceState中。
+
+保存的状态包括argument，故而getArgument()仍然可以拿到正确的数据。
+
+### LifeCycle
+
+```
+/**
+*ActivityA中嵌一个FragmentA，
+*如果此时启动ActivityB，且ActivityA因为内存不足或其他原因被回收的时候，
+*从B回到A，会回调这样的声明周期：
+*/
+
+ActivityB.onPause()
+
+ActivityA onCreate
+FragmentA onAttach
+ActivityA onAttachFragment
+FragmentA onCreate
+FragmentA onViewCreated
+ActivityA onStart
+FragmentA onStart
+ActivityA onRestoreInstanceState
+ActivityA onResume
+FragmentA onResume
+
+ActivityB onStop
+ActivityB onDestroy
+
+/**
+*ActivityA中嵌一个FragmentA，
+*按下home，且ActivityA因为内存不足或其他原因被回收的时候，
+*从屏幕回到A，会回调这样的声明周期：
+*/
+FragmentA.on
+ActivityA
+ActivityA
+FragmentA
+ActivityA
+FragmentA
+ActivityA
+FragmentA
+ActivityA
+FragmentA
+
+
+```
+
+### Fragment Overlap
+
+当Fragment所在Activity被意外清理掉时，会从栈底向栈顶的顺序恢复fragments,并且全部都是以show()的方式，所以会看到界面重叠。
+
+```
+@Override
+protected void onCreate(Bundle savedInstanceState){
+  	//todo
+  	
+  	if(savedInstanceState != null){
+  		//可以使用getFragments()获取栈内所有Fragment
+      	getFragemntManager().beginTransaction().show(XX).hide(XX).commit();
+  	}
+  	
+}
+```
+
+## Extra
+
+### OnActivityResult
+
+Fragment的onActivityResult只能接受fragment.startActivityForResult，同样的，fragment.startActivityForResult（）返回的事件不会被该framgnet所属的activity的onActivityResult()接收到
+
+### Fragment State Loss
+
+FragmentManager的每一个操作前(增加、移除、改变生命周期状态)，都会调用一个方法来检查状态是否被保存过：
+
+```
+/**
+*	在onSaveInstanceState()
+* 	android.support.v4.app.Fragment#onStop
+*/
+private void checkStateLoss(){
+  	if (mStateSaved) {
+        throw new IllegalStateException(
+                    "Can not perform this action after onSaveInstanceState");
+    }
+    if (mNoTransactionsBecause != null) {
+        throw new IllegalStateException(
+                    "Can not perform this action inside of " + mNoTransactionsBecause);
+    
+}
+```
