@@ -1,2 +1,0 @@
-# HgwartsDocs
-Some Docs.

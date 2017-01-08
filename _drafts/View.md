@@ -1,21 +1,13 @@
-# View
+
 
 > A view occupies a rectangular area on the screen and is responsible for drawing and event handling
 >
 > View占据了屏幕上一个矩形区域，并负责他的绘制和事件监听
 
+要点：
+
 * 矩形区域
 * 绘制和事件监听
-
-#### 如果想要监听一个区域，而不是View的扇形区域的点击事件，该怎么办？
-
-传统的setOnClickListener只是监听整个View的矩形区域，想要监听View的特定区域需要使用Region判断点击事件。
-
-
-
-### onFinishInflate
-
-
 
 ### onMeasure
 
@@ -36,7 +28,7 @@
 
 * 如果父View是match_parent,子View是match_parent,则子View的MeasureSpec为AT_MOST
 
-```
+```java
 protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) { 					    			    setMeasuredDimension(getDefaultSize(getSuggestedMinimumWidth(), widthMeasureSpec),getDefaultSize(getSuggestedMinimumHeight(), heightMeasureSpec));
 }
 
@@ -78,6 +70,8 @@ public static int getDefaultSize(int size, int measureSpec) {
 
 
 ### Draw
+
+六步骤
 
 1. Draw the background
 2. If necessary, save the canvas' layers to prepare for fading
@@ -402,8 +396,12 @@ public int getVerticalScrollbarWidth() {
 >
 > margins. However, view groups provide such a support. 
 
-尽量使用padding
+故而尽量使用padding
 
 ### Picture
 
 ### Region
+
+#### 如果想要监听一个区域，而不是View的扇形区域的点击事件，该怎么办？
+
+传统的setOnClickListener只是监听整个View的矩形区域，想要监听View的特定区域需要使用Region判断点击事件。
