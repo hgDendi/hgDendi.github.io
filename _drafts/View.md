@@ -9,6 +9,18 @@
 * 矩形区域
 * 绘制和事件监听
 
+## 绘制流程
+
+![view绘制流程](http://upload-images.jianshu.io/upload_images/764699-4f64498fa1b87f29.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+主要是按照以下流程
+
+* measure
+* layout
+* draw
+
+有一篇详细的文章介绍[深入理解Android之View的绘制流程](http://www.jianshu.com/p/060b5f68da79)
+
 ### onMeasure
 
 > Called to determine the size requirements for this view and all of its children
@@ -58,16 +70,12 @@ public static int getDefaultSize(int size, int measureSpec) {
 
 * 一般由ViewGroup重写，调用childView的layout方法
 
-#### requestLayout
-
-
-
 ### onSizeChange
 
 > Called when the size of this view has changed
 
-* 此处的size不一定与getMeasuredSize()一致，需要看layout的策略
-
+- 此处的size不一定与getMeasuredSize()一致，需要看layout的策略
+- 如果自定义View需要持有mWidth,mHeight，**一般在此获得
 
 ### Draw
 
@@ -80,8 +88,7 @@ public static int getDefaultSize(int size, int measureSpec) {
 5. If necessary, draw the fading edges and restore layers
 6. Draw decorations (scrollbars for instance)
 
-
-### onDraw
+#### onDraw
 
 > Called when the view should render its content
 
@@ -99,11 +106,9 @@ canvas.restore();
 canvas.restoreToCount();
 ```
 
-#### setChildrenDrawingOrderEnabled
-
-#### invalidate
 
 
+### 交互事件
 
 ### onTouchEvent
 
@@ -181,8 +186,6 @@ public boolean onTouchEvent(MotionEvent event) {
     return consume;
 }
 ```
-
-### DrawingCache
 
 
 
