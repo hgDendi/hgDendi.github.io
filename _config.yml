@@ -88,7 +88,7 @@ author:
   name: :Dendi      ## e.g. wuchong Author name
   intro_line1:  "Thanks for coming！"    ## your introduction on the bottom of the page
   intro_line2:  "And enjoy thinking & coding"  ## the 2nd line
-  weibo: hgdendi     ## e.g. wuchong1014 or 2176287895 for http://weibo.com/2176287895
+  weibo:     ## e.g. wuchong1014 or 2176287895 for http://weibo.com/2176287895
   weibo_verifier:  ## e.g. b3593ceb Your weibo-show widget verifier ,if you use weibo-show it is needed.
   tsina: 2507038732     ## e.g. 2176287895  Your weibo ID,It will be used in share button.
   douban:     ## e.g. wuchong1014 or your id for https://www.douban.com/people/wuchong1014
