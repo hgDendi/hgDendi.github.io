@@ -54,7 +54,7 @@
 * enum
 * Annotation
 
-> 元素不能有不确定的值，要么具有默认值，要么在使用注解时提供元素的值，且不能以null作为其值2去	·1`
+  > 元素不能有不确定的值，要么具有默认值，要么在使用注解时提供元素的值，且不能以null作为其值2去·1`
 
 ### 一个普通注解例子
 
@@ -85,3 +85,48 @@ public class UseCaseTracker{
 	}
 }
 ```
+
+
+### Android中的View
+
+。Android中可以使用IntDef注解来声明常量值（配合BitMask使用更酸爽）
+
+```java
+public class Toast {
+    static final String TAG = "Toast";
+    static final boolean localLOGV = false;
+
+    /** @hide */
+    /*定义部分*/
+    @IntDef({LENGTH_SHORT, LENGTH_LONG})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface Duration {}
+
+    public static final int LENGTH_SHORT = 0;
+    public static final int LENGTH_LONG = 1;
+
+    ...
+
+    /*作为类型使用时*/
+     /**
+     * Set how long to show the view for.
+     * @see #LENGTH_SHORT
+     * @see #LENGTH_LONG
+     */
+    public void setDuration(@Duration int duration) {
+        mDuration = duration;
+    }
+
+    /*做为返回值时*/
+    /**
+     * Return the duration.
+     * @see #setDuration
+     */
+    @Duration
+    public int getDuration() {
+        return mDuration;
+    }
+
+}
+```
+
