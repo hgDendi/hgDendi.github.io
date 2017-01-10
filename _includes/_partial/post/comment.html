@@ -1,12 +1,7 @@
-{% if site.duoshuo_shortname %}
+
 <section id="comments" class="comment">
 	<div class="ds-thread" data-thread-key="{{ page.id }}" data-title="{{ page.title }}" data-url="{{ site.url }}{{ site.baseurl }}{{ page.url }}"></div>
-</section>
-{% endif %}
-{% if site.disqus_shortname or site.disqus_shortname %}
-<section id="comments" class="comment">
-  <div id="duoshuo_thread">
-    <script type="text/javascript">
+	<script type="text/javascript">
 		var duoshuoQuery = {short_name:"hgworts"};
 		(function() {
 			var ds = document.createElement('script');
@@ -17,9 +12,8 @@
 			 || document.getElementsByTagName('body')[0]).appendChild(ds);
 		})();
 	</script>
-  </div>
 </section>
-{% endif %}
+
 
 <!-- <section id="comments" class="comment">
   <div id="disqus_thread"></div>
