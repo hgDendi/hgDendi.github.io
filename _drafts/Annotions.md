@@ -1,8 +1,19 @@
-# 注解
+---
+layout: post
+comments: true
+title: "Java Annotations"
+date: 2017-01-15
+categories: java
+tags: [java]
+---
+
+
 
 > 注解为我们在代码中添加信息提供了一种形式化的方法，使我们可以在稍后某个时刻非常方便的使用这些数据
 >
 > 也称元数据
+>
+> 是一种很重要的元素，但是很多开发者不甚了解。
 
 ## 定义注解
 
@@ -54,35 +65,41 @@
 * enum
 * Annotation
 
-  > 元素不能有不确定的值，要么具有默认值，要么在使用注解时提供元素的值，且不能以null作为其值2去·1`
+  > 元素不能有不确定的值，要么具有默认值，要么在使用注解时提供元素的值，且不能以null作为其值
 
-### 一个普通注解例子
+### 比如使用注解来实现一个简陋版的ButterKnife
+
+> 例子来自[Ryon](http://www.jianshu.com/p/bc70d5d71a61)
 
 ```java
-@Target(ElementType.Method)
+//Annotation
+@Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface UseCase{
-  	public int id();
-  	public String description() default "no description";
+public @interface ViewInject {  
+    int value() default 0;  
 }
 
-//xxx.class
-@UseCase (id = 0,description = "stub")
-public boolean XX{
-  return false;
-}
-
-public class UseCaseTracker{
-	public static void trackUseCases(List<Integer> useCases,Class<?> cl){
-      	//很关键 getAnnotation(.class)
-      	for(Method m : cl.getDeclaredMethods()){
-          	UseCase uc = m.getAnnotation(UseCase.class);
-          	if(uc != null){
-              	System.out.println("Found Use Case: "+uc.id()+ uc.description);
-              	useCases.remove(new Integer(uc.id()));
-          	}
-      	}
-	}
+//Activity
+public void autoInjectAllField() {  
+        try {  
+            Class<?> clazz = this.getClass();  
+            Field[] fields = clazz.getDeclaredFields();
+            for (Field field : fields) {  
+                // 查看这个字段是否有我们自定义的注解类标志的  
+                if (field.isAnnotationPresent(ViewInject.class)) {  
+                    ViewInject inject = field.getAnnotation(ViewInject.class);  
+                    int id = inject.value();  
+                    if (id > 0) {  
+                        field.setAccessible(true);  
+                        field.set(this, this.findViewById(id));//给我们要找的字段设置值  
+                    }  
+                }  
+            }  
+        } catch (IllegalAccessException e) {  
+            e.printStackTrace();  
+        } catch (IllegalArgumentException e) {  
+            e.printStackTrace();  
+        }  
 }
 ```
 
@@ -126,7 +143,6 @@ public class Toast {
     public int getDuration() {
         return mDuration;
     }
-
 }
 ```
 
