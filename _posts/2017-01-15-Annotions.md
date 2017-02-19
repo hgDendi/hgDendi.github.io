@@ -13,7 +13,6 @@ tags: [java]
 >
 > 也称元数据
 >
-> 是一种很重要的元素，但是很多开发者不甚了解。
 
 ## 定义注解
 
@@ -21,7 +20,18 @@ tags: [java]
 
 
 
-元注解：
+```java
+public @interface Demo{
+  String value(); //方法的形式表示属性,没有默认值的话需要手动赋值
+  String value2() default "helloWorld";
+}
+// 等价于,本质上是一个集成了Annotation接口的接口
+interface Demo extends java.lang.annotation.Annotation{}
+```
+
+
+
+### 元注解：（修饰注解的注解）
 
 * @Target
   * 用来定义注解应用于什么地方
@@ -53,19 +63,37 @@ tags: [java]
 ```java
  @Target(ElementType.Method)
  @Retention(RetentionPolicy.RUNTIME)
- public interface Test{}
+ public @interface Test{}
 ```
 ### 注解元素
 
 注解元素可用的类型：
 
 * 所有基本类型
+
 * String
+
 * Class
+
 * enum
+
 * Annotation
 
+* 数组
+
   > 元素不能有不确定的值，要么具有默认值，要么在使用注解时提供元素的值，且不能以null作为其值
+
+### 运行时注解和编译时注解
+
+#### 运行时注解
+
+在程序运行时通过反射来获取注解和注解的属性值。但是因为大量使用反射，对程序会有性能上的影响。
+
+调用Class对象、Method对象、Field对象的getAnnotation(Class<A> annotationType)
+
+#### 编译时注解
+
+在代码编译时通过APT（Annotation Processing Tool）获取注解和注解的属性值，并据此生成Java代码。在程序运行时只要调用编译时生成的代码即可，不需要再通过反射区解析注解。比如Dagger、ButterKnife等。
 
 ### 比如使用注解来实现一个简陋版的ButterKnife
 
