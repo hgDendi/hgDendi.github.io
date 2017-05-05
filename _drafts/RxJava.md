@@ -1,5 +1,11 @@
 # RxJava #
 
+## 3 major things
+
+1. A set of classes for representing data sources
+2. A set of classes for listening to data sources
+3. A set of methods for modifying and composing the data
+
 ## 最核心的两个东西是Observables和Subscribers ##
 
 - Observable和Subscriber可以做任何事情
