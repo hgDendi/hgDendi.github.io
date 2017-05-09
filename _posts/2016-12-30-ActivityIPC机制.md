@@ -123,3 +123,90 @@ SharedPreferences因为系统对它的读写有有一定的缓存策略，即在
 是一种轻量级的IPC方案，底层实现是AIDL。
 
 一次只处理一个请求，因此在服务端我们**不用考虑线程同步**的问题。
+
+通过Messgenger来传递Message，能使用的载体只有what、arg1、arg2、Bundle和replayTo。
+
+```java
+//Messenger的构造方法
+
+// 初始化
+Messenger(Handler);
+
+// 从服务端获得IBinder后初始化
+Messenger(IBinder);
+
+//服务端
+public class MessengerService extends Service{
+  	private Messenger mMessenger = new Messenger(new Handler());
+  
+  	@Override
+  	public IBinder onBind(Intent intent){
+      	return mMessenger.getBinder();
+  	}
+}
+
+//客户端
+private mMessenger;
+
+public ServiceConnection mConnection = new ServiceConnection(){
+  	public void onServiceConnected(ComponentName className,IBinder service){
+      	mMessenger = new Messenger(service);
+  	}
+}
+
+onCreate(){
+  	bindService(intent,mConnection,Context.BIND_AUTO_CREATE);
+}
+```
+
+### AIDL
+
+使用步骤：
+
+* 服务端创建Service，实现AIDL接口,并在onBind中返回它
+
+  ```java
+  // Server实现AIDL接口
+  private Binder mBinder = new IBookManager.Stub(){
+    
+  }
+
+  @Override
+  public IBinder onBind(Intent intent){
+    	return mBinder;
+  }
+  ```
+
+* 客户端绑定Service，将服务端返回的Binder对象转换成AIDL接口所属的类型
+
+  ```Java
+  public ServiceConnection mConnection = new ServiceConnection(){
+    	public void onServiceConnected(ComponentName className,IBinder service){
+        	IBookManager bookManager = IBookManager.Stub.asInterface(service);
+    	}
+  }
+  ```
+
+需要注意：
+
+1. 对象的跨进程传输本质上是反序列化的过程，通过Binder传递后的对象会是全新的对象，但是这些对象会有一个共同点，他们底层的Binder是同一个。
+
+   所以若要跨进程使用观察者模式，需要使用RemoteCallbackList。
+
+   这个类还有一个很有用的功能，就是当客户端进程终止后，能够自动移除客户端所注册的listener。
+
+2. Binder是会意外死亡的
+
+   * 给Binder设置DeathRecipient监听
+   * 在onServiceDisconnected中重连远程服务
+
+3. 远程方法调用发生在binder线程池中，需要小心因为耗时操作导致本端阻塞
+
+4. 服务端验证客户端权限
+
+   * onBind中通过checkCallingOrsELFpermission("permission")检查客户端是否声明该权限
+   * 验证包名，getPackageManager().getPackagesForUid(getCallingUid())
+
+### ContentProvider
+
+底层实现也是Binder
