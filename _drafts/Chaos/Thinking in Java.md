@@ -2,29 +2,29 @@
 
 ### 存储数据的五个区域 ###
 - 寄存器
-	- 最快的存储区
+  - 最快的存储区
 - 堆栈
-	- 位于通用RAM中
-	- 通过堆栈指针从处理器获得直接支持，堆栈指针向下移动，分配新的内存；向上移动，释放内存
-	- 为方便移动指针，必须知道存储项的生命周期，所以一般存储对象引用，而对象并不存储在其中
+  - 位于通用RAM中
+  - 通过堆栈指针从处理器获得直接支持，堆栈指针向下移动，分配新的内存；向上移动，释放内存
+  - 为方便移动指针，必须知道存储项的生命周期，所以一般存储对象引用，而对象并不存储在其中
 - 堆
-	- 通用的内存池，用于存放所有的Java对象
-	- 用堆进行存储分配和清理可能比用堆栈需要更多的时间
+  - 通用的内存池，用于存放所有的Java对象
+  - 用堆进行存储分配和清理可能比用堆栈需要更多的时间
 - 常量存储
 - 非RAM存储
-	- 流对象
-	- 持久化对象
+  - 流对象
+  - 持久化对象
 
 #### 基本类型 ####
 不用new来创建变量，而是创建一个并非是引用的“自动”变量，这个变量直接存储值，并置于堆栈中。
 
-8-bits		boolean
+8-bits		boolean  byte
 
-16-bits		char	short
+16-bits		char 	short
 
 32-bits		int		float
 
-64-bits		long	double
+64-bits		long 	double
 
 Java中所有数据类型在所有机器中的大小都是相同的，所以不需要像C和C++一样使用sizeof()进行移植
 
@@ -32,19 +32,19 @@ Java中所有数据类型在所有机器中的大小都是相同的，所以不�
 
 ### JavaDoc ###
 - @see
-	- 引用其他类的文档
-	- @see classname
-	- @see fully-qualified-classname
-	- @see fully-qualified-classname#method-name
+  - 引用其他类的文档
+  - @see classname
+  - @see fully-qualified-classname
+  - @see fully-qualified-classname#method-name
 - {@link package.class#menber label}
 - {@docRoot}
-	- 产生到文档根目录的相对路径
+  - 产生到文档根目录的相对路径
 - {@inheritDoc}
-	- 从当前这个类的最直接的基类中继承相关文档到当前的文档注释中
+  - 从当前这个类的最直接的基类中继承相关文档到当前的文档注释中
 - @version
 - @author
 - @since
-	- 指定JDK版本
+  - 指定JDK版本
 - @param
 - @return
 - @throws
@@ -58,7 +58,7 @@ Java中所有数据类型在所有机器中的大小都是相同的，所以不�
 >种子是用于随机数生成器的初始化值，随机数生成器对于特定的种子值总是产生相同的随机数序列。
 
 	//每次输出结果都是一样的
-    Random aRandom = new Random(1);
+	Random aRandom = new Random(1);
 	System.out.println(aRandom.nextInt());
 	System.out.println(aRandom.nextInt());
 	System.out.println(aRandom.nextInt());
@@ -70,18 +70,18 @@ Java中所有数据类型在所有机器中的大小都是相同的，所以不�
 >对应位相同返回0 相异返回1
 
     //swap the value of a ,b
-	int a = 5;
-	int b = 9;
-	a = a ^ b;
-	b = a ^ b;
-	a = a ^ b;
+    int a = 5;
+    int b = 9;
+    a = a ^ b;
+    b = a ^ b;
+    a = a ^ b;
 
 ### 移位操作符 ###
 - <<
 - \>>
-	- 有符号右移
+  - 有符号右移
 - \>>>
-	- 无符号右移
+  - 无符号右移
 
 若对char、byte、short类型的数值进行移位，会首先进行int的转型，并且得到的结果也为int型
 若移位操作符右值大于精度值，则会只取数值右端的有效地位。
@@ -97,14 +97,14 @@ Java中所有数据类型在所有机器中的大小都是相同的，所以不�
 ### GOTO 、 Label ###
 
     outer:
-	outer-iteration{
-		inner-iteration{
-			//DO STH
-			continue outer;
-			//DO STH
-			break outer;
-		}
-	}
+    outer-iteration{
+    	inner-iteration{
+    		//DO STH
+    		continue outer;
+    		//DO STH
+    		break outer;
+    	}
+    }
 
 >在Java里需要使用标签的唯一理由就是因为有循环嵌套存在，而且想从多层嵌套中break或continue。
 
@@ -117,9 +117,7 @@ Java中所有数据类型在所有机器中的大小都是相同的，所以不�
 答：编译器在switch是连续整数的时候会根据二分法查找进行优化，其他情况没有了解
 
 ### 重载 ###
-
-    //class Son extends class Father
-
+	//class Son extends class Father
 	Father a = new Father();
 	f(a);		//调用f(Father)
 	a.toString();	//调用father.toString();
@@ -128,11 +126,11 @@ Java中所有数据类型在所有机器中的大小都是相同的，所以不�
 	Father b = new Son();
 	f(b);			//调用f(Father)
 	b.toString();	//调用son.toString();
-
+	
 	Son c = new Son();
 	f(c);			//调用f(Son)，如果没有f(Son),再调用f(Father)
 	c.toString();	//调用son.toString();
-	
+
 
 （1）
 
@@ -152,7 +150,7 @@ doSth(object) 则是取的声明时候声明的类型
 
 ### finalize() ###
 
-一旦垃圾回收期准备好释放对象占用的存储空间，将首先调用其finalize()方法，并且在下一次垃圾回收动作发生时，才会真正回收对象占用的内存。
+一旦垃圾回收器准备好释放对象占用的存储空间，将首先调用其finalize()方法，并且在下一次垃圾回收动作发生时，才会真正回收对象占用的内存。
 
 之所以要有finalize()方法，是由于在分配内存时可能采用了类似C语言中的做法，而非Java中的通常做法。
 
@@ -191,30 +189,30 @@ Java中除了static方法和final方法之外，其他所有的方法都是后�
 		void draw(){
 			print("Glyph.draw()");
 		}
-
+	
 		Glyph(){
 			draw(); 									………………………………1
 		}
 	}
-
+	
 	class RoundGlyph extends Glyph{
 		private int radius = 1;
-
+	
 		RoundGlyph(int r){
 			radius = r;
 			print("RoundGlyph(),radius = " + radius);		…………………………………………2
 		}
-
+	
 		void draw(){
 			print("RoundGlyph.draw(),radius = " + radius);
 		}
 	}
-
+	
 	//main方法如下
 	public static void main(String[] args){
 		new RoundGlyph(5);
 	}
-
+	
 	/*output :
 	*RoundGlyph.draw(),radius = 0;
 	*RoundGlyph(),radius = 5;
@@ -229,22 +227,22 @@ Glyph()中会调用RoundGlyph.draw()，而此时radius还未调用成员的初�
 导出类中的被覆盖方法可以返回基类方法的返回类型的某种导出类型：
 
     class Grain{
-	}
-
-	class Wheat extends Grain{
-	}
-
-	class Mill{
-		Grain process(){
-			return new Grain();
-		}
-	}
-
-	class WheatMill extends Mill{
-		Wheat process(){
-			return new Wheat();
-		}
-	}
+    }
+    
+    class Wheat extends Grain{
+    }
+    
+    class Mill{
+    	Grain process(){
+    		return new Grain();
+    	}
+    }
+    
+    class WheatMill extends Mill{
+    	Wheat process(){
+    		return new Wheat();
+    	}
+    }
 
 ### 内部类 ###
 好处之一是使对某接口的实现能够做到不可见并且不可用。隐藏细节。
@@ -266,21 +264,21 @@ Glyph()中会调用RoundGlyph.draw()，而此时radius还未调用成员的初�
 
 ### Queue ###
 - peek()&element()
-	- peek()在队列为空时返回null,element()返回NoSuchElementException
+  - peek()在队列为空时返回null,element()返回NoSuchElementException
 - remove()&pull()
-	- poll()在队列为空时返回null，而remove()会抛出NoSuchElementException
+  - poll()在队列为空时返回null，而remove()会抛出NoSuchElementException
 
 ### printStackTrace() ###
 这个方法将返回一个由栈轨迹中的元素所构成的数组，其中每一个元素都表示栈中的一帧。
 
 如果想在catch中再次throw，则最好使用fillInStackTrace更新调用栈信息
     try{
-		throw new Exception("bad one");
-	}catch(Exception e){
-		//TODO
-
-		throw (Exception)e.fillInStackTrace();
-	}
+    	throw new Exception("bad one");
+    }catch(Exception e){
+    	//TODO
+    
+    	throw (Exception)e.fillInStackTrace();
+    }
 
 ### 异常链 ###
 当想要捕获一个异常后抛出另一个异常，并且希望把原始异常的信息保存下来。
@@ -291,9 +289,9 @@ Error、Exception、RuntimeException具有带cause参数的构造器，其他类
 
 ### Throwable ###
 - Error
-	- 编译时和系统错误
+  - 编译时和系统错误
 - Exception
-	- 可以被抛出的基本类型
+  - 可以被抛出的基本类型
 
 #### RuntimeException ####
 会自动被Java虚拟机抛出，不必再异常说明中把它们列出来。
@@ -306,14 +304,14 @@ Error、Exception、RuntimeException具有带cause参数的构造器，其他类
 前一个异常被后一个冲掉
 
     try{
-		try{
-			throw new MissingException();
-		}finally{
-			throw new CatchedException();
-		}
-	}catch(Exception e){
-		print
-	}
+    	try{
+    		throw new MissingException();
+    	}finally{
+    		throw new CatchedException();
+    	}
+    }catch(Exception e){
+    	print
+    }
 
 在finally子句中返回
 
@@ -327,11 +325,11 @@ Error、Exception、RuntimeException具有带cause参数的构造器，其他类
 - argument_index
 - flags
 - width
-	- 控制一个域的最小尺寸
+  - 控制一个域的最小尺寸
 - .precision
-	- 指明最大尺寸
-		- 应用于String时，表示输出字符的最大数量
-		- 应用于浮点数时，表示小数部分要显示出来的位数，如果小数位数过多则舍入，太少则补0
+  - 指明最大尺寸
+    - 应用于String时，表示输出字符的最大数量
+    - 应用于浮点数时，表示小数部分要显示出来的位数，如果小数位数过多则舍入，太少则补0
 - conversion
 
 ### 正则表达式 ###
@@ -340,30 +338,30 @@ Error、Exception、RuntimeException具有带cause参数的构造器，其他类
 Java中表示数字为\\d,如果想插入一个普通的反斜线，则应该是\\\\，不过换行和制表符之类的东西只需使用单反斜线\n\t
 
 - ?
-	- 0或1
+  - 0或1
 - +
-	- 1或多个
+  - 1或多个
 
 字符类
 - .
-	- 任意字符
+  - 任意字符
 - [abc]
-	- 包含a、b、c的任何字符
+  - 包含a、b、c的任何字符
 - [^abc]
-	- 除了abc的任何字符
+  - 除了abc的任何字符
 - [a-zA-Z]
-	- 从a到z或A到Z的任何字符
+  - 从a到z或A到Z的任何字符
 - [a-z&&[hij]]
-	- 交，即任意h、i或j
+  - 交，即任意h、i或j
 - \s
-	- 空白符（空格、tab、换行、换页、回车）
+  - 空白符（空格、tab、换行、换页、回车）
 - \S
-	- 非空白符（[^\s]）
+  - 非空白符（[^\s]）
 - \d
-	- 数字
+  - 数字
 - \D
 - \w
-	- 词字符[a-zA-Z0-9]
+  - 词字符[a-zA-Z0-9]
 - \W
 
 
@@ -414,12 +412,12 @@ HashMap中的代码：
             HashMapEntry<K, V> e = entryForNullKey;
             return e == null ? null : e.value;
         }
-
+    
         // Doug Lea's supplemental secondaryHash function (inlined)
         int hash = key.hashCode();
         hash ^= (hash >>> 20) ^ (hash >>> 12);
         hash ^= (hash >>> 7) ^ (hash >>> 4);
-
+    
         //使用tab
         HashMapEntry<K, V>[] tab = table;
         for (HashMapEntry<K, V> e = tab[hash & (tab.length - 1)];
