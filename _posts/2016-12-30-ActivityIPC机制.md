@@ -209,4 +209,60 @@ onCreate(){
 
 ### ContentProvider
 
-底层实现也是Binder
+底层实现也是Binder,用于不同应用间进行数据共享的方式。
+
+#### 创建一个ContentProvider
+
+创建一个自定义的ContentProvider需要继承ContentProvider并实现六个抽象方法：
+
+另外，是存在多进程并发访问的，故而四大方法需要做好线程**同步**准备。
+
+* onCreate
+  * 代表ContentProvider的创建，做一些初始化的操作
+* query
+* update
+* insert
+* delete
+* getType
+  * 返回一个Uri请求所对应的MIME类型，比如图片或者视频等
+  * 不关注这个选项可以返回null或者“*/*”
+
+需要注册：
+
+```xml
+<provider
+	android:name = ".provider.BookProvider"
+	//唯一标识
+	android:authorities="com.dendi.chapter.book.provider"
+	//权限声明
+	android:permission="com.dendi.Provider"/>
+```
+
+查询时
+
+```java
+Uri userUri = Uri.parse("content://com.dendi.chapter.book.provider/user");
+Cursor userCursor = getContentResolver().query(
+  	userUri,new String[]{"_id","name","sex"},null,null,null);
+while(userCursor.moveToNext()){
+ 	//print
+}
+```
+
+#### 特性
+
+以**表格**的形式来组织数据
+
+### Socket
+
+* 流式套接字
+  * TCP
+  * 面向连接，提供稳定的双向通信功能（本身提供了超时重传），有很高的稳定性
+* 用户数据报套接字
+  * UDP
+  * 无连接，提供不稳定的单向通信功能
+  * 效率更高，但是不能保证数据一定能够正确传输，尤其在网络拥塞的情况下
+
+注意不要在UI线程中访问网络，会抛出异常。
+
+另外Socket的ip地址是可以伪造的，故而不一定具有安全性。
