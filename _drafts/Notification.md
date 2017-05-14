@@ -9,7 +9,7 @@
 3. 为Notification设置属性
 4. 通过NotificationManager发送Notification
 
-```
+```java
 //for example
 Notification notification = new Notification.Builder(this)
 .setXXX()
@@ -22,7 +22,7 @@ nm.cancel(NOTIFICATION_ID);
 
 
 
-```
+```java
 //Notification.Builder中的方法
 //设置通知LED灯、音乐、振动等
 setDefaults();
