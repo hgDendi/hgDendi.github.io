@@ -1,5 +1,104 @@
 # Android动画 #
 
+## 基本的四个动画
+
+* 逐帧动画
+
+  * 要尽量避免使用过多尺寸较大的图片，因为容易发生OOM
+
+   ```xml
+    <animation-list>
+    	<item android:drawable="" android:duration=500>
+    	<item android:drawable="" android:duration=500>
+    </animation-list>
+   ```
+
+* 透明度动画
+
+* 旋转动画
+
+* 缩放动画
+
+## LayoutAnimation
+
+作用于ViewGroup，这样当它的子元素出场时都会具有这种动画效果。
+
+* 通过xml定义LayoutAnimation，并为ViewGroup指定android:layoutAnimation属性
+
+ ```Xml
+ <layoutAnimation
+ android:delay="0.5"
+   //子元素的延迟时间
+ android:animationOrder="normal"
+ android:animation="@anim/anim_item"/>
+ ```
+
+
+* 通过LayoutAnimationController来实现
+
+  ```java
+  Animation animation = AnimationUtils.loadAnimation(this,R.anim.anim_item);
+  LayoutAnimationController controller = new LayoutAnimationController(animation);
+  controller.setDelay(0.5f);
+  controller.setOrder(LayoutAnimationController.ORDER_NORMAL);
+  listView.setLayoutAnimation(controller);
+  ```
+
+
+## Activity切换效果
+
+* 通过theme添加
+
+* overridePendingTransition(int enterAnim , int exitAnim)
+
+  * 必须在startActivity()或finish后被调用才能生效
+
+  * ```java
+    startActivity(intent);
+    overridePendingTransition(R.anim.enter_anin,R.anim.exit_anim)
+    ```
+
+* Fragment的动画通过setCustomAnimations()来添加动画
+
+## 属性动画
+
+默认刷新率是10ms每帧
+
+主要是ValueAnimator、ObjectAnimator和AnimatorSet.
+
+其中AnimatorSet可以通过AnimatorInflater从xml中渲染出来
+
+> 属性动画要求动画作用的对象提供该属性的set方法
+>
+> 如果没有传递初始值，还要提供get方法
+
+对于不满足上述条件，可以：
+
+* 用一个类包装原始对象，提供set和get方法
+* 采用ValueAnimator，监听动画过程
+
+关键的两个组成部分
+
+* TimeInterpolator
+  * 作用是根据时间流逝的百分比来计算出当前属性值改变的百分比
+  * linearInterpolator
+  * AccelerateDecelerateInterpolator
+  * decelerateInterpolator
+* TypeEvaluator
+  * 作用是根据当前属性改变的百分比来计算改变后的属性值
+  * IntEvaluator
+  * FloatEvaluator
+  * ArgbEvaluator
+
+## 注意事项
+
+1. 内存泄漏
+   * 无线循环的动画在退出时需要及时停止
+2. 尽量使用dp
+3. 建议开启硬件加速
+
+
+
 Animation框架定义了透明度、旋转、缩放和位移几种常见的动画，而且控制的是整个View。
 
 实现原理是每次绘制视图时View所在的ViewGroup中的drawChild函数获取该View的Animation的Transformation值，然后调用canvas.concat(transformToApply.getMatrix())通过矩阵运算完成动画帧。如果动画没有完成，就继续调用invalidate()函数，启动下次绘制来驱动动画。
@@ -154,7 +253,7 @@ labels:
 	android:valueFrom=""
 	android:valueTo=""
 	android:valueType="intType|floatType">
-	
+
 <set
 	android:ordering = "sequentially"
 		<objectAnimator
@@ -197,7 +296,7 @@ public interface TimeInterpolator{
 //需要重写evaluate方法
 //fraction是比例{[0,1]}
 public Object evaluate(float fraction,Object startValue,Object endValue){
-  
+
 }
 
 //在属性动画中传入，将其返回的值作为set方法的穿入职
@@ -218,3 +317,7 @@ ObjectAnimator animator = ObjectAnimator.ofFloat(textview,"alpha",0f);
 animator.start();
 ```
 
+
+```
+
+```
