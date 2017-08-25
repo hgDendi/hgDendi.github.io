@@ -7,7 +7,7 @@ categories: java
 tags: [java]
 ---
 
-
+[TOC]
 
 > 注解为我们在代码中添加信息提供了一种形式化的方法，使我们可以在稍后某个时刻非常方便的使用这些数据
 >
@@ -48,8 +48,10 @@ interface Demo extends java.lang.annotation.Annotation{}
       * 将被编译器丢弃
     * CLASS
       * 注解在class文件中可用，但会被VM丢弃
+      * 编译时注解
     * RUNTIME
       * 可使用反射
+      * 运行时注解
 * @Document
   * 将此注解包含在JavaDoc中
 * @Inherited
@@ -93,7 +95,7 @@ interface Demo extends java.lang.annotation.Annotation{}
 
 #### 编译时注解
 
-在代码编译时通过APT（Annotation Processing Tool）获取注解和注解的属性值，并据此生成Java代码。在程序运行时只要调用编译时生成的代码即可，不需要再通过反射区解析注解。比如Dagger、ButterKnife等。
+在代码编译时通过APT（Annotation Processing Tool）获取注解和注解的属性值，并据此生成Java代码。在程序运行时只要调用编译时生成的代码即可，不需要再通过反射去解析注解。比如Dagger、ButterKnife等。
 
 ### 比如使用注解来实现一个简陋版的ButterKnife
 
