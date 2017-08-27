@@ -7,6 +7,8 @@ categories: android
 tags: [android]
 ---
 
+[TOC]
+
 # IPC机制
 
 ## 进程间通信
