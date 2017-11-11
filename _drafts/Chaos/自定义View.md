@@ -10,7 +10,7 @@
 
 在res/values下建立attrs.xml,在里面定义我们的属性和声明我们的整个样式
 
-```
+```xml
 <?xml version="" encoding=""?>
 <resources>
     
@@ -21,8 +21,6 @@
     </declare-styleable>
 </resources>
 ```
-
-> 
 
 format可选字段
 
@@ -39,31 +37,21 @@ format可选字段
 
 ## 获得属性
 
-```
+```java
 TypedArray typedArray = context.obtainStyledAttributes(attrs,R.styleable.);
-```
-
-```
 typedArray.getXX(R.styleable.XX_name);
-```
-
-```
 typedArray.recycle();
 ```
 
 ## 重写onMeasure
 
-```
+```java
 @Override
 protected void onMeasure(int widthMeasureSpec , int heightMeasureSpec){
     int widthMode = MeasureSpec.getMode(widthMeasureSpec);
     int widthSize = MeasureSpec.getSize(widthMeasureSpec);
     int heightMode = MeasureSpec.getMode(heightMeasureSpec);
-    int heightSize = MeasureSpec.getSize(heightMeasureSpec);
-```
-
-```
-    setMeasuredDimension(calculateWidth(widthMode,widthSize),calculateHeight(heightMode,heightSize));
+    int heightSize = MeasureSpec.getSize(heightMeasureSpec); setMeasuredDimension(calculateWidth(widthMode,widthSize),calculateHeight(heightMode,heightSize));
 }
 
 private int getMeasuredWidth(int widthMode, int widthSize) {
@@ -158,10 +146,10 @@ Paint
 - setShader(Shader shader)//渲染效果
 
     Path path = new Path();
-  path.moveTo(x,y);
-  path.quadTo(middleX,middleY,x,y);
-  path.lineTo(x,y);
-  path.close();
+      path.moveTo(x,y);
+      path.quadTo(middleX,middleY,x,y);
+      path.lineTo(x,y);
+      path.close();
 
   canvas.drawPath(path,paint);
 
