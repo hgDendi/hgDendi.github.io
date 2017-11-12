@@ -1,4 +1,4 @@
-# RecyclerView实现二级菜单
+# ExpanableRecyclerView
 
 ![demo](https://github.com/hgDendi/ExpandableRecyclerView/blob/master/img/expandableRecyclerView.gif)
 
@@ -393,4 +393,3 @@ protected void bindGroupViewHolder(final GroupViewHolder holder, final GroupBean
     }
 }
 ```
-
