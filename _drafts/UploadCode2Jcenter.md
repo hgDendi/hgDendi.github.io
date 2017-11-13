@@ -40,13 +40,15 @@ GROUP_ID:ARTIFACT_ID:VERSION
 
 ## Android项目准备
 
-以一个简单的demo为例，项目地址在https://github.com/hgDendi/AndroidJCenterDemo
+以一个简单的demo为例，项目地址在
+
+https://github.com/hgDendi/AndroidJCenterDemo
 
 是一个HelloWorld项目，其中字符串来自于mylib module下的MyLib抽象类的静态方法。
 
 mylib也是我们这次需要上传到JCenter的类。
 
-![project](../../../project.png)
+![project](https://ws3.sinaimg.cn/large/006tKfTcgy1flfkm0i210j31f2104n53.jpg)
 
 ### Module划分
 
