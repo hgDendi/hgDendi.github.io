@@ -1,3 +1,12 @@
+---
+layout: post
+comments: true
+title: "如何上传自己的Android库到JCenter"
+date: 2017-11-13
+categories: android
+tags: [android]
+---
+
 介绍如何将自己的项目上传到JCenter。
 
 ## 前言
