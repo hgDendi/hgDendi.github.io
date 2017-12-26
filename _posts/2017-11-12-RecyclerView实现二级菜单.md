@@ -7,7 +7,7 @@ categories: android
 tags: [android]
 ---
 
-# ExpanableRecyclerView
+# ExpandableRecyclerView
 
 ![demo](https://github.com/hgDendi/ExpandableRecyclerView/blob/master/img/expandableRecyclerView.gif)
 
