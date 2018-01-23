@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="android," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="围绕Android中的进程与线程做了简要的概述。  按照操作系统中的描述  线程是CPU调度的最小单元，同时线程是一种有限的系统资源 而进程一般指一个执行单元，在PC和移动设备上指一个程序或者一个应用 一个程序至少有一个进程，一个进程至少有一个线程 操作系统并没有将多个线程看做多个独立的应用，来实现进程间的调度和管理以及资源分配，这就是进程和线程的重要区别  差别进程是系统进行资源分配和调度的一">
+<meta name="keywords" content="android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android进程与线程">
+<meta property="og:url" content="http://www.hgdendi.tech/2017/01/07/Android进程与线程/index.html">
+<meta property="og:site_name" content="HgWorts">
+<meta property="og:description" content="围绕Android中的进程与线程做了简要的概述。  按照操作系统中的描述  线程是CPU调度的最小单元，同时线程是一种有限的系统资源 而进程一般指一个执行单元，在PC和移动设备上指一个程序或者一个应用 一个程序至少有一个进程，一个进程至少有一个线程 操作系统并没有将多个线程看做多个独立的应用，来实现进程间的调度和管理以及资源分配，这就是进程和线程的重要区别  差别进程是系统进行资源分配和调度的一">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://ww4.sinaimg.cn/large/006tNc79gw1fbi70eu93yj31kc0wqgxp.jpg">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/454052-af085ffaf33054ea.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/454052-f45493b4121cd3b5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://static.oschina.net/uploads/space/2013/0621/174442_0BNr_182175.jpg">
+<meta property="og:image" content="https://ww3.sinaimg.cn/large/006tNc79gw1fbi70dhzluj30yk0oggo4.jpg">
+<meta property="og:updated_time" content="2018-01-20T03:39:34.361Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android进程与线程">
+<meta name="twitter:description" content="围绕Android中的进程与线程做了简要的概述。  按照操作系统中的描述  线程是CPU调度的最小单元，同时线程是一种有限的系统资源 而进程一般指一个执行单元，在PC和移动设备上指一个程序或者一个应用 一个程序至少有一个进程，一个进程至少有一个线程 操作系统并没有将多个线程看做多个独立的应用，来实现进程间的调度和管理以及资源分配，这就是进程和线程的重要区别  差别进程是系统进行资源分配和调度的一">
+<meta name="twitter:image" content="https://ww4.sinaimg.cn/large/006tNc79gw1fbi70eu93yj31kc0wqgxp.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.hgdendi.tech/2017/01/07/Android进程与线程/"/>
+
+
+
+
+
+  <title>Android进程与线程 | HgWorts</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HgWorts</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Think big thoughts , but relish small pleasures.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.hgdendi.tech/2017/01/07/Android进程与线程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hgDendi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HgWorts">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android进程与线程</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-07T00:00:00+08:00">
+                2017-01-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/android/" itemprop="url" rel="index">
+                    <span itemprop="name">android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>围绕Android中的进程与线程做了简要的概述。</p>
+</blockquote>
+<p>按照操作系统中的描述</p>
+<blockquote>
+<p>线程是CPU调度的最小单元，同时线程是一种有限的系统资源</p>
+<p>而进程一般指一个执行单元，在PC和移动设备上指一个程序或者一个应用</p>
+<p>一个程序至少有一个进程，一个进程至少有一个线程</p>
+<p>操作系统并没有将多个线程看做多个独立的应用，来实现进程间的调度和管理以及资源分配，这就是进程和线程的重要区别</p>
+</blockquote>
+<h2 id="差别"><a href="#差别" class="headerlink" title="差别"></a>差别</h2><p>进程是系统进行资源分配和调度的一个独立单位。</p>
+<p>线程是进程的一个实体，是CPU调度和分配的基本单位，是比进程更小的能独立运行的基本单位，线程本身不拥有系统资源（除了必不可少的资源如<strong>程序计数器、寄存器、栈</strong>），但是它可与同属一个进程的其他的线程共享进程所拥有的全部资源。</p>
+<p>主要差别在于是不同的操作系统资源管理方式。进程有独立的地址空间，一个进程崩溃后，在保护模式下不会对其他进程产生影响，而线程是一个进程中的不同执行路径。线程有自己的堆栈和局部变量，但线程之间没有单独的地址空间，一个线程死掉就等于整个进程死掉，所以多进程的程序要比多线程的健壮，但是多进程在切换时，资源耗费大，效率要差。</p>
+<h2 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h2><p>进程在执行过程中拥有独立的内存单元，而多个线程共享内存，极大的提高了程序的运行效率。</p>
+<p>进程保活的方式：<a href="http://mp.weixin.qq.com/s?__biz=MzA3NTYzODYzMg==&amp;mid=2653577617&amp;idx=1&amp;sn=623256a2ff94641036a6c9eea17baab8&amp;scene=1&amp;srcid=0818EecQYYkaSkd5HD8WjDf8#rd" target="_blank" rel="noopener">这篇文章</a></p>
+<h3 id="Foreground-process"><a href="#Foreground-process" class="headerlink" title="Foreground process"></a>Foreground process</h3><ul>
+<li>有一个Activity且它<ul>
+<li>正在交互</li>
+</ul>
+</li>
+<li>有一个Service且它<ul>
+<li>绑定到正在交互的Activity</li>
+<li>“前台运行”，startForeground()</li>
+<li>正在执行生命周期回调 onCreate() onStart() onDestroy()</li>
+</ul>
+</li>
+<li>有一个BroadcastReceiver且它<ul>
+<li>正在执行onReceive()</li>
+</ul>
+</li>
+</ul>
+<h3 id="Visible-process"><a href="#Visible-process" class="headerlink" title="Visible process"></a>Visible process</h3><ul>
+<li>有一个Activity且它<ul>
+<li>不在交互，但仍可见</li>
+</ul>
+</li>
+<li>有一个Service且它<ul>
+<li>绑定到可见Activity</li>
+</ul>
+</li>
+</ul>
+<h3 id="Service-process"><a href="#Service-process" class="headerlink" title="Service process"></a>Service process</h3><ul>
+<li>普通Service</li>
+</ul>
+<p>故而对于耗时的比如上传等，新建一个Service是比在activity中新建一个线程好得多的。</p>
+<h3 id="Background-process"><a href="#Background-process" class="headerlink" title="Background process"></a>Background process</h3><ul>
+<li>所有Activity都对用户不可见</li>
+</ul>
+<p>会被保存在<strong>LRU</strong>列表中，即最近查看的最晚被终止</p>
+<h3 id="Empty-process"><a href="#Empty-process" class="headerlink" title="Empty process"></a>Empty process</h3><p>系统有时候会使用空进程做为缓存，以缩短下一次在其中运行组建所需的启动时间。</p>
+<h3 id="额外说明"><a href="#额外说明" class="headerlink" title="额外说明"></a>额外说明</h3><p>若一个进程A依赖于另一个进程B,则进程B的优先级可能会被提升并保证B的优先级高于A顶优先级。</p>
+<p>​    举例 (A优先级永远高于B):</p>
+<ul>
+<li>A中的ContentProvider提供数据给B</li>
+<li>A中的某个service绑定到B的某个组件</li>
+</ul>
+<h2 id="进程间通信"><a href="#进程间通信" class="headerlink" title="进程间通信"></a>进程间通信</h2><blockquote>
+<p><strong>IPC</strong>         InterProcess Communication</p>
+<p><strong>RPC</strong>     Remote Procedure Call</p>
+</blockquote>
+<p>Android默认每个app是一个进程，但也可以通过android:process属性使每个app有多个进程，或者多个app共享某个进程。</p>
+<p>有时候通过多进程的方式获取多份内存空间。一般是指定android:process属性，还有一种非常规的方法，通过JNI在native层去fork一个新的进程。</p>
+<h3 id="多进程的特性"><a href="#多进程的特性" class="headerlink" title="多进程的特性"></a>多进程的特性</h3><p>多进程模式中，不同进程的组件的确会有独立的虚拟机、Application和内存空间。<br>相当于两个不同的应用采用了SharedUID的模式。</p>
+<ul>
+<li>不同的内存空间，数据无法共享</li>
+<li>需要谨慎处理代码中的线程同步</li>
+<li>需要提防多进程并发导致的文件锁和数据库锁时效的问题</li>
+</ul>
+<p>具体问题：</p>
+<pre><code>1. 静态成员和单例模式完全失效
+2. 线程同步机制失效
+3. SharedPreferences可靠性下降
+4. Application会多次创建
+</code></pre><h3 id="多进程App适用场景"><a href="#多进程App适用场景" class="headerlink" title="多进程App适用场景"></a>多进程App适用场景</h3><ul>
+<li>提高UI进程的稳定性以及各进程各自的稳定性</li>
+<li>独立组件充分解耦，充分独立</li>
+<li>为用户节约内存，更加灵活（只保留一个非主进程的来满足聊天的推送）</li>
+<li>减少引入部分第三方组件所带来的风险</li>
+<li>更有效的做UI进程的有损体验（子进程crash后可以重启）</li>
+<li>由于独立进程在自己的JVM上，内存方面不会对UI进程的内存分配造成直接的影响，因此在一些内存占用较多如大图预览的时候，可以一次性使用，一次性回收</li>
+</ul>
+<h3 id="进程间通信方式"><a href="#进程间通信方式" class="headerlink" title="进程间通信方式"></a>进程间通信方式</h3><blockquote>
+<p>摘自任玉刚的《把玩Android多进程》ppt</p>
+</blockquote>
+<p><img src="https://ww4.sinaimg.cn/large/006tNc79gw1fbi70eu93yj31kc0wqgxp.jpg" alt="Screen Shot 2017-01-07 at 16.37.37"></p>
+<h3 id="Parcelable和Serializable"><a href="#Parcelable和Serializable" class="headerlink" title="Parcelable和Serializable"></a>Parcelable和Serializable</h3><p>Serializable使用简单但是开销很大，序列化和反序列化过程需要大量的IO操作，一般用于将对象序列化到存储设备中或者将对象序列化后通过网络传输。</p>
+<p>Parcelable使用麻烦，但效率很高。</p>
+<h3 id="Binder"><a href="#Binder" class="headerlink" title="Binder"></a>Binder</h3><p>binder是Android中的一种跨进程通信方式</p>
+<p>可以理解为一种虚拟的物理设备，它的设备驱动是/dev/binder.</p>
+<p>从Android Framework角度来说，Binder是ServiceManager连接各种Manager和相应ManagerService的桥梁。</p>
+<p>从Android应用层来说，Binder是客户端和服务端进行通信的媒介。当bindService的时候，服务端会返回一个包含了服务端业务调用的Binder对象，通过这个Binder对象，客户端就可以获取服务端提供的服务或者数据，这里的服务包括普通服务和基于AIDL的服务。</p>
+<blockquote>
+<p>更安全，比如socket的ip地址可以进行伪造，而Binder机制从协议本身就支持对通信双方做身份校验，因而大大提升了安全性，这个也是Android权限模型的基础。</p>
+</blockquote>
+<p><img src="http://upload-images.jianshu.io/upload_images/454052-af085ffaf33054ea.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Binder通信模型"></p>
+<p>如下图，伪装。即代理模式。对代理对象的操作会通过驱动最终转发到Binder本地对象上去完成，当然使用者无需关心这些细节。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/454052-f45493b4121cd3b5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Binder伪装"></p>
+<p>Binder对象是一个可以跨进程引用的对象，它的实体位于一个进程中，它的引用却遍布于系统的各个进程中。最诱人的是，这个引用和java里引用一样既可以是强类型，也可以是弱类型，而且可以从一个进程传给另一个进程，让大家都能访问同一Server，就像一个对象或引用赋值给另一个引用一样。Binder模糊了进程边界，淡化了进程间通信过程，整个系统仿佛运行于同一个面向对象的程序之中。</p>
+<h2 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h2><p><img src="http://static.oschina.net/uploads/space/2013/0621/174442_0BNr_182175.jpg" alt="线程状态转换"></p>
+<h3 id="Android中的线程"><a href="#Android中的线程" class="headerlink" title="Android中的线程"></a>Android中的线程</h3><blockquote>
+<p>Android系统基于精简过后的linux内核，Linux系统的调度器在分配time slice的时候，采用的CFS（Completely fair scheduler）策略，不仅会参考单个线程的优先级，还会追踪每个线程已经获取到的time slice数量。优先级高的线程不一定能在争取timeslice上有绝对的优势。</p>
+</blockquote>
+<p>Android将进程分为多个group，其中有两种比较重要：</p>
+<ul>
+<li>default group<ul>
+<li>能获得绝大部分的timeslice（UI线程就属于此列）</li>
+</ul>
+</li>
+<li>background group<ul>
+<li>工作线程，最多被分配10%的timeslice</li>
+</ul>
+</li>
+</ul>
+<p>其中background group需要开发者显示的归位（<strong>官方建议</strong>）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable()&#123;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">		Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);</span><br><span class="line">		<span class="comment">// do sth</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;).start();</span><br></pre></td></tr></table></figure>
+<h3 id="线程间通信"><a href="#线程间通信" class="headerlink" title="线程间通信"></a>线程间通信</h3><ol>
+<li>共享内存</li>
+<li>文件、数据库</li>
+<li>Handler</li>
+<li>Java里的wait notify notifyAll</li>
+<li>Thead.join</li>
+<li>CountDownLatch（等待多个条件达成后）</li>
+<li>CyclicBarrier（指定数目的线程都做好准备后一起开始）</li>
+<li>使用Runnable将执行事件传递给Thread</li>
+<li>使用Callable+FutureTask（ExecutorService线程池）</li>
+</ol>
+<p><a href="https://xiaozhuanlan.com/topic/9031824576" target="_blank" rel="noopener">wingjay的博客</a></p>
+<h3 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h3><h4 id="ReentrantLock和条件对象"><a href="#ReentrantLock和条件对象" class="headerlink" title="ReentrantLock和条件对象"></a>ReentrantLock和条件对象</h4><p>支持重进入的锁，支持一个线程对资源的重复加锁。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Lock mLock = <span class="keyword">new</span> ReentrantLock();</span><br><span class="line">mlock.lock();</span><br><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">&#125;<span class="keyword">finally</span>&#123;</span><br><span class="line">  	mlock.unlock();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 条件对象</span></span><br><span class="line">Condition condition = mLock.newCondition();</span><br><span class="line"><span class="comment">// 阻塞当前进程，并放弃锁(收到signalAll后再次获得锁)</span></span><br><span class="line">condition.await();</span><br><span class="line">condition.signalAll();</span><br></pre></td></tr></table></figure>
+<h4 id="Synchronized"><a href="#Synchronized" class="headerlink" title="Synchronized"></a>Synchronized</h4><p>Java中每一个对象都有一个锁，且该锁有一个内部条件。</p>
+<p>Synchronized相当于对对象锁进行加锁，wait方法将一个线程添加到等待集中，notify和nitifyAll等待线程的阻塞状态，也就是说wait相当于调用condition.await()，notifyAll相当于调用condition.signalAll()</p>
+<ul>
+<li>内部类的同步独立于外部类</li>
+<li>静态同步方法会锁定它的Class对象</li>
+</ul>
+<h4 id="Volatile"><a href="#Volatile" class="headerlink" title="Volatile"></a>Volatile</h4><p>为实例域的同步访问提供了免锁的机制，非常简单同时又非常脆弱，某些情况下提供优于锁的性能和伸缩性。</p>
+<p>线程之间的共享变量存储在主存中，每个线程都有一个私有的本地内存，本地内存中存储了该线程共享变量的副本。（这是一个抽象概念，并不真实存在，涵盖了缓存、写缓冲区、寄存器等区域）</p>
+<p>volatile保证有序性、但不保证原子性。（比如自增）</p>
+<p>保证了：</p>
+<ul>
+<li>变量的值在使用之前总会从主内存中再读取出来</li>
+<li>对变量值的修改总会在完成之后写回到主内存中</li>
+</ul>
+<p>使用必须包括两个条件：</p>
+<ul>
+<li><p>对变量的写操作不会依赖于当前值</p>
+<ul>
+<li>自增、自减</li>
+</ul>
+</li>
+<li><p>该变量没有包含在具有其他变量的不变式中</p>
+<ul>
+<li><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">numRange</span></span>&#123;</span><br><span class="line">  	<span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">int</span> lower, upper;</span><br><span class="line">  </span><br><span class="line">  	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setLower</span><span class="params">(<span class="keyword">int</span> value)</span></span>&#123;</span><br><span class="line">    	<span class="keyword">if</span>(value &lt; upper)</span><br><span class="line">        	lower = value;</span><br><span class="line">  	&#125;</span><br><span class="line">  	<span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>有时候在并发编程时可以考虑<strong>不变模式</strong>，让对象的状态是不变的，如果希望修改对象的状态，就会创建对象的副本并将改变写入副本而不改变原来的对象，这样就不会出现状态不一致的情况。比如String就采用了这样的设计。</p>
+<h3 id="UI-Main-thread"><a href="#UI-Main-thread" class="headerlink" title="UI / Main thread"></a>UI / Main thread</h3><p>系统启动时创建的线程，用来处理页面的绘制。</p>
+<p><strong>不可以把耗时操作放在ui线程中</strong>，如网络请求、数据库的读写等等，阻塞超过5s会发生<strong>ANR错误</strong>。</p>
+<p>因为Android UI toolkit<strong>不是线程安全</strong>的，故而所有的页面绘制都必须放在UI线程中做。</p>
+<blockquote>
+<p>有个黑科技是可以在Activity的onResume()前使用非UI线程绘制UI，因为检测线程是否是UI线程是在ViewRootImpl中进行检测的，而ViewRootImpl是在onResume()时才会进行初始化的</p>
+<p>仅限了解，请勿在实际项目中尝试。</p>
+</blockquote>
+<h3 id="在非UI线程中更新UI"><a href="#在非UI线程中更新UI" class="headerlink" title="在非UI线程中更新UI"></a>在非UI线程中更新UI</h3><h4 id="简单情况"><a href="#简单情况" class="headerlink" title="简单情况"></a>简单情况</h4><ul>
+<li>Activity.runOnUiThread(Runnable)</li>
+<li>View.post(Runnable)</li>
+<li>View.postDelayed(Runnable,long)</li>
+<li>handler</li>
+<li>AsyncTask</li>
+</ul>
+<h4 id="Handler介绍"><a href="#Handler介绍" class="headerlink" title="Handler介绍"></a>Handler介绍</h4><p><img src="https://ww3.sinaimg.cn/large/006tNc79gw1fbi70dhzluj30yk0oggo4.jpg" alt="Screen Shot 2017-01-07 at 17.25.19"></p>
+<p>主要分为三个部分：</p>
+<ul>
+<li>Looper<ul>
+<li>工人，完成MessageQueue里面的任务</li>
+<li>用来执行消息队列中的消息，本质是一个while循环，通过pipe机制进行同步</li>
+<li>每个Thread最多拥有一个Looper，而Thread只有拥有了Looper，才能初始化Handler</li>
+</ul>
+</li>
+<li>MessageQueue<ul>
+<li>任务队列，采用FIFS</li>
+</ul>
+</li>
+<li>Handler<ul>
+<li>将消息放入MessageQueue</li>
+</ul>
+</li>
+</ul>
+<p><strong>注意点</strong> ：</p>
+<blockquote>
+<p>Can’t create handler inside thread that has not called Looper.prepare()</p>
+<p>handler所在的线程必须调用过Looper.prepare方法，否则没有looper来进行工作</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">prepare</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(sThreadLocal.get()!=<span class="keyword">null</span>)&#123;</span><br><span class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Only one Looper may be created per thread"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">  	<span class="comment">//关于ThreadLocal的介绍，放在文章末尾，此处可以理解为一个referfence，可以set和get</span></span><br><span class="line">	sThreadLocal.set(<span class="keyword">new</span> Looper());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>所以需要在新开的线程中显示调用Looper.prepare()方法，否则无法在此线程中新建handler（不然sThreadLocal中是取不到looper来进行更新操作的）</p>
+<p>Android中有一个现成的类HandlerThread，可以方便使用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HandlerThread handlerThread = <span class="keyword">new</span> HandlerThread(<span class="string">"thread_name"</span>);</span><br><span class="line">handlerThread.start();</span><br><span class="line"><span class="comment">//MyHandler extends android.os.Handler</span></span><br><span class="line">mHandler = <span class="keyword">new</span> MyHandler(handlerThread.getLooper());</span><br></pre></td></tr></table></figure>
+<h3 id="Thread类"><a href="#Thread类" class="headerlink" title="Thread类"></a>Thread类</h3><ul>
+<li>启动了新的线程，没有任务的概念，不能做状态的管理。</li>
+<li>start之后，run当中的代码就<strong>一定会执行到底</strong>，中途无法取消。</li>
+<li>作为匿名内部类持有了外部类的引用，在线程退出之前，会阻碍GC的回收，在一段时间内造成<strong>内存泄露</strong></li>
+<li>没有线程切换的接口，要传递处理结果到UI线程，需要些额外的线程切换代码</li>
+<li>如果从UI线程启动，该线程优先级默认为Default</li>
+</ul>
+<h3 id="AsyncTask"><a href="#AsyncTask" class="headerlink" title="AsyncTask"></a>AsyncTask<params,progress,result></params,progress,result></h3><p>重写方法:</p>
+<ul>
+<li>onPreExecute<ul>
+<li>在执行耗时线程前被调用</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>doInBackground(Params…)<ul>
+<li>在后台线程执行，返回Result,执行过程中调用publicProgress(Progress)来进行任务进度的更新</li>
+</ul>
+</li>
+<li>onPostExecute(Result)<ul>
+<li>在UI线程中执行</li>
+</ul>
+</li>
+<li>onProgressUpdate(Progress…)<ul>
+<li>在UI线程执行,在publishProgress方法调用后执行</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>在不同的系统版本上串行与并行的执行行为不一致</p>
+</blockquote>
+<p>必须遵守的规则:</p>
+<ol>
+<li>Task实例必须在<strong>UI线程中创建</strong></li>
+<li>execute方法必须在<strong>UI线程中调用</strong></li>
+<li>该Task只能被执行一次,<strong>多次调用时会出现异常</strong></li>
+<li>不要手动调用onPreExecute….等生命周期方法，使用publishProgress()更新进度</li>
+</ol>
+<h3 id="ThreadPoolExecutor"><a href="#ThreadPoolExecutor" class="headerlink" title="ThreadPoolExecutor"></a>ThreadPoolExecutor</h3><blockquote>
+<p>Thread、AsyncTask适合处理单个任务的场景，HandlerThread适合串行处理多任务的场景。当需要并行的处理多任务时，ThreadPoolExecutor是更好的选择。</p>
+</blockquote>
+<p>提供复用机制（线程池）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> Executor THREAD_POOL_EXECUTOR</span><br><span class="line">		= <span class="keyword">new</span> ThreadPoolExecutor(CORE_POOL_SIZE, MAXIMUM_POOL_SIZE, KEEP_ALIVE,</span><br><span class="line">		TimeUnit.SECONDS, sPoolWorkQueue, sThreadFactory);</span><br><span class="line"></span><br><span class="line"><span class="comment">//execute</span></span><br><span class="line">THREAD_POOL_EXECUTOR.execute(Runnable XX);</span><br></pre></td></tr></table></figure>
+<h3 id="代价"><a href="#代价" class="headerlink" title="代价"></a>代价</h3><ul>
+<li>每一个新线程至少消耗64kb内存</li>
+<li>线程的切换回带来额外开销（switch context）</li>
+<li>尽量复用已有的工作线程</li>
+</ul>
+<h2 id="ThreadLocal"><a href="#ThreadLocal" class="headerlink" title="ThreadLocal"></a>ThreadLocal</h2><blockquote>
+<p>很多地方出现这个东西,其实它是一个容器，用来存放线程的<strong>静态</strong>局部变量，保证每一个线程都拥有单独的静态成员变量，保证了线程安全。</p>
+<p>ThreadLocal<t>可以近似的认为是Map<thread,t>，它的get方法就是以当前线程为key去map中取对应的T</thread,t></t></p>
+</blockquote>
+<p>ThreadLocal为每一个线程提供了一个独立的副本。</p>
+<h3 id="Sample"><a href="#Sample" class="headerlink" title="Sample"></a>Sample</h3><p>比如说下面这段代码为每个线程创建一个计数器，这时使用不同的线程获得的number就不同。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Sequence</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">getNumber</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SequenceByThreadLocal</span> <span class="keyword">implements</span> <span class="title">Squence</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> ThreadLocal&lt;Integer&gt; numberContainer = <span class="keyword">new</span> ThreadLocal&lt;Integer&gt;()&#123;</span><br><span class="line">		<span class="meta">@Override</span></span><br><span class="line">		<span class="function"><span class="keyword">protected</span> Integer <span class="title">initialValue</span><span class="params">()</span></span>&#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getNumber</span><span class="params">()</span></span>&#123;</span><br><span class="line">		numberContainer.set(numberContainer.get()+<span class="number">1</span>);</span><br><span class="line">		<span class="keyword">return</span> numberContainer.get();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="一个简易实现"><a href="#一个简易实现" class="headerlink" title="一个简易实现"></a>一个简易实现</h3><p>其实这个数据结构很简单，可以用代码做一个简易的实现</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyThreadLocal</span>&lt;<span class="title">T</span>&gt;</span>&#123;</span><br><span class="line">	<span class="keyword">private</span> Map&lt;Thread,T&gt; container = Collections.synchronizedMap(<span class="keyword">new</span> HashMap&lt;Thread,T&gt;());</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(T vaule)</span></span>&#123;</span><br><span class="line">		container.put(Thread.currentThread(),value);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> T <span class="title">get</span><span class="params">()</span></span>&#123;</span><br><span class="line">		Thread thread = Thread.currentThread();</span><br><span class="line">		T value = container.get(thread);</span><br><span class="line">		<span class="keyword">if</span>(value == <span class="keyword">null</span> &amp;&amp;　!container.containsKey(key)&#123;</span><br><span class="line">			valuee = initValue();</span><br><span class="line">			container.put(thread,value);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> value;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">()</span></span>&#123;</span><br><span class="line">		container.put(Thread.currentThread());</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">protected</span> T <span class="title">initialValue</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/android/" rel="tag"># android</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/04/Android通讯录实现/" rel="next" title="简单的通讯录实现ContactsList">
+                <i class="fa fa-chevron-left"></i> 简单的通讯录实现ContactsList
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/10/View/" rel="prev" title="View的杂谈">
+                View的杂谈 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="hgDendi" />
+          <p class="site-author-name" itemprop="name">hgDendi</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#差别"><span class="nav-number">1.</span> <span class="nav-text">差别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程"><span class="nav-number">2.</span> <span class="nav-text">进程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Foreground-process"><span class="nav-number">2.1.</span> <span class="nav-text">Foreground process</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Visible-process"><span class="nav-number">2.2.</span> <span class="nav-text">Visible process</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Service-process"><span class="nav-number">2.3.</span> <span class="nav-text">Service process</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Background-process"><span class="nav-number">2.4.</span> <span class="nav-text">Background process</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Empty-process"><span class="nav-number">2.5.</span> <span class="nav-text">Empty process</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#额外说明"><span class="nav-number">2.6.</span> <span class="nav-text">额外说明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程间通信"><span class="nav-number">3.</span> <span class="nav-text">进程间通信</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多进程的特性"><span class="nav-number">3.1.</span> <span class="nav-text">多进程的特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多进程App适用场景"><span class="nav-number">3.2.</span> <span class="nav-text">多进程App适用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程间通信方式"><span class="nav-number">3.3.</span> <span class="nav-text">进程间通信方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Parcelable和Serializable"><span class="nav-number">3.4.</span> <span class="nav-text">Parcelable和Serializable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Binder"><span class="nav-number">3.5.</span> <span class="nav-text">Binder</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程"><span class="nav-number">4.</span> <span class="nav-text">线程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Android中的线程"><span class="nav-number">4.1.</span> <span class="nav-text">Android中的线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线程间通信"><span class="nav-number">4.2.</span> <span class="nav-text">线程间通信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#锁"><span class="nav-number">4.3.</span> <span class="nav-text">锁</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ReentrantLock和条件对象"><span class="nav-number">4.3.1.</span> <span class="nav-text">ReentrantLock和条件对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Synchronized"><span class="nav-number">4.3.2.</span> <span class="nav-text">Synchronized</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Volatile"><span class="nav-number">4.3.3.</span> <span class="nav-text">Volatile</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UI-Main-thread"><span class="nav-number">4.4.</span> <span class="nav-text">UI / Main thread</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在非UI线程中更新UI"><span class="nav-number">4.5.</span> <span class="nav-text">在非UI线程中更新UI</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简单情况"><span class="nav-number">4.5.1.</span> <span class="nav-text">简单情况</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Handler介绍"><span class="nav-number">4.5.2.</span> <span class="nav-text">Handler介绍</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Thread类"><span class="nav-number">4.6.</span> <span class="nav-text">Thread类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AsyncTask"><span class="nav-number">4.7.</span> <span class="nav-text">AsyncTask</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ThreadPoolExecutor"><span class="nav-number">4.8.</span> <span class="nav-text">ThreadPoolExecutor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代价"><span class="nav-number">4.9.</span> <span class="nav-text">代价</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ThreadLocal"><span class="nav-number">5.</span> <span class="nav-text">ThreadLocal</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Sample"><span class="nav-number">5.1.</span> <span class="nav-text">Sample</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一个简易实现"><span class="nav-number">5.2.</span> <span class="nav-text">一个简易实现</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">hgDendi</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

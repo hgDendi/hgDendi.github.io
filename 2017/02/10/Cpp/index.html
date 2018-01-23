@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="C++," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="函数cpp对函数之间的的排列要满足先定义后使用。后定义先调用的函数必须声明。因为在函数被调用之前，应当让编译器知道该函数的原型。 内存区域 代码区 存放程序的可执行代码   全局数据区 静态变量 一般的全局变量（自动初始化为0）   栈区 局部变量（不处理原内存中的值）   堆区 与指针有关的动态数据    变量全局变量若和局部变量同名，需要加上::  staticstatic修饰的变量为静态变量">
+<meta name="keywords" content="C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cpp">
+<meta property="og:url" content="http://www.hgdendi.tech/2017/02/10/Cpp/index.html">
+<meta property="og:site_name" content="HgWorts">
+<meta property="og:description" content="函数cpp对函数之间的的排列要满足先定义后使用。后定义先调用的函数必须声明。因为在函数被调用之前，应当让编译器知道该函数的原型。 内存区域 代码区 存放程序的可执行代码   全局数据区 静态变量 一般的全局变量（自动初始化为0）   栈区 局部变量（不处理原内存中的值）   堆区 与指针有关的动态数据    变量全局变量若和局部变量同名，需要加上::  staticstatic修饰的变量为静态变量">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-12-19T13:55:40.050Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Cpp">
+<meta name="twitter:description" content="函数cpp对函数之间的的排列要满足先定义后使用。后定义先调用的函数必须声明。因为在函数被调用之前，应当让编译器知道该函数的原型。 内存区域 代码区 存放程序的可执行代码   全局数据区 静态变量 一般的全局变量（自动初始化为0）   栈区 局部变量（不处理原内存中的值）   堆区 与指针有关的动态数据    变量全局变量若和局部变量同名，需要加上::  staticstatic修饰的变量为静态变量">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.hgdendi.tech/2017/02/10/Cpp/"/>
+
+
+
+
+
+  <title>Cpp | HgWorts</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HgWorts</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Think big thoughts , but relish small pleasures.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.hgdendi.tech/2017/02/10/Cpp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hgDendi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HgWorts">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Cpp</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-10T00:00:00+08:00">
+                2017-02-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C++</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><p>cpp对函数之间的的排列要满足先定义后使用。后定义先调用的函数必须声明。因为在函数被调用之前，应当让编译器知道该函数的原型。</p>
+<h2 id="内存区域"><a href="#内存区域" class="headerlink" title="内存区域"></a>内存区域</h2><ul>
+<li>代码区<ul>
+<li>存放程序的可执行代码</li>
+</ul>
+</li>
+<li>全局数据区<ul>
+<li>静态变量</li>
+<li>一般的全局变量（自动初始化为0）</li>
+</ul>
+</li>
+<li>栈区<ul>
+<li>局部变量（不处理原内存中的值）</li>
+</ul>
+</li>
+<li>堆区<ul>
+<li>与指针有关的动态数据</li>
+</ul>
+</li>
+</ul>
+<h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><p>全局变量若和局部变量同名，需要加上:: </p>
+<h4 id="static"><a href="#static" class="headerlink" title="static"></a>static</h4><p>static修饰的变量为静态变量、内部变量。其中局部静态变量具有局部作用域，但是却具有全局生存期。</p>
+<p>static变量作为类的静态变量时，需要在类外部(.cpp)进行定义，如</p>
+<p>float Stub::staticVariable=0;</p>
+<p>静态函数成员的调用</p>
+<p>Stub::stubmethod();</p>
+<p>extern作用域从定义处到当前文件结束</p>
+<p>默认参数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">void showArea(int a = 0,int b = 10)</span><br></pre></td></tr></table></figure>
+<h3 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h3><h5 id="函数模板"><a href="#函数模板" class="headerlink" title="函数模板"></a>函数模板</h5><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class">  <span class="title">void</span> <span class="title">swap</span>(<span class="title">T</span> &amp;<span class="title">left</span> , <span class="title">T</span> &amp;<span class="title">right</span>)&#123;</span></span><br><span class="line">    <span class="comment">//todo</span></span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<h5 id="类模板"><a href="#类模板" class="headerlink" title="类模板"></a>类模板</h5><p>编译器看到类模板时并不为它分配内存空间，直到定义了一个模板对象，即模板参数由编译器替换时，才为其分配空间。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt; <span class="class"><span class="keyword">class</span> <span class="title">T</span> &gt;</span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">Stub</span>&#123;</span></span><br><span class="line">  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Stub&lt;<span class="keyword">int</span>&gt; initStub;</span><br></pre></td></tr></table></figure>
+<h3 id="内联函数"><a href="#内联函数" class="headerlink" title="内联函数"></a>内联函数</h3><p>一定要放在头文件中</p>
+<p>方法是加上inline关键字</p>
+<p>编译器在编译时，会将内联函数采用函数体进行替换，是以增加目标代码为代价来换取时间的。</p>
+<h3 id="指针"><a href="#指针" class="headerlink" title="指针"></a>指针</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//返回指针 </span></span><br><span class="line">float *search(float (*p)[4],int n)&#123;</span><br><span class="line">   <span class="keyword">return</span> *(p+n);</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//一种错误情况，局部变量导致系统释放空间，使得返回的地址无效</span></span><br><span class="line"><span class="function"><span class="keyword">char</span> *<span class="title">getName</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">char</span> name[<span class="number">81</span>];</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> name;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>void指针表示任何类型。但是不能对其使用算数操作。</p>
+<p>const可以修饰类型、变量名</p>
+<ul>
+<li>修饰类型表示不可以通过指针改变现在所指的内容</li>
+<li>修饰变量名，表示可以改变指针所指向空间的内容</li>
+</ul>
+<h3 id="Main"><a href="#Main" class="headerlink" title="Main"></a>Main</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc , <span class="keyword">char</span> *argv[])</span></span>&#123;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="内存的动态分配和释放"><a href="#内存的动态分配和释放" class="headerlink" title="内存的动态分配和释放"></a>内存的动态分配和释放</h3><p>new和delete</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> *iptr = <span class="keyword">new</span> <span class="keyword">int</span>;</span><br><span class="line"><span class="keyword">int</span> *iptr = <span class="keyword">new</span> <span class="keyword">int</span>(<span class="number">30</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> *a;</span><br><span class="line">a = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">100</span>];</span><br><span class="line"><span class="comment">//若空间不足 new int会返回0或NULL</span></span><br><span class="line"><span class="keyword">if</span>(<span class="literal">NULL</span> == a)&#123;</span><br><span class="line">  <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//释放</span></span><br><span class="line"><span class="keyword">delete</span> a;</span><br><span class="line"><span class="keyword">delete</span> [] a;</span><br></pre></td></tr></table></figure>
+<p>malloc和free</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">NODE * NODE;</span><br><span class="line">NODE = (NODE*) <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(NODE));</span><br><span class="line"></span><br><span class="line"><span class="built_in">free</span>(NODE);</span><br></pre></td></tr></table></figure>
+<h3 id="结构体"><a href="#结构体" class="headerlink" title="结构体"></a>结构体</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">char</span> NAME[<span class="number">100</span>];</span><br></pre></td></tr></table></figure>
+<h3 id="类"><a href="#类" class="headerlink" title="类"></a>类</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Stub</span>&#123;</span></span><br><span class="line">  <span class="keyword">private</span>:</span><br><span class="line">  	<span class="keyword">int</span> a;</span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">  	<span class="function"><span class="keyword">void</span> <span class="title">calculate</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//类外部定义函数需要用两个引号</span></span><br><span class="line"><span class="keyword">void</span> stub::calculate()&#123;</span><br><span class="line">  	<span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//新建类</span></span><br><span class="line"> Stub stub;</span><br></pre></td></tr></table></figure>
+<h3 id="h文件和-cpp文件"><a href="#h文件和-cpp文件" class="headerlink" title=".h文件和.cpp文件"></a>.h文件和.cpp文件</h3><p>将类的定义存储在头文件中，函数成员放在cpp文件中</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Rectangle.h</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> RECTANGLE_H</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> RECTANGLE_H</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Rectangle</span>&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">setData</span><span class="params">(<span class="keyword">float</span>,<span class="keyword">float</span>)</span></span>;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">calculate</span><span class="params">()</span></span>;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">  <span class="keyword">float</span> width;</span><br><span class="line">  <span class="keyword">float</span> height;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Rectangle.cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Rectangle.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> Rectangle::setData(<span class="keyword">float</span> w,<span class="keyword">float</span> l)&#123;</span><br><span class="line">  width = w;</span><br><span class="line">  height = l;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> Rectangle::calculate()&#123;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="友元函数"><a href="#友元函数" class="headerlink" title="友元函数"></a>友元函数</h3><p>友元函数不是类中的函数成员，但它可以访问类中定义的私有成员。</p>
+<p>友元破坏了数据的封装和隐藏，尽量不使用或少适用友元。</p>
+<h4 id="外部函数作为类的友元"><a href="#外部函数作为类的友元" class="headerlink" title="外部函数作为类的友元"></a>外部函数作为类的友元</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//类中定义</span></span><br><span class="line"><span class="function"><span class="keyword">friend</span> <span class="keyword">double</span> <span class="title">Distance</span><span class="params">(Point &amp;a,Point &amp;b)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//外部函数定义</span></span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">Distance</span><span class="params">(Point &amp;a , Point &amp;b)</span></span>&#123;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="类的成员函数作为另一个类的友元"><a href="#类的成员函数作为另一个类的友元" class="headerlink" title="类的成员函数作为另一个类的友元"></a>类的成员函数作为另一个类的友元</h4><p>这样的成员函数也被称为友元成员。既可以访问所在类对象的私有成员，也可以访问friend声明语句所在类对象中的私有成员和公有成员。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Budget</span>&#123;</span></span><br><span class="line">  <span class="keyword">private</span>:</span><br><span class="line">  	<span class="keyword">float</span> divBudget;</span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">  	<span class="keyword">friend</span> <span class="keyword">void</span> Aux::addBudget(<span class="keyword">float</span> , Budget &amp;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Aux.cpp</span></span><br><span class="line"><span class="keyword">void</span> Aux::addBudget(<span class="keyword">float</span> , Budget &amp;)&#123;</span><br><span class="line">  divBudget++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="一个类作为另外一个类的友元"><a href="#一个类作为另外一个类的友元" class="headerlink" title="一个类作为另外一个类的友元"></a>一个类作为另外一个类的友元</h4><p>B类中的每个函数成员都能访问A类中的私有成员。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>&#123;</span></span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">  	<span class="function"><span class="keyword">void</span> <span class="title">Display</span><span class="params">()</span></span>;</span><br><span class="line">  	<span class="keyword">friend</span> <span class="class"><span class="keyword">class</span> <span class="title">B</span>;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="拷贝构造函数"><a href="#拷贝构造函数" class="headerlink" title="拷贝构造函数"></a>拷贝构造函数</h3><p>并不调用构造函数，而是采用对象按位拷贝操作，将b对象的每个成员复制到a中。这样如果b中有指针，a中也会有指针，而a对象在析构的时候可能会删除指针指向的内容，导致b对象错乱。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Stub a = b;</span><br></pre></td></tr></table></figure>
+<p>拷贝构造函数是特殊的构造函数，当采用一个对象初始化另一个对象时，将自动调用该函数。</p>
+<p>拷贝构造函数在<strong>对象被创建</strong>时调用，而赋值函数在对象<strong>已经存在</strong>的情况下调用。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Stub</span>&#123;</span></span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">  	Stub(<span class="keyword">const</span> Stub &amp;obj)&#123;</span><br><span class="line">      name = <span class="keyword">new</span> <span class="keyword">char</span>[<span class="built_in">strlen</span>(obj.name)+<span class="number">1</span>];</span><br><span class="line">      <span class="built_in">strcpy</span>(name,obj.name);</span><br><span class="line">      age = obj.age;</span><br><span class="line">  	&#125;</span><br><span class="line">  <span class="keyword">private</span>:</span><br><span class="line">  	<span class="keyword">char</span> *name;</span><br><span class="line">  	<span class="keyword">int</span> age;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="操作符重载"><a href="#操作符重载" class="headerlink" title="操作符重载"></a>操作符重载</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Stub</span>&#123;</span></span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">  	<span class="keyword">void</span> <span class="keyword">operator</span> =(<span class="keyword">const</span> Stub &amp;right)&#123;</span><br><span class="line">    </span><br><span class="line">  	&#125;</span><br><span class="line">  </span><br><span class="line">  	Stub <span class="keyword">operator</span> ++();<span class="comment">//prefix</span></span><br><span class="line">  	Stub <span class="keyword">operator</span> ++(<span class="keyword">int</span>);<span class="comment">//post</span></span><br><span class="line">  	ostream &amp;<span class="keyword">operator</span> &lt;&lt;(ostream &amp;strm , Stub &amp;stub)&#123;</span><br><span class="line">      strm &lt;&lt;stub.XXX;</span><br><span class="line">      <span class="keyword">return</span> strm;</span><br><span class="line">  	&#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//类型转换</span></span><br><span class="line">  	<span class="function"><span class="keyword">operator</span> <span class="title">float</span><span class="params">()</span></span>&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="number">12.0</span>;</span><br><span class="line">  	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="技巧"><a href="#技巧" class="headerlink" title="技巧"></a>技巧</h3><p>创建一个临时对象将其返回 和 创建一个局部变量并返回 是不同的。</p>
+<p>场景1：</p>
+<ol>
+<li>创建一个temp对象，调用构造函数完成初始化；</li>
+<li>拷贝构造函数将temp赋值到内存的外部存储中；</li>
+<li>在函数结束时，摧毁temp对象</li>
+</ol>
+<p>而场景2：直接把临时对象创建并初始化在内存的外部存储单元中，省去了调用拷贝构造函数和析构函数的过程，提高了效率。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">temp</span><span class="params">(s1+s2)</span></span>;</span><br><span class="line"><span class="keyword">return</span> temp;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line"><span class="keyword">return</span> <span class="built_in">string</span>(s1+s2);</span><br><span class="line"></span><br><span class="line"><span class="number">1</span>和<span class="number">2</span></span><br></pre></td></tr></table></figure>
+<h3 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h3><p>CPP可以多重继承，其中子类的同名函数需要作用域分隔符：：来确定要调用的函数</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Son</span> :</span> <span class="keyword">public</span> Father &#123;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//构造函数</span></span><br><span class="line">Son::Son(<span class="built_in">string</span> name):Father(name)</span><br><span class="line"></span><br><span class="line"><span class="comment">//public、protected、private为继承修饰符，控制可见性。</span></span><br></pre></td></tr></table></figure>
+<h3 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">float</span> <span class="title">divide</span><span class="params">(<span class="keyword">int</span> dividend , <span class="keyword">int</span> divisor)</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(divisor == <span class="number">0</span> )&#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="string">"error"</span>;</span><br><span class="line">  &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">float</span> (dividend)/divisor;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">  divide(a,b);</span><br><span class="line">&#125;<span class="keyword">catch</span>(<span class="keyword">char</span>* exceptionString)&#123;</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; exceptionString;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="初始化列表"><a href="#初始化列表" class="headerlink" title="初始化列表"></a>初始化列表</h4><p>构造函数参数表和函数体之间，在构造函数的函数体执行之前完成初始化列表中指定的工作。</p>
+<ol>
+<li>具有继承关系的子类必须在初始化列表中调用基类的构造函数</li>
+<li>类中的const常量成员只能在初始化列表中进行初始化</li>
+<li>对象类型的成员的初始化放在初始化列表中则程序的效率较高</li>
+</ol>
+<h3 id="Virtual"><a href="#Virtual" class="headerlink" title="Virtual"></a>Virtual</h3><p>CPP编译器在默认情况下，对函数成员的调用实施的是静态绑定。如需改为动态绑定，需要增加前缀virtual</p>
+<p>虚函数是一个函数成员，唯一要求是在子类中一定要覆盖它。</p>
+<h5 id="纯虚函数"><a href="#纯虚函数" class="headerlink" title="纯虚函数"></a>纯虚函数</h5><p>virtual &lt;&gt; &lt;&gt;() = 0; </p>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>CPP中字符串末尾要有\0</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C/" rel="tag"># C++</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/16/Java类的生命周期/" rel="next" title="Java类的生命周期">
+                <i class="fa fa-chevron-left"></i> Java类的生命周期
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/12/人生苦短，我用Python/" rel="prev" title="人生苦短，我用python">
+                人生苦短，我用python <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="hgDendi" />
+          <p class="site-author-name" itemprop="name">hgDendi</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#函数"><span class="nav-number">1.</span> <span class="nav-text">函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存区域"><span class="nav-number">2.</span> <span class="nav-text">内存区域</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#变量"><span class="nav-number">2.1.</span> <span class="nav-text">变量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#static"><span class="nav-number">2.1.1.</span> <span class="nav-text">static</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模板"><span class="nav-number">2.2.</span> <span class="nav-text">模板</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#函数模板"><span class="nav-number">2.2.0.1.</span> <span class="nav-text">函数模板</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#类模板"><span class="nav-number">2.2.0.2.</span> <span class="nav-text">类模板</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内联函数"><span class="nav-number">2.3.</span> <span class="nav-text">内联函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#指针"><span class="nav-number">2.4.</span> <span class="nav-text">指针</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Main"><span class="nav-number">2.5.</span> <span class="nav-text">Main</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内存的动态分配和释放"><span class="nav-number">2.6.</span> <span class="nav-text">内存的动态分配和释放</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结构体"><span class="nav-number">2.7.</span> <span class="nav-text">结构体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类"><span class="nav-number">2.8.</span> <span class="nav-text">类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#h文件和-cpp文件"><span class="nav-number">2.9.</span> <span class="nav-text">.h文件和.cpp文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#友元函数"><span class="nav-number">2.10.</span> <span class="nav-text">友元函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#外部函数作为类的友元"><span class="nav-number">2.10.1.</span> <span class="nav-text">外部函数作为类的友元</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#类的成员函数作为另一个类的友元"><span class="nav-number">2.10.2.</span> <span class="nav-text">类的成员函数作为另一个类的友元</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#一个类作为另外一个类的友元"><span class="nav-number">2.10.3.</span> <span class="nav-text">一个类作为另外一个类的友元</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拷贝构造函数"><span class="nav-number">2.11.</span> <span class="nav-text">拷贝构造函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#操作符重载"><span class="nav-number">2.12.</span> <span class="nav-text">操作符重载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#技巧"><span class="nav-number">2.13.</span> <span class="nav-text">技巧</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#继承"><span class="nav-number">2.14.</span> <span class="nav-text">继承</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异常"><span class="nav-number">2.15.</span> <span class="nav-text">异常</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#初始化列表"><span class="nav-number">2.15.1.</span> <span class="nav-text">初始化列表</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Virtual"><span class="nav-number">2.16.</span> <span class="nav-text">Virtual</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#纯虚函数"><span class="nav-number">2.16.0.1.</span> <span class="nav-text">纯虚函数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他"><span class="nav-number">2.17.</span> <span class="nav-text">其他</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">hgDendi</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

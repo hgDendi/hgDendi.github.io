@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="network," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="网络URIUniform Resource identifier 统一资源标识符，用来唯一的标志一个资源 File://a:1234/b/c/d.txt  访问资源的命名机制 主机名 资源自身的名称，由路径展示  URLUniversal Resource Locator 统一资源定位器，是一种具体的URI 可以用来标志一个资源，还指明了如何locate这个资源  协议 存有该资源的主机IP地址">
+<meta name="keywords" content="network">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网络相关">
+<meta property="og:url" content="http://www.hgdendi.tech/2017/11/11/网络/index.html">
+<meta property="og:site_name" content="HgWorts">
+<meta property="og:description" content="网络URIUniform Resource identifier 统一资源标识符，用来唯一的标志一个资源 File://a:1234/b/c/d.txt  访问资源的命名机制 主机名 资源自身的名称，由路径展示  URLUniversal Resource Locator 统一资源定位器，是一种具体的URI 可以用来标志一个资源，还指明了如何locate这个资源  协议 存有该资源的主机IP地址">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tKfTcgy1fle3tlox07j30kw0acwez.jpg">
+<meta property="og:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1507393085215&di=31c995f6e06cee71486a2e79fecf4f23&imgtype=0&src=http%3A%2F%2Froclinux.cn%2Fwp-content%2Fuploads%2F2013%2F12%2FHTTP%25E5%258D%258F%25E8%25AE%25AE-%25E8%25AF%25B7%25E6%25B1%2582%25E6%258A%25A5%25E6%2596%2587%25E6%25A0%25BC%25E5%25BC%258F.png">
+<meta property="og:image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1507393435182&di=a151b5ba1fa56eb7a8964ee0297fcc5e&imgtype=0&src=http%3A%2F%2Froclinux.cn%2Fwp-content%2Fuploads%2F2013%2F12%2FHTTP%25E5%258D%258F%25E8%25AE%25AE-%25E5%2593%258D%25E5%25BA%2594%25E6%258A%25A5%25E6%2596%2587%25E6%25A0%25BC%25E5%25BC%258F1.png">
+<meta property="og:image" content="https://ws4.sinaimg.cn/large/006tKfTcgy1fle45c3xxcj30yy0ja0uv.jpg">
+<meta property="og:updated_time" content="2018-01-01T05:06:52.312Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="网络相关">
+<meta name="twitter:description" content="网络URIUniform Resource identifier 统一资源标识符，用来唯一的标志一个资源 File://a:1234/b/c/d.txt  访问资源的命名机制 主机名 资源自身的名称，由路径展示  URLUniversal Resource Locator 统一资源定位器，是一种具体的URI 可以用来标志一个资源，还指明了如何locate这个资源  协议 存有该资源的主机IP地址">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/006tKfTcgy1fle3tlox07j30kw0acwez.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.hgdendi.tech/2017/11/11/网络/"/>
+
+
+
+
+
+  <title>网络相关 | HgWorts</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HgWorts</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Think big thoughts , but relish small pleasures.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.hgdendi.tech/2017/11/11/网络/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hgDendi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HgWorts">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">网络相关</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-11T00:00:00+08:00">
+                2017-11-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/network/" itemprop="url" rel="index">
+                    <span itemprop="name">network</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h1><h2 id="URI"><a href="#URI" class="headerlink" title="URI"></a>URI</h2><p>Uniform Resource identifier</p>
+<p>统一资源标识符，用来唯一的标志一个<strong>资源</strong></p>
+<p>File://a:1234/b/c/d.txt</p>
+<ul>
+<li>访问资源的命名机制</li>
+<li>主机名</li>
+<li>资源自身的名称，由路径展示</li>
+</ul>
+<h2 id="URL"><a href="#URL" class="headerlink" title="URL"></a>URL</h2><p>Universal Resource Locator</p>
+<p>统一资源定位器，是一种<strong>具体的URI</strong></p>
+<p>可以用来标志一个资源，还指明了如何locate这个资源</p>
+<ul>
+<li>协议</li>
+<li>存有该资源的主机IP地址</li>
+<li>主机资源具体地址</li>
+</ul>
+<h2 id="分层"><a href="#分层" class="headerlink" title="分层"></a>分层</h2><ul>
+<li>应用层<ul>
+<li>收到传输层数据后按格式进行解读</li>
+<li>HTTP、FTP、Telnet、SMTP、POP3</li>
+</ul>
+</li>
+<li>传输层<ul>
+<li>建立主机到主机的通信，为两台主机上的应用提供端到端的通信</li>
+<li>TCP UDP</li>
+</ul>
+</li>
+<li>网络层<ul>
+<li>决定如何将数据从发送方路由到接收方</li>
+<li>综合考虑发送优先权、网络拥塞程度、服务质量、可选路由的花费</li>
+<li>ip协议</li>
+</ul>
+</li>
+<li>数据链路层<ul>
+<li>从网络层接收到的数据被分割成特定的可被物理层传输的帧</li>
+<li>原始数据、发送方和接收方的物理地址、纠错和控制信息</li>
+</ul>
+</li>
+<li>物理层</li>
+</ul>
+<h1 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h1><p>是面向对象协议，使用于分布式超媒体信息系统。</p>
+<ul>
+<li>支持CS模式</li>
+<li>简单快速</li>
+<li>灵活，允许传输任意类型的数据</li>
+<li><strong>无连接</strong>，限制每次连接只处理一个请求</li>
+<li><strong>无状态</strong>，对于事务处理没有记忆能力</li>
+</ul>
+<h2 id="URL格式"><a href="#URL格式" class="headerlink" title="URL格式"></a>URL格式</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://host[&quot;:&quot;port][abs_path]</span><br></pre></td></tr></table></figure>
+<h2 id="Cookie和Session"><a href="#Cookie和Session" class="headerlink" title="Cookie和Session"></a>Cookie和Session</h2><h3 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h3><p>是<strong>客户端</strong>的解决方案（HTTP是无状态的），是服务器发给客户端的特殊信息，这些信息以文本文件的方式存放在客户端，然后客户端每次向服务器发送请求的时候都会带上这些特殊的信息。</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tKfTcgy1fle3tlox07j30kw0acwez.jpg" alt="1510379800835"></p>
+<h3 id="Session"><a href="#Session" class="headerlink" title="Session"></a>Session</h3><p>保存在<strong>服务器</strong>上。客户端浏览器访问Server的时候，Server把客户端信息以某种形式记录在服务器上。</p>
+<h2 id="请求报文"><a href="#请求报文" class="headerlink" title="请求报文"></a>请求报文</h2><p><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1507393085215&amp;di=31c995f6e06cee71486a2e79fecf4f23&amp;imgtype=0&amp;src=http%3A%2F%2Froclinux.cn%2Fwp-content%2Fuploads%2F2013%2F12%2FHTTP%25E5%258D%258F%25E8%25AE%25AE-%25E8%25AF%25B7%25E6%25B1%2582%25E6%258A%25A5%25E6%2596%2587%25E6%25A0%25BC%25E5%25BC%258F.png" alt="requestHttp"></p>
+<ul>
+<li>请求行</li>
+<li>请求报头</li>
+<li>请求数据</li>
+</ul>
+<h3 id="请求行"><a href="#请求行" class="headerlink" title="请求行"></a>请求行</h3><p>Method Request-URI HTTP-VERSION CRLF</p>
+<blockquote>
+<p>GET <a href="http://blog.csdn.net/" target="_blank" rel="noopener">http://blog.csdn.net/</a> HTTP/1.1</p>
+</blockquote>
+<p>八种请求方法：</p>
+<ul>
+<li>GET<ul>
+<li>请求获取Request-URI所标识的资源</li>
+<li>大小有限制</li>
+</ul>
+</li>
+<li>POST<ul>
+<li>在Request-URI所标识的资源后附加新的数据</li>
+<li>数据放在body中，无大小限制</li>
+</ul>
+</li>
+<li>HEAD<ul>
+<li>请求获取由URI所标志的资源的响应消息报头</li>
+</ul>
+</li>
+<li>PUT<ul>
+<li>请求服务器存储一个资源，并用URI作为其标识</li>
+</ul>
+</li>
+<li>DELETE<ul>
+<li>请求服务器删除URI所标识的资源</li>
+</ul>
+</li>
+<li>TRACE<ul>
+<li>请求服务器回送收到的请求信息，主要用于测试或诊断</li>
+</ul>
+</li>
+<li>CONNECT<ul>
+<li>预留给能够将连接改为管道方式的代理服务器</li>
+</ul>
+</li>
+<li>OPTIONS<ul>
+<li>能够查询服务器的性能</li>
+</ul>
+</li>
+</ul>
+<h2 id="响应报文"><a href="#响应报文" class="headerlink" title="响应报文"></a>响应报文</h2><p><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1507393435182&amp;di=a151b5ba1fa56eb7a8964ee0297fcc5e&amp;imgtype=0&amp;src=http%3A%2F%2Froclinux.cn%2Fwp-content%2Fuploads%2F2013%2F12%2FHTTP%25E5%258D%258F%25E8%25AE%25AE-%25E5%2593%258D%25E5%25BA%2594%25E6%258A%25A5%25E6%2596%2587%25E6%25A0%25BC%25E5%25BC%258F1.png" alt="responseHTTP"></p>
+<ul>
+<li>状态行</li>
+<li>响应报头</li>
+<li>空行</li>
+</ul>
+<h3 id="状态行"><a href="#状态行" class="headerlink" title="状态行"></a>状态行</h3><p>HTTP-Version Status-Code Reason-phrase CRLF</p>
+<blockquote>
+<p>HTTP/1.1 200 OK</p>
+</blockquote>
+<ul>
+<li>100~199<ul>
+<li>收到请求，需要请求者继续执行操作</li>
+</ul>
+</li>
+<li>200~299<ul>
+<li>请求成功，请求已被成功接收并处理</li>
+<li>200 OK</li>
+</ul>
+</li>
+<li>300~399<ul>
+<li>重定向，要完成请求必须进行更进一步的操作</li>
+</ul>
+</li>
+<li>400~499<ul>
+<li>客户端错误，请求有语法错误或请求无法实现</li>
+<li>400 Bad Request</li>
+<li>401 Unauthorized</li>
+<li>403 Forbidden</li>
+</ul>
+</li>
+<li>500~599<ul>
+<li>服务器错误，服务器不能实现合法的请求</li>
+<li>500 Internal Server Error</li>
+<li>503 Server Unavailable</li>
+</ul>
+</li>
+</ul>
+<h2 id="消息报头"><a href="#消息报头" class="headerlink" title="消息报头"></a>消息报头</h2><h3 id="通用部分"><a href="#通用部分" class="headerlink" title="通用部分"></a>通用部分</h3><ul>
+<li>Date</li>
+<li>Connection</li>
+<li>Cache-Control</li>
+</ul>
+<h3 id="请求报头"><a href="#请求报头" class="headerlink" title="请求报头"></a>请求报头</h3><ul>
+<li>Host<ul>
+<li>请求主机名</li>
+</ul>
+</li>
+<li>User-Agent<ul>
+<li>发送请求的浏览器类型</li>
+</ul>
+</li>
+<li>Accept<ul>
+<li>指定客户端接收哪些类型的信息</li>
+<li>比如<em>/</em></li>
+</ul>
+</li>
+<li>Refer<ul>
+<li>从哪个链接链接过来的</li>
+</ul>
+</li>
+<li>Accept-Encoding<ul>
+<li>客户端可识别的数据编码</li>
+</ul>
+</li>
+<li>Accept-Language<ul>
+<li>浏览器支持的语言类型</li>
+</ul>
+</li>
+<li>Connection<ul>
+<li>允许客户端和服务器指定与请求、响应连接有关的选项</li>
+<li>如Keep-Alive</li>
+</ul>
+</li>
+<li>if-none-match<ul>
+<li>缓存</li>
+<li>返回304，直接使用本地缓存</li>
+</ul>
+</li>
+<li>If-modified-since<ul>
+<li>返回304，直接使用本地缓存</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>Transfer-Encoding<ul>
+<li>告知接收端为了保证报文的可靠传输，对报文采用了什么编码方式</li>
+</ul>
+</li>
+</ul>
+<h3 id="响应报头"><a href="#响应报头" class="headerlink" title="响应报头"></a>响应报头</h3><ul>
+<li>Location<ul>
+<li>用于重定向接收者到一个新的位置</li>
+</ul>
+</li>
+<li>Server<ul>
+<li>包含服务器用来处理请求的系统信息</li>
+</ul>
+</li>
+<li>ETag<ul>
+<li>标志服务端信息的标志位</li>
+<li>和if-none-match配对</li>
+</ul>
+</li>
+<li>Expires<ul>
+<li>缓存时间控制</li>
+</ul>
+</li>
+<li>Cache-Control</li>
+<li>Proxy-Connection<ul>
+<li>keep-alive</li>
+</ul>
+</li>
+</ul>
+<h3 id="实体报头"><a href="#实体报头" class="headerlink" title="实体报头"></a>实体报头</h3><ul>
+<li>Content-Type<ul>
+<li>发送给接收者的实体正文的媒体类型</li>
+</ul>
+</li>
+<li>Content-Length<ul>
+<li>实体正文的长度</li>
+</ul>
+</li>
+<li>Content-Language</li>
+<li>Content-Encoding</li>
+<li>Last-Modified<ul>
+<li>指示资源的最后修改时间和日期</li>
+</ul>
+</li>
+<li>Expires<ul>
+<li>响应过期的日期和时间</li>
+</ul>
+</li>
+</ul>
+<h2 id="HTTP-1-X-协议存在的问题"><a href="#HTTP-1-X-协议存在的问题" class="headerlink" title="HTTP 1.X 协议存在的问题"></a>HTTP 1.X 协议存在的问题</h2><ul>
+<li>传输数据时，每次都要重新建立链接</li>
+<li>所有传输内容都是明文，客户端和服务器无法验证对方身份</li>
+<li>header里携带的内容过大，在一定程度上增加了传输成本</li>
+<li>虽然支持keep-alive，来弥补多次创建连接产生的延迟，但是使用多了同样会给服务器带来大量的性能压力</li>
+</ul>
+<h1 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h1><h2 id="HTTPS-1"><a href="#HTTPS-1" class="headerlink" title="HTTPS"></a>HTTPS</h2><p>不是一个单独的协议，是对工作在加密连接（SSL/TLS）上的常规HTTP协议。</p>
+<p>通过在TCP和HTTP之间加入TLS来加密。</p>
+<h2 id="SSL-TLS"><a href="#SSL-TLS" class="headerlink" title="SSL/TLS"></a>SSL/TLS</h2><p>SSL协议是一种安全传输协议。</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tKfTcgy1fle45c3xxcj30yy0ja0uv.jpg" alt="1510380517163"></p>
+<h3 id="TCP和UDP"><a href="#TCP和UDP" class="headerlink" title="TCP和UDP"></a>TCP和UDP</h3><table>
+<thead>
+<tr>
+<th>TCP</th>
+<th>UDP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>基于连接，全双工的可靠信道</td>
+<td>无连接，不可靠信道</td>
+</tr>
+<tr>
+<td>要求系统资源较多</td>
+<td>较少</td>
+</tr>
+<tr>
+<td>流模式</td>
+<td>数据报模式</td>
+</tr>
+<tr>
+<td>保证数据正确性</td>
+<td>可能丢包</td>
+</tr>
+<tr>
+<td>保证数据顺序</td>
+<td>不保证</td>
+</tr>
+<tr>
+<td>文件传输、重要状态的更新</td>
+<td>视频传输、实时通信</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h1 id="Android中的网络通信框架"><a href="#Android中的网络通信框架" class="headerlink" title="Android中的网络通信框架"></a>Android中的网络通信框架</h1><h2 id="HttpURLConnection"><a href="#HttpURLConnection" class="headerlink" title="HttpURLConnection"></a>HttpURLConnection</h2><p>API简单，体积较小，适应于Android项目，而且其压缩和缓存机制可以有效的减少网络访问的流量。</p>
+<h3 id="GET"><a href="#GET" class="headerlink" title="GET"></a>GET</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">URL mURL = <span class="keyword">new</span> URL(url);</span><br><span class="line">httpURLConnection = (HttpURLConnection) mURL.openConnection();</span><br><span class="line">httpURLConnection.setConnectTimeout(<span class="number">15000</span>);</span><br><span class="line">httpURLConnection.setReadTimeout(<span class="number">15000</span>);</span><br><span class="line">httpURLConnection.setRequestMethod(<span class="string">"GET"</span>);</span><br><span class="line">httpURLConnection.setRequestProperty(<span class="string">"Connection"</span>, <span class="string">"Keep-Alive"</span>);</span><br><span class="line">httpURLConnection.setDoInput(<span class="keyword">true</span>);</span><br><span class="line">httpURLConnection.connect();</span><br><span class="line"></span><br><span class="line">inputStream = httpURLConnection.getInputStream();</span><br><span class="line"><span class="keyword">int</span> code = httpURLConnection.getResponseCode();</span><br><span class="line">String response = UrlConnManager.convertStreamToString(inputStream);</span><br><span class="line">inputStream.close();</span><br></pre></td></tr></table></figure>
+<h3 id="POST"><a href="#POST" class="headerlink" title="POST"></a>POST</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">URL mURL = <span class="keyword">new</span> URL(url);</span><br><span class="line">httpURLConnection = (HttpURLConnection) mURL.openConnection();</span><br><span class="line"></span><br><span class="line">httpURLConnection.setConnectTimeout(<span class="number">15000</span>);</span><br><span class="line">httpURLConnection.setReadTimeout(<span class="number">15000</span>);</span><br><span class="line">httpURLConnection.setRequestMethod(<span class="string">"POST"</span>);</span><br><span class="line">httpURLConnection.setRequestProperty(<span class="string">"Connection"</span>, <span class="string">"Keep-Alive"</span>);</span><br><span class="line">httpURLConnection.setDoInput(<span class="keyword">true</span>);</span><br><span class="line"><span class="comment">//post传递参数时需要开启</span></span><br><span class="line">httpURLConnection.setDoOutput(<span class="keyword">true</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//post body</span></span><br><span class="line">OutputStream outputStream = httpURLConnection.getOutputStream();</span><br><span class="line">StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line"><span class="keyword">for</span> (NameValuePair nameValuePair : paramsList) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!TextUtils.isEmpty(sb)) &#123;</span><br><span class="line">        sb.append(<span class="string">"&amp;"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    sb.append(URLEncoder.encode(nameValuePair.getName(), <span class="string">"UTF-8"</span>));</span><br><span class="line">    sb.append(<span class="string">"="</span>);</span><br><span class="line">    sb.append(URLEncoder.encode(nameValuePair.getValue(), <span class="string">"UTF-8"</span>));</span><br><span class="line">&#125;</span><br><span class="line">BufferedWriter writer = <span class="keyword">new</span> BufferedWriter(<span class="keyword">new</span> OutputStreamWriter(outputStream, <span class="string">"UTF-8"</span>));</span><br><span class="line">writer.write(sb.toString());</span><br><span class="line">writer.flush();</span><br><span class="line">writer.close();</span><br><span class="line"></span><br><span class="line">httpURLConnection.connect();</span><br><span class="line">inputStream = httpURLConnection.getInputStream();</span><br><span class="line"><span class="keyword">int</span> code = httpURLConnection.getResponseCode();</span><br><span class="line">String response = UrlConnManager.convertStreamToString(inputStream);</span><br><span class="line">inputStream.close();</span><br></pre></td></tr></table></figure>
+<h2 id="Volley"><a href="#Volley" class="headerlink" title="Volley"></a>Volley</h2><p>适合进行数据量不大但通信频繁的网络操作</p>
+<p>对于大数据量的网络操作，比如下载文件等，表现就比较糟糕。</p>
+<p>基于HttpURLConnection。</p>
+<p>基于队列，有四个NetworkDispatcher，一个CacheDispatcher。</p>
+<ol>
+<li>创建RequestQueue</li>
+</ol>
+<ol>
+<li>创建XXRequest</li>
+<li>RequestQueue#add</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">RequestQueue queue = Volley.newRequestQueue(getApplicationContext());</span><br><span class="line">StringRequest stringRequest = <span class="keyword">new</span> StringRequest(</span><br><span class="line">    Request.Method.GET,</span><br><span class="line">    <span class="string">"https://www.baidu.com"</span>,</span><br><span class="line">    <span class="keyword">new</span> Response.Listener&lt;String&gt;() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResponse</span><span class="params">(String response)</span> </span>&#123;</span><br><span class="line">            Log.d(TAG, <span class="string">"===="</span> + response);</span><br><span class="line">         &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="keyword">new</span> Response.ErrorListener() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onErrorResponse</span><span class="params">(VolleyError error)</span> </span>&#123;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">);</span><br><span class="line">JsonObjectRequest jsonObjectRequest = <span class="keyword">new</span> JsonObjectRequest(</span><br><span class="line">    <span class="string">"http://ip.taobao.com/service/getIpInfo.php?ip=59.108.54.37"</span>,</span><br><span class="line">    <span class="keyword">null</span>,</span><br><span class="line">    <span class="keyword">new</span> Response.Listener&lt;JSONObject&gt;() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResponse</span><span class="params">(JSONObject response)</span> </span>&#123;</span><br><span class="line">             IpModel ipModel = <span class="keyword">new</span> Gson().fromJson(response.toString(), IpModel.class);</span><br><span class="line">             Log.d(TAG, <span class="string">"====ip"</span> + ipModel);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="keyword">new</span> Response.ErrorListener() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onErrorResponse</span><span class="params">(VolleyError error)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">);</span><br><span class="line">queue.add(stringRequest);</span><br><span class="line">queue.add(jsonObjectRequest);</span><br></pre></td></tr></table></figure>
+<h2 id="OKHttp"><a href="#OKHttp" class="headerlink" title="OKHttp"></a>OKHttp</h2><p>会从很多常用的连接问题中自动恢复，比如服务器配置了多个IP，当第一个IP连接失败时，会自动尝试下一个IP。（原理是通过拦截器进行实现）</p>
+<p>Fresco、Glide、Picasso、Retrofit都使用了OkHttp</p>
+<p>使用方法：</p>
+<ol>
+<li>通过RequestBuilder创建Request</li>
+<li>创建OkHttpClient</li>
+<li>通过OkHttpClient#newCall(Request)创建Call</li>
+<li>调用Call#enqueue或execute</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">okhttp3.Request.Builder requestBuilder = <span class="keyword">new</span> okhttp3.Request.Builder().url(<span class="string">"http://blog.csdn.net/itachi85"</span>);</span><br><span class="line"><span class="comment">//POST请求需要用FormBody封装请求的参数</span></span><br><span class="line">requestBuilder.method(<span class="string">"GET"</span>, <span class="keyword">null</span>);</span><br><span class="line">okhttp3.Request request = requestBuilder.build();</span><br><span class="line"></span><br><span class="line">OkHttpClient okHttpClient = <span class="keyword">new</span> OkHttpClient();</span><br><span class="line">Call call = okHttpClient.newCall(request);</span><br><span class="line"></span><br><span class="line">call.enqueue(<span class="keyword">new</span> Callback() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(Call call, IOException e)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResponse</span><span class="params">(Call call, okhttp3.Response response)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        Log.d(TAG, <span class="string">"===="</span> + response.body().toString());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="Retrofit"><a href="#Retrofit" class="headerlink" title="Retrofit"></a>Retrofit</h2><p>底层是基于OkHttp实现的。</p>
+<p>与其他框架不同的是，更多使用运行时注解的方式提供功能。</p>
+<p>使用方法：</p>
+<ol>
+<li>创建Retrofit</li>
+<li>使用Retrofit创建对应的接口，使用接口返回Call</li>
+<li>Call#enqueue或者execute</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//POST</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IpServiceForPost</span> </span>&#123;</span><br><span class="line">    <span class="meta">@FormUrlEncoded</span></span><br><span class="line">    <span class="meta">@POST</span>(<span class="string">"&#123;path&#125;/getIpInfo.php"</span>)</span><br><span class="line">    <span class="function">Call&lt;IpModel&gt; <span class="title">getIpMsg</span><span class="params">(@Path(<span class="string">"path"</span>)</span> String path, @<span class="title">Field</span><span class="params">(<span class="string">"ip"</span>)</span> String first)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//GET</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IpService</span> </span>&#123;</span><br><span class="line">    <span class="meta">@GET</span>(<span class="string">"&#123;path&#125;/getIpInfo.php"</span>)</span><br><span class="line">    <span class="function">Call&lt;IpModel&gt; <span class="title">getIpMsg</span><span class="params">(@Path(<span class="string">"path"</span>)</span> String path, @<span class="title">Query</span><span class="params">(<span class="string">"ip"</span>)</span> String ip)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//其他注解</span></span><br><span class="line"><span class="comment">//Path：地址</span></span><br><span class="line"><span class="comment">//Query(Map)</span></span><br><span class="line"><span class="comment">//Field</span></span><br><span class="line"><span class="comment">//Body 数据传输类型JSON字符串</span></span><br><span class="line"><span class="comment">//Part 单个文件上传</span></span><br><span class="line"><span class="comment">//Header 消息报头</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">String url = <span class="string">"http://ip.taobao.com/"</span>;</span><br><span class="line">Retrofit retrofit = <span class="keyword">new</span> Retrofit.Builder()</span><br><span class="line">    .baseUrl(url)</span><br><span class="line">    .addConverterFactory(GsonConverterFactory.create())</span><br><span class="line">    .build();</span><br><span class="line">IpService ipService = retrofit.create(IpService.class);</span><br><span class="line">retrofit2.Call&lt;IpModel&gt; call = ipService.getIpMsg(<span class="string">"service"</span>,<span class="string">"59.108.54.37"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 同步方法使用execute</span></span><br><span class="line">call.enqueue(<span class="keyword">new</span> retrofit2.Callback&lt;IpModel&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResponse</span><span class="params">(retrofit2.Call&lt;IpModel&gt; call, retrofit2.Response&lt;IpModel&gt; response)</span> </span>&#123;</span><br><span class="line">        String country = response.body().toString();</span><br><span class="line">        Log.d(TAG, <span class="string">"==== coutry is "</span> + country);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(retrofit2.Call&lt;IpModel&gt; call, Throwable t)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/network/" rel="tag"># network</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/11/Gradle/" rel="next" title="Gradle初探">
+                <i class="fa fa-chevron-left"></i> Gradle初探
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/12/RecyclerView实现二级菜单/" rel="prev" title="RecyclerView实现二级菜单">
+                RecyclerView实现二级菜单 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="hgDendi" />
+          <p class="site-author-name" itemprop="name">hgDendi</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#网络"><span class="nav-number">1.</span> <span class="nav-text">网络</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#URI"><span class="nav-number">1.1.</span> <span class="nav-text">URI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#URL"><span class="nav-number">1.2.</span> <span class="nav-text">URL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分层"><span class="nav-number">1.3.</span> <span class="nav-text">分层</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HTTP"><span class="nav-number">2.</span> <span class="nav-text">HTTP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#URL格式"><span class="nav-number">2.1.</span> <span class="nav-text">URL格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cookie和Session"><span class="nav-number">2.2.</span> <span class="nav-text">Cookie和Session</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Cookie"><span class="nav-number">2.2.1.</span> <span class="nav-text">Cookie</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Session"><span class="nav-number">2.2.2.</span> <span class="nav-text">Session</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#请求报文"><span class="nav-number">2.3.</span> <span class="nav-text">请求报文</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#请求行"><span class="nav-number">2.3.1.</span> <span class="nav-text">请求行</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#响应报文"><span class="nav-number">2.4.</span> <span class="nav-text">响应报文</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#状态行"><span class="nav-number">2.4.1.</span> <span class="nav-text">状态行</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#消息报头"><span class="nav-number">2.5.</span> <span class="nav-text">消息报头</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#通用部分"><span class="nav-number">2.5.1.</span> <span class="nav-text">通用部分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#请求报头"><span class="nav-number">2.5.2.</span> <span class="nav-text">请求报头</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#响应报头"><span class="nav-number">2.5.3.</span> <span class="nav-text">响应报头</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实体报头"><span class="nav-number">2.5.4.</span> <span class="nav-text">实体报头</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP-1-X-协议存在的问题"><span class="nav-number">2.6.</span> <span class="nav-text">HTTP 1.X 协议存在的问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HTTPS"><span class="nav-number">3.</span> <span class="nav-text">HTTPS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTPS-1"><span class="nav-number">3.1.</span> <span class="nav-text">HTTPS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SSL-TLS"><span class="nav-number">3.2.</span> <span class="nav-text">SSL/TLS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP和UDP"><span class="nav-number">3.2.1.</span> <span class="nav-text">TCP和UDP</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Android中的网络通信框架"><span class="nav-number">4.</span> <span class="nav-text">Android中的网络通信框架</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HttpURLConnection"><span class="nav-number">4.1.</span> <span class="nav-text">HttpURLConnection</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#GET"><span class="nav-number">4.1.1.</span> <span class="nav-text">GET</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#POST"><span class="nav-number">4.1.2.</span> <span class="nav-text">POST</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Volley"><span class="nav-number">4.2.</span> <span class="nav-text">Volley</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OKHttp"><span class="nav-number">4.3.</span> <span class="nav-text">OKHttp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Retrofit"><span class="nav-number">4.4.</span> <span class="nav-text">Retrofit</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">hgDendi</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

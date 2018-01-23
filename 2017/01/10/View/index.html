@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="android," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="A view occupies a rectangular area on the screen and is responsible for drawing and event handling View占据了屏幕上一个矩形区域，并负责他的绘制和事件监听 强烈推荐 中文世界最好的自定义View教程  要点：  矩形区域 绘制和事件监听  绘制流程 主要是按照以下流程  measure layo">
+<meta name="keywords" content="android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="View的杂谈">
+<meta property="og:url" content="http://www.hgdendi.tech/2017/01/10/View/index.html">
+<meta property="og:site_name" content="HgWorts">
+<meta property="og:description" content="A view occupies a rectangular area on the screen and is responsible for drawing and event handling View占据了屏幕上一个矩形区域，并负责他的绘制和事件监听 强烈推荐 中文世界最好的自定义View教程  要点：  矩形区域 绘制和事件监听  绘制流程 主要是按照以下流程  measure layo">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/764699-4f64498fa1b87f29.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-05-05T13:34:48.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="View的杂谈">
+<meta name="twitter:description" content="A view occupies a rectangular area on the screen and is responsible for drawing and event handling View占据了屏幕上一个矩形区域，并负责他的绘制和事件监听 强烈推荐 中文世界最好的自定义View教程  要点：  矩形区域 绘制和事件监听  绘制流程 主要是按照以下流程  measure layo">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/764699-4f64498fa1b87f29.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.hgdendi.tech/2017/01/10/View/"/>
+
+
+
+
+
+  <title>View的杂谈 | HgWorts</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HgWorts</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Think big thoughts , but relish small pleasures.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.hgdendi.tech/2017/01/10/View/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hgDendi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HgWorts">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">View的杂谈</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-10T00:00:00+08:00">
+                2017-01-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/android/" itemprop="url" rel="index">
+                    <span itemprop="name">android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>A view occupies a rectangular area on the screen and is responsible for drawing and event handling</p>
+<p>View占据了屏幕上一个矩形区域，并负责他的绘制和事件监听</p>
+<p>强烈推荐 <a href="http://www.gcssloop.com/customview/CustomViewIndex" target="_blank" rel="noopener">中文世界最好的自定义View教程</a></p>
+</blockquote>
+<p><strong>要点</strong>：</p>
+<ul>
+<li>矩形区域</li>
+<li>绘制和事件监听</li>
+</ul>
+<h2 id="绘制流程"><a href="#绘制流程" class="headerlink" title="绘制流程"></a>绘制流程</h2><p><img src="http://upload-images.jianshu.io/upload_images/764699-4f64498fa1b87f29.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="view绘制流程"></p>
+<p><strong>主要是按照以下流程</strong></p>
+<ul>
+<li>measure</li>
+<li>layout</li>
+<li>draw</li>
+</ul>
+<p>有一篇详细的文章介绍<a href="http://www.jianshu.com/p/060b5f68da79" target="_blank" rel="noopener">深入理解Android之View的绘制流程</a></p>
+<h3 id="onMeasure"><a href="#onMeasure" class="headerlink" title="onMeasure"></a>onMeasure</h3><blockquote>
+<p>Called to determine the size requirements for this view and all of its children</p>
+</blockquote>
+<ul>
+<li>onMeasure()方法用于测量视图的大小</li>
+<li>measure()是final的，但是onMeasure()却是可以进行重写的</li>
+<li>View系统的绘制流程会从ViewRoot的performTraversals()方法中开始，在其内部调用View的measure方法。measure()接收两个参数，widthMeasureSpec和heightMeasureSpec</li>
+<li>一般调用setMeasuredDimension()</li>
+<li>RelativeLayout会让子View调用两次onMeasure,LinearLayout在有weight时，也会调用2次，其他情况一次</li>
+<li>尽量使用padding代替margin，因为RelativeLayout的子View如果高度和RelativeLayout不同，会引发效率问题。</li>
+</ul>
+<h4 id="MeasureSpec"><a href="#MeasureSpec" class="headerlink" title="MeasureSpec"></a>MeasureSpec</h4><blockquote>
+<p>is used by views to tell their parents how they want to be measured and positioned.</p>
+<p>MeasureSpecs are used to push requirements down the tree from parent to<br> child.</p>
+</blockquote>
+<h5 id="MeasureSpec是一个32位int类型"><a href="#MeasureSpec是一个32位int类型" class="headerlink" title="MeasureSpec是一个32位int类型"></a>MeasureSpec是一个32位int类型</h5><ul>
+<li>前2位，测量的模式<ul>
+<li>EXACTLY<ul>
+<li>具体数值</li>
+<li>match_parent</li>
+</ul>
+</li>
+<li>AT_MOST<ul>
+<li>wrap_content</li>
+</ul>
+</li>
+<li>UNSPECIFIED</li>
+</ul>
+</li>
+<li>后32位，测量的大小</li>
+</ul>
+<h5 id="MeasureSpec-父容器的规则-View的LayoutParams"><a href="#MeasureSpec-父容器的规则-View的LayoutParams" class="headerlink" title="MeasureSpec = 父容器的规则+View的LayoutParams"></a>MeasureSpec = 父容器的规则+View的LayoutParams</h5><p>如果父View是match_parent,子View是match_parent,则子View的MeasureSpec为AT_MOST</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onMeasure</span><span class="params">(<span class="keyword">int</span> widthMeasureSpec, <span class="keyword">int</span> heightMeasureSpec)</span> </span>&#123; 					    			    setMeasuredDimension(getDefaultSize(getSuggestedMinimumWidth(), widthMeasureSpec),getDefaultSize(getSuggestedMinimumHeight(), heightMeasureSpec));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getDefaultSize</span><span class="params">(<span class="keyword">int</span> size, <span class="keyword">int</span> measureSpec)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> result = size;</span><br><span class="line">    <span class="keyword">int</span> specMode = MeasureSpec.getMode(measureSpec);</span><br><span class="line">    <span class="keyword">int</span> specSize = MeasureSpec.getSize(measureSpec);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">switch</span> (specMode) &#123;</span><br><span class="line">    <span class="keyword">case</span> MeasureSpec.UNSPECIFIED:</span><br><span class="line">    	<span class="comment">//getSuggestedMinimumWidth()</span></span><br><span class="line">        result = size;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> MeasureSpec.AT_MOST:</span><br><span class="line">    	<span class="comment">//子View为wrap_content时为父view的size</span></span><br><span class="line">    <span class="keyword">case</span> MeasureSpec.EXACTLY:</span><br><span class="line">        result = specSize;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="onLayout"><a href="#onLayout" class="headerlink" title="onLayout"></a>onLayout</h3><p>Called when this view should assign a size and position to all of its children</p>
+<ul>
+<li>layout()方法中，首先会调用setFrame()方法来判断视图的大小是否发生过变化，以确定是否有必要对当前的视图进行重绘。如果需要重绘则调用onLayout方法。</li>
+<li>onLayout()方法View中是空方法，ViewGroup中为抽象方法，每个ViewGroup的子类必须重写这个方法。</li>
+<li>一般由ViewGroup重写，调用childView的layout方法</li>
+</ul>
+<h4 id="measuredWidth和width的区别"><a href="#measuredWidth和width的区别" class="headerlink" title="measuredWidth和width的区别"></a>measuredWidth和width的区别</h4><h5 id="measuredWidth"><a href="#measuredWidth" class="headerlink" title="measuredWidth"></a>measuredWidth</h5><blockquote>
+<p>These dimensions define how big a view wants to be within its parent (see <a href="#Layout">Layout</a> for more details.</p>
+</blockquote>
+<p>测量后的值，是View期望分配的值，是onMeasure中setMeasuredDimension设置的值</p>
+<p>在measure（）过程结束后就可以得到</p>
+<h5 id="width"><a href="#width" class="headerlink" title="width"></a>width</h5><blockquote>
+<p>These dimensions define the actual size of the view on screen, at drawing time and<br>after layout. These values may, but do not have to, be different from the<br>measured width and height.</p>
+</blockquote>
+<p>layout之后才能获取到的值，表示画面在屏幕上的真是宽高，未必和measuredWidth相同</p>
+<p>比如自定义View的策略就是layout（0,0,50,50）,而不管measuredDiemnsion</p>
+<h3 id="onSizeChange"><a href="#onSizeChange" class="headerlink" title="onSizeChange"></a>onSizeChange</h3><blockquote>
+<p>Called when the size of this view has changed</p>
+</blockquote>
+<ul>
+<li>此处的size不一定与getMeasuredSize()一致，需要看layout的策略</li>
+<li>如果自定义View需要持有mWidth,mHeight，一般在此获得</li>
+</ul>
+<h3 id="Draw"><a href="#Draw" class="headerlink" title="Draw"></a>Draw</h3><h4 id="六步骤"><a href="#六步骤" class="headerlink" title="六步骤"></a>六步骤</h4><ol>
+<li>Draw the background</li>
+<li>If necessary, save the canvas’ layers to prepare for fading</li>
+<li>Draw view’s content (onDraw)</li>
+<li>Draw children</li>
+<li>If necessary, draw the fading edges and restore layers</li>
+<li>Draw decorations (scrollbars for instance)</li>
+</ol>
+<h3 id="onDraw"><a href="#onDraw" class="headerlink" title="onDraw"></a>onDraw</h3><blockquote>
+<p>Called when the view should render its content</p>
+</blockquote>
+<p>一般自定义View在此方法中通过canvas进行绘制</p>
+<h2 id="交互事件"><a href="#交互事件" class="headerlink" title="交互事件"></a>交互事件</h2><h3 id="事件拦截机制"><a href="#事件拦截机制" class="headerlink" title="事件拦截机制"></a>事件拦截机制</h3><ul>
+<li>ViewGroup<ul>
+<li>dispatchTouchEvent</li>
+<li>onInterceptTouchEvent</li>
+<li>onTouchEvent</li>
+</ul>
+</li>
+<li>View<ul>
+<li>diapatchTouchEvent</li>
+<li>onTouchEvent</li>
+</ul>
+</li>
+</ul>
+<h3 id="onTouchEvent"><a href="#onTouchEvent" class="headerlink" title="onTouchEvent"></a>onTouchEvent</h3><blockquote>
+<p>Called when a touch screen motion event occurs</p>
+</blockquote>
+<p>注意如果在其中生成点击事件，调用onClickListener，最好使用performClick()，保持系统内部一致性</p>
+<h4 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h4><ul>
+<li>ACTION_DOWN<ul>
+<li>ACTION_MOVE,ACTION_UP发生的前提是曾经发生了ACTION_DOWN,如果没有消费ACTION_DOWN,系统不会捕获ACTION_MOVE和ACTION_UP。onTouchEvent的事件回传到父控件 只会发生在ACTION_DOWN中。ACTION_MOVE和ACTION_UP会跟随ACTION_DOWN进行处理</li>
+</ul>
+</li>
+<li>ACTION_UP</li>
+<li>ACTION_MOVE</li>
+<li>ACTION_CANCEL<ul>
+<li>ACTION_CANCEL是收到事件前驱后，后续事件被父空间拦截的情况下产生的</li>
+</ul>
+</li>
+<li>ACTION_OUTSIDE</li>
+<li>ACTION_CANCEL</li>
+<li>ACTION_POINTER_DOWN</li>
+<li>ACTION_POINTER_UP</li>
+</ul>
+<h3 id="一些辅助类"><a href="#一些辅助类" class="headerlink" title="一些辅助类"></a>一些辅助类</h3><h4 id="TouchSlop"><a href="#TouchSlop" class="headerlink" title="TouchSlop"></a>TouchSlop</h4><p>系统能识别出的最小滑动距离</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ViewConfiguratin.get(<span class="keyword">this</span>).getScaledTouchSlop();</span><br></pre></td></tr></table></figure>
+<h4 id="Velocity-Tracker"><a href="#Velocity-Tracker" class="headerlink" title="Velocity Tracker"></a>Velocity Tracker</h4><h5 id="常用来得到滑动速度"><a href="#常用来得到滑动速度" class="headerlink" title="常用来得到滑动速度"></a>常用来得到滑动速度</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//init()</span></span><br><span class="line">VelocityTracker velocityTracker = VelocityTracker.obtain();</span><br><span class="line">velocityTracker.addMovement(event);</span><br><span class="line"></span><br><span class="line"><span class="comment">//int参数是以毫秒为单位的时间</span></span><br><span class="line">velocityTracker.computeCurrentVelocity(<span class="keyword">int</span>);</span><br><span class="line">velocityTracker.getXVelocity();</span><br><span class="line"></span><br><span class="line"><span class="comment">//destroy()</span></span><br><span class="line">velocityTracker.clear();</span><br><span class="line">velocityTracker.recycle();</span><br></pre></td></tr></table></figure>
+<h4 id="GestureDetector"><a href="#GestureDetector" class="headerlink" title="GestureDetector"></a>GestureDetector</h4><h5 id="辅助检测用户的手势动作"><a href="#辅助检测用户的手势动作" class="headerlink" title="辅助检测用户的手势动作"></a>辅助检测用户的手势动作</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">GestureDetector gestureDetector = <span class="keyword">new</span> GestureDetector(<span class="keyword">new</span> GestureDetector.OnGestureListener() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onDown</span><span class="params">(MotionEvent e)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onShowPress</span><span class="params">(MotionEvent e)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onSingleTapUp</span><span class="params">(MotionEvent e)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onScroll</span><span class="params">(MotionEvent e1, MotionEvent e2, <span class="keyword">float</span> distanceX, <span class="keyword">float</span> distanceY)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onLongPress</span><span class="params">(MotionEvent e)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onFling</span><span class="params">(MotionEvent e1, MotionEvent e2, <span class="keyword">float</span> velocityX, <span class="keyword">float</span> velocityY)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">//add this to onTouchEvent</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onTouchEvent</span><span class="params">(MotionEvent event)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">boolean</span> consume = mGestureDetector.onTouchEvent(event);</span><br><span class="line">    <span class="keyword">return</span> consume;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Region"><a href="#Region" class="headerlink" title="Region"></a>Region</h4><h5 id="如果想要监听一个区域，而不是View的矩形区域的点击事件，该怎么办？"><a href="#如果想要监听一个区域，而不是View的矩形区域的点击事件，该怎么办？" class="headerlink" title="如果想要监听一个区域，而不是View的矩形区域的点击事件，该怎么办？"></a>如果想要监听一个区域，而不是View的矩形区域的点击事件，该怎么办？</h5><p>传统的setOnClickListener只是监听整个View的矩形区域，想要监听View的特定区域需要使用Region判断点击事件。</p>
+<p>比如说下面有一个圆形的自定义View</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RoundImageView</span> <span class="keyword">extends</span> <span class="title">ImageView</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Region mClickRegion;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onSizeChanged</span><span class="params">(<span class="keyword">int</span> w, <span class="keyword">int</span> h, <span class="keyword">int</span> oldw, <span class="keyword">int</span> oldh)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onSizeChanged(w, h, oldw, oldh);</span><br><span class="line">        mWidth = w;</span><br><span class="line">        mHeight = h;</span><br><span class="line">        mRadius = Math.min(w, h) / <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">        Path clickPath = <span class="keyword">new</span> Path();</span><br><span class="line">        clickPath.addCircle(mRadius, mRadius, mRadius, Path.Direction.CW);</span><br><span class="line">      	<span class="comment">//设定clickRegion，将其与View绑定</span></span><br><span class="line">        mClickRegion.setPath(clickPath, <span class="keyword">new</span> Region(<span class="number">0</span>, <span class="number">0</span>, w, h));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onTouchEvent</span><span class="params">(MotionEvent event)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> x = (<span class="keyword">int</span>) event.getX();</span><br><span class="line">        <span class="keyword">int</span> y = (<span class="keyword">int</span>) event.getY();</span><br><span class="line">      	<span class="comment">//判断交互事件是否在Region中</span></span><br><span class="line">        <span class="keyword">return</span> mClickRegion.contains(x, y) &amp;&amp; <span class="keyword">super</span>.onTouchEvent(event);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="滑动"><a href="#滑动" class="headerlink" title="滑动"></a>滑动</h2><h3 id="实现方法"><a href="#实现方法" class="headerlink" title="实现方法"></a>实现方法</h3><ul>
+<li>scrollTo/By</li>
+<li>offset()</li>
+<li>ObjectAnimator</li>
+<li>改变MarginLayoutParams</li>
+<li>layout</li>
+<li>ObjectAnimatior</li>
+<li>Scroller</li>
+<li>ViewDraggerHelper</li>
+</ul>
+<h4 id="Scroller"><a href="#Scroller" class="headerlink" title="Scroller"></a>Scroller</h4><p>原理是通过不断的computeScroll 不断的重新绘制</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//init()</span></span><br><span class="line">Scroller mScroller = <span class="keyword">new</span> Scroller(context);</span><br><span class="line"></span><br><span class="line"><span class="comment">//invoke</span></span><br><span class="line">mScroller.startScroll(getScrollX(),getScrollY(),-<span class="number">50</span>,-<span class="number">50</span>);</span><br><span class="line">invalidate();</span><br><span class="line"></span><br><span class="line"><span class="comment">//系统在draw()方法中调用此方法</span></span><br><span class="line"><span class="comment">//但因为其不会自动调用，所以需要invalidate()&gt;draw()&gt;computeScroll()</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">computeScroll</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(mScroller.computeScrollOffset())&#123;</span><br><span class="line">    <span class="comment">//true means has not finished</span></span><br><span class="line">    ((View)getParent()).scrollTo(mScroller.getCurrX(),mScroller.getCurrY());</span><br><span class="line">  	invalidate();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="ViewDraggerHelper"><a href="#ViewDraggerHelper" class="headerlink" title="ViewDraggerHelper"></a>ViewDraggerHelper</h4><ul>
+<li>基本可以实现不同的滑动、拖放需求</li>
+<li>写在ViewGroup中</li>
+<li>内部也是使用Scroller来实现的，所以也需重写computeScroll()</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">mViewDraggerHelper = ViewDragHelper.create(<span class="keyword">this</span>,callback);</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onInterceptTouchEvent</span><span class="params">(MotionEvent ev)</span></span>&#123;</span><br><span class="line">  	<span class="keyword">return</span> mViewDraggerHelper.shouldInterceptTouchEvent(ev);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onTouchEvent</span><span class="params">(MotionEvent event)</span></span>&#123;</span><br><span class="line">  	mViewDragHelper.processTouchEvent(event);</span><br><span class="line">  	<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">computeScroll</span><span class="params">()</span></span>&#123;</span><br><span class="line">  	<span class="keyword">if</span>(mViewDragHelper.continueSettling(<span class="keyword">true</span>))&#123;</span><br><span class="line">      	ViewCompat.postInvalidateOnAnimation(<span class="keyword">this</span>);</span><br><span class="line">  	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> ViewDragHelper.Callback callback = <span class="keyword">new</span> ViewDragHelper.Callback()&#123;</span><br><span class="line"></span><br><span class="line">  	<span class="meta">@Override</span></span><br><span class="line">  	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">tryCaptureView</span><span class="params">(View child , <span class="keyword">int</span> pointerId)</span></span>&#123;</span><br><span class="line">  		<span class="comment">//指定哪一个子View可以被移动</span></span><br><span class="line">      	<span class="keyword">return</span> child == XXXView;</span><br><span class="line">  	&#125;</span><br><span class="line">  	</span><br><span class="line">  	<span class="comment">//返回值为0，表示在该方向上不发生滑动</span></span><br><span class="line">  	<span class="meta">@Override</span></span><br><span class="line">  	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">clampViewPositionVertical</span><span class="params">(View child,<span class="keyword">int</span> top,<span class="keyword">int</span> dy)</span></span>&#123;</span><br><span class="line">      	<span class="keyword">return</span> top;</span><br><span class="line">  	&#125;</span><br><span class="line">  	</span><br><span class="line">  	<span class="meta">@Override</span></span><br><span class="line">  	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">clampViewPositinoHorizontal</span><span class="params">(View child,<span class="keyword">int</span> left,<span class="keyword">int</span> dx)</span></span>&#123;</span><br><span class="line">      	<span class="keyword">return</span> left;</span><br><span class="line">  	&#125;</span><br><span class="line">  	</span><br><span class="line">  	<span class="comment">//结束拖动后调用</span></span><br><span class="line">  	<span class="meta">@Override</span></span><br><span class="line">  	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onViewReleased</span><span class="params">(View releasedChild,<span class="keyword">float</span> xvel,<span class="keyword">float</span> yvel)</span></span>&#123;</span><br><span class="line">      	<span class="keyword">super</span>.onViewReleased(releasedChild,xvel,yvel);</span><br><span class="line">      	<span class="keyword">if</span>(mMainView.getLeft()&lt;<span class="number">500</span>)&#123;</span><br><span class="line">          	mViewDragHelper.smoothSlideViewTo(mMainView,<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line">          	ViewCompat.postInvalidateOnAnimation(<span class="keyword">this</span>);</span><br><span class="line">      	&#125;</span><br><span class="line">  	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="滑动冲突"><a href="#滑动冲突" class="headerlink" title="滑动冲突"></a>滑动冲突</h3><ul>
+<li>父控件进行拦截<ul>
+<li>dispatchTouchEvent()</li>
+<li>onInterceptTouchEvent()</li>
+</ul>
+</li>
+<li>子控件进行拦截<ul>
+<li>getParent().requestDisallowInterceptTouchEvent(true);</li>
+<li>一般在actiondown中判断是否拦截，传入true，在up中传入false取消拦截</li>
+</ul>
+</li>
+</ul>
+<h2 id="四大构造方法"><a href="#四大构造方法" class="headerlink" title="四大构造方法"></a>四大构造方法</h2><ul>
+<li>View(Context)<ul>
+<li>代码中构造</li>
+</ul>
+</li>
+<li>View(Context,AttributeSet)<ul>
+<li>style默认是使用Context的主题</li>
+</ul>
+</li>
+<li>View(Context,AttributeSet,int)</li>
+<li>View(Context,AttributeSet,int,int)<ul>
+<li>归根结底XML构造方法都会调用到此方法</li>
+<li>这里面有TypedArray的标准读取方法，自定义View的模板可以直接模仿此处</li>
+</ul>
+</li>
+</ul>
+<h2 id="一些杂谈"><a href="#一些杂谈" class="headerlink" title="一些杂谈"></a>一些杂谈</h2><h3 id="BitMask"><a href="#BitMask" class="headerlink" title="BitMask"></a>BitMask</h3><p>一个有趣的地方，因为View有很多属性，比如clickable、focusable等等，可能高达几十上百个。</p>
+<p>这里并没有采用简单的boolean值，而是采用一个全局的int变量和对应的静态BITMASK进行判断，</p>
+<p>比如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> PFLAG_FOCUSED = <span class="number">0x00000002</span>;</span><br><span class="line"><span class="keyword">int</span> mPrivateFlags;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasFocus</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (mPrivateFlags &amp; PFLAG_FOCUSED) != <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样只需要极少量的mFlags，和所有View公用的static bitmask，就可以指示出极多的属性值，是一个非常好的思路。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MASK = <span class="number">0x00000006</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> FLAG_A = <span class="number">0x00000000</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> FLAG_B = <span class="number">0x00000002</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> FLAG_C = <span class="number">0x00000004</span>;</span><br></pre></td></tr></table></figure>
+<h4 id="归类"><a href="#归类" class="headerlink" title="归类"></a>归类</h4><p>对于聚簇的Listener，封装成一个实体</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ListenerInfo</span> </span>&#123;</span><br><span class="line">       <span class="keyword">protected</span> OnCreateContextMenuListener mOnCreateContextMenuListener;</span><br><span class="line"></span><br><span class="line">       ************</span><br><span class="line"></span><br><span class="line">       <span class="keyword">private</span> OnSystemUiVisibilityChangeListener mOnSystemUiVisibilityChangeListener;</span><br><span class="line"></span><br><span class="line">       OnApplyWindowInsetsListener mOnApplyWindowInsetsListener;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   ListenerInfo mListenerInfo;</span><br></pre></td></tr></table></figure>
+<h4 id="StringBuilder"><a href="#StringBuilder" class="headerlink" title="StringBuilder"></a>StringBuilder</h4><ol>
+<li>指定大小，因为内部是使用char[]存储，默认大小为16，变长时候和ArrayList一样的策略，申请新char[]并逐个复制，能抠一点性能是一点。</li>
+<li>相比String的+操作，虽然编译器有优化，但是在循环语句中还是会生成多个对象</li>
+</ol>
+<h4 id="方法中使用临时变量"><a href="#方法中使用临时变量" class="headerlink" title="方法中使用临时变量"></a>方法中使用临时变量</h4><p>保持原子性</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* Returns the width of the vertical scrollbar.</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">* <span class="doctag">@return</span> The width in pixels of the vertical scrollbar or 0 if there</span></span><br><span class="line"><span class="comment">*         is no vertical scrollbar.</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getVerticalScrollbarWidth</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ScrollabilityCache cache = mScrollCache;</span><br><span class="line">    <span class="keyword">if</span> (cache != <span class="keyword">null</span>) &#123;</span><br><span class="line">        ScrollBarDrawable scrollBar = cache.scrollBar;</span><br><span class="line">        <span class="keyword">if</span> (scrollBar != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">int</span> size = scrollBar.getSize(<span class="keyword">true</span>);</span><br><span class="line">            <span class="keyword">if</span> (size &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">                size = cache.scrollBarSize;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> size;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="padding和margin"><a href="#padding和margin" class="headerlink" title="padding和margin"></a>padding和margin</h4><blockquote>
+<p>Even though a view can define a padding, it does not provide any support for</p>
+<p>margins. However, view groups provide such a support. </p>
+</blockquote>
+<p>某些情况下发现使用margin不奏效，不妨试试看使用padding</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/android/" rel="tag"># android</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/07/Android进程与线程/" rel="next" title="Android进程与线程">
+                <i class="fa fa-chevron-left"></i> Android进程与线程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/15/Android屏幕相关/" rel="prev" title="Android屏幕相关">
+                Android屏幕相关 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="hgDendi" />
+          <p class="site-author-name" itemprop="name">hgDendi</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#绘制流程"><span class="nav-number">1.</span> <span class="nav-text">绘制流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#onMeasure"><span class="nav-number">1.1.</span> <span class="nav-text">onMeasure</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MeasureSpec"><span class="nav-number">1.1.1.</span> <span class="nav-text">MeasureSpec</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#MeasureSpec是一个32位int类型"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">MeasureSpec是一个32位int类型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#MeasureSpec-父容器的规则-View的LayoutParams"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">MeasureSpec = 父容器的规则+View的LayoutParams</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#onLayout"><span class="nav-number">1.2.</span> <span class="nav-text">onLayout</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#measuredWidth和width的区别"><span class="nav-number">1.2.1.</span> <span class="nav-text">measuredWidth和width的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#measuredWidth"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">measuredWidth</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#width"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">width</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#onSizeChange"><span class="nav-number">1.3.</span> <span class="nav-text">onSizeChange</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Draw"><span class="nav-number">1.4.</span> <span class="nav-text">Draw</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#六步骤"><span class="nav-number">1.4.1.</span> <span class="nav-text">六步骤</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#onDraw"><span class="nav-number">1.5.</span> <span class="nav-text">onDraw</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#交互事件"><span class="nav-number">2.</span> <span class="nav-text">交互事件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#事件拦截机制"><span class="nav-number">2.1.</span> <span class="nav-text">事件拦截机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#onTouchEvent"><span class="nav-number">2.2.</span> <span class="nav-text">onTouchEvent</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#分类"><span class="nav-number">2.2.1.</span> <span class="nav-text">分类</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一些辅助类"><span class="nav-number">2.3.</span> <span class="nav-text">一些辅助类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#TouchSlop"><span class="nav-number">2.3.1.</span> <span class="nav-text">TouchSlop</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Velocity-Tracker"><span class="nav-number">2.3.2.</span> <span class="nav-text">Velocity Tracker</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#常用来得到滑动速度"><span class="nav-number">2.3.2.1.</span> <span class="nav-text">常用来得到滑动速度</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#GestureDetector"><span class="nav-number">2.3.3.</span> <span class="nav-text">GestureDetector</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#辅助检测用户的手势动作"><span class="nav-number">2.3.3.1.</span> <span class="nav-text">辅助检测用户的手势动作</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Region"><span class="nav-number">2.3.4.</span> <span class="nav-text">Region</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#如果想要监听一个区域，而不是View的矩形区域的点击事件，该怎么办？"><span class="nav-number">2.3.4.1.</span> <span class="nav-text">如果想要监听一个区域，而不是View的矩形区域的点击事件，该怎么办？</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#滑动"><span class="nav-number">3.</span> <span class="nav-text">滑动</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实现方法"><span class="nav-number">3.1.</span> <span class="nav-text">实现方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Scroller"><span class="nav-number">3.1.1.</span> <span class="nav-text">Scroller</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ViewDraggerHelper"><span class="nav-number">3.1.2.</span> <span class="nav-text">ViewDraggerHelper</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#滑动冲突"><span class="nav-number">3.2.</span> <span class="nav-text">滑动冲突</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四大构造方法"><span class="nav-number">4.</span> <span class="nav-text">四大构造方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一些杂谈"><span class="nav-number">5.</span> <span class="nav-text">一些杂谈</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BitMask"><span class="nav-number">5.1.</span> <span class="nav-text">BitMask</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#归类"><span class="nav-number">5.1.1.</span> <span class="nav-text">归类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#StringBuilder"><span class="nav-number">5.1.2.</span> <span class="nav-text">StringBuilder</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法中使用临时变量"><span class="nav-number">5.1.3.</span> <span class="nav-text">方法中使用临时变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#padding和margin"><span class="nav-number">5.1.4.</span> <span class="nav-text">padding和margin</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">hgDendi</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

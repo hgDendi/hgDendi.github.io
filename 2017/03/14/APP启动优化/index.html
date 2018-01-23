@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="android," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="[TOC] APP启动优化启动方式冷启动 后台没有该应用的进程，这时系统会重新创建一个新的进程分配给该应用，这个启动方式就是冷启动。  整体流程  application以及activity初始化是一个比较复杂的过程，而白屏或黑屏就是这个过程的产物。 在应用程序刚启动到应用程序初始化完全之间有一段时间空隙，这时候系统创建了一个空白窗口，叫StartingWindow。这个窗口是一个临时窗口，对应的">
+<meta name="keywords" content="android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="APP启动优化">
+<meta property="og:url" content="http://www.hgdendi.tech/2017/03/14/APP启动优化/index.html">
+<meta property="og:site_name" content="HgWorts">
+<meta property="og:description" content="[TOC] APP启动优化启动方式冷启动 后台没有该应用的进程，这时系统会重新创建一个新的进程分配给该应用，这个启动方式就是冷启动。  整体流程  application以及activity初始化是一个比较复杂的过程，而白屏或黑屏就是这个过程的产物。 在应用程序刚启动到应用程序初始化完全之间有一段时间空隙，这时候系统创建了一个空白窗口，叫StartingWindow。这个窗口是一个临时窗口，对应的">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://mmbiz.qpic.cn/mmbiz_png/y5HvXaQmpqlaGgGLbnvDx2euvnOhxXDZa5p6rLCHqpicauy0NjMl3mLcrVfaD9QyZ0M7jZsE2oyQ5uzyWOT2icsg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1">
+<meta property="og:updated_time" content="2018-01-01T15:56:49.485Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="APP启动优化">
+<meta name="twitter:description" content="[TOC] APP启动优化启动方式冷启动 后台没有该应用的进程，这时系统会重新创建一个新的进程分配给该应用，这个启动方式就是冷启动。  整体流程  application以及activity初始化是一个比较复杂的过程，而白屏或黑屏就是这个过程的产物。 在应用程序刚启动到应用程序初始化完全之间有一段时间空隙，这时候系统创建了一个空白窗口，叫StartingWindow。这个窗口是一个临时窗口，对应的">
+<meta name="twitter:image" content="http://mmbiz.qpic.cn/mmbiz_png/y5HvXaQmpqlaGgGLbnvDx2euvnOhxXDZa5p6rLCHqpicauy0NjMl3mLcrVfaD9QyZ0M7jZsE2oyQ5uzyWOT2icsg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.hgdendi.tech/2017/03/14/APP启动优化/"/>
+
+
+
+
+
+  <title>APP启动优化 | HgWorts</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HgWorts</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Think big thoughts , but relish small pleasures.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.hgdendi.tech/2017/03/14/APP启动优化/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hgDendi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HgWorts">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">APP启动优化</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-14T00:00:00+08:00">
+                2017-03-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/android/" itemprop="url" rel="index">
+                    <span itemprop="name">android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>[TOC]</p>
+<h1 id="APP启动优化"><a href="#APP启动优化" class="headerlink" title="APP启动优化"></a>APP启动优化</h1><h2 id="启动方式"><a href="#启动方式" class="headerlink" title="启动方式"></a>启动方式</h2><h3 id="冷启动"><a href="#冷启动" class="headerlink" title="冷启动"></a>冷启动</h3><blockquote>
+<p>后台没有该应用的进程，这时系统会重新创建一个新的进程分配给该应用，这个启动方式就是冷启动。</p>
+</blockquote>
+<p>整体流程</p>
+<p><img src="http://mmbiz.qpic.cn/mmbiz_png/y5HvXaQmpqlaGgGLbnvDx2euvnOhxXDZa5p6rLCHqpicauy0NjMl3mLcrVfaD9QyZ0M7jZsE2oyQ5uzyWOT2icsg/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt="流程"></p>
+<p>application以及activity初始化是一个比较复杂的过程，而白屏或黑屏就是这个过程的产物。</p>
+<p>在应用程序刚启动到应用程序初始化完全之间有一段时间空隙，这时候系统创建了一个空白窗口，叫StartingWindow。这个窗口是一个临时窗口，对应的WindowType是TYPE_APPLICATION_STARTING。应用程序加载完第一帧后，这个窗口就会被移除。</p>
+<p>Window的顶层是DecorView，所以StartingWindow显示一个空DecorView，但是会给这个DecorView应用当前Activity指定的Theme，如果这个activity没有指定Theme就用application的，如果Theme是白色的，屏幕就是白色的；如果是Dark，就会显示黑屏。</p>
+<h3 id="热启动"><a href="#热启动" class="headerlink" title="热启动"></a>热启动</h3><blockquote>
+<p> 后台已有该应用的进程(按back键、home键)</p>
+</blockquote>
+<p>热启动在直到应用完成渲染之前都会一直显示一个空白窗口。</p>
+<h2 id="App启动过程"><a href="#App启动过程" class="headerlink" title="App启动过程"></a>App启动过程</h2><p>ActivityThread运行在应用进程的主线程上，响应AMS启动、暂停Activity，广播启动等消息。</p>
+<p>AMS：统一调度各应用程序的Activity、内存管理、进程管理</p>
+<ol>
+<li>点击Launcher，启动程序，通知ActivityManagerService</li>
+<li>AMS通知zygote进程孵化出应用进程，分配内存空间等</li>
+<li>执行该应用ActivityThread的main方法</li>
+<li>APP通知AMS，AMS保存一个该应用的代理对象，AMS通过它可以控制应用进程</li>
+<li>AMS通知应用进程创建入口的Activity实例，执行它的生命周期<ul>
+<li>Application的构造方法</li>
+<li>attachBaseContext()</li>
+<li>onCreate()</li>
+<li>LauncherActivity的构造方法</li>
+<li>setTheme()设置主题等信息</li>
+<li>Activity的生命周期</li>
+</ul>
+</li>
+</ol>
+<h2 id="启动页优化"><a href="#启动页优化" class="headerlink" title="启动页优化"></a>启动页优化</h2><p>设置一个启动页SplashFragment进行过度。并在MainActivity中优先展示SplashFragment，显示完毕后再进行remove。当然MainActivity的主布局可以采用ViewStub进行懒加载。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span></span>&#123;</span><br><span class="line">  	setContentView();</span><br><span class="line">  	<span class="comment">//显示splashFragment</span></span><br><span class="line">  </span><br><span class="line">  	getWindow().getDecorView().post(<span class="keyword">new</span> Runnable()&#123;</span><br><span class="line">      	<span class="comment">//渲染主界面，用队列</span></span><br><span class="line">      	viewStub.inflate();</span><br><span class="line">  	&#125;);</span><br><span class="line">  </span><br><span class="line">  	<span class="comment">//等时间结束后，取消splashFragment，呈现主界面</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="评估"><a href="#评估" class="headerlink" title="评估"></a>评估</h2><ol>
+<li><p>系统提供的启动时间方案</p>
+<p>logcat的输出，关键字为Displayed</p>
+</li>
+<li><p>ADB命令提供的启动时间方案</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb shell am start -w packagename/activity</span><br></pre></td></tr></table></figure>
+<p>ThisTime:一连串启动的activity中的最后一个activity的启动耗时<br>TotalTime:新进程的Activity的启动耗时，但不包括前一个应用activity中pause()方法的耗时<br>WaitTime：总的耗时</p>
+<p>一般情况下ThisTime和TotalTime耗时是相同的。有一个场景会导致这两个值不同，比如点击App图标，先启动一个无界面的activity做逻辑处理，接着又启动一个有界面的activity</p>
+</li>
+<li><p>利用TraceView进行分析</p>
+<ul>
+<li>使用方法<ul>
+<li>AS中的startMethodTracing</li>
+<li>代码中使用Debug.startMethodTracing(“xxx.trace”)和stop，然后sdcard下会生成trace文件</li>
+</ul>
+</li>
+<li>最关心的数据<ul>
+<li>Calls+Recur Calls / Total, 查找自身占用时间不长，但是调用频繁的操作</li>
+<li>Cpu Time / Call , 某个函数消耗CPU的平均时间，一般用来查找调用次数不多，但每次调用却需要花费很长时间的方法</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="界面优化"><a href="#界面优化" class="headerlink" title="界面优化"></a>界面优化</h2><ol>
+<li>尽量使用include、merge、ViewStub标签</li>
+<li>不使用冗余嵌套和过于复杂布局</li>
+<li>尽量使用GONE替换INVISIBLE</li>
+<li>使用weight后尽量将width和height设置为0</li>
+<li>item存在复杂嵌套关系时用自定义View替代，减少measure与layout次数</li>
+<li>主题上使用windowbackground为启动Activty设置简单的自定义Drawable</li>
+<li>第三方SDK在使用到的地方再进行初始化</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/android/" rel="tag"># android</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/21/Android事件分发/" rel="next" title="Android事件分发">
+                <i class="fa fa-chevron-left"></i> Android事件分发
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/07/AndroidIPC机制/" rel="prev" title="Android的IPC机制">
+                Android的IPC机制 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="hgDendi" />
+          <p class="site-author-name" itemprop="name">hgDendi</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#APP启动优化"><span class="nav-number">1.</span> <span class="nav-text">APP启动优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#启动方式"><span class="nav-number">1.1.</span> <span class="nav-text">启动方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#冷启动"><span class="nav-number">1.1.1.</span> <span class="nav-text">冷启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#热启动"><span class="nav-number">1.1.2.</span> <span class="nav-text">热启动</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#App启动过程"><span class="nav-number">1.2.</span> <span class="nav-text">App启动过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动页优化"><span class="nav-number">1.3.</span> <span class="nav-text">启动页优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#评估"><span class="nav-number">1.4.</span> <span class="nav-text">评估</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#界面优化"><span class="nav-number">1.5.</span> <span class="nav-text">界面优化</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">hgDendi</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

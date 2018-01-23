@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="android," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="[TOC] IPC机制进程间通信 IPC         InterProcess Communication RPC     Remote Procedure Call  Android默认每个app是一个进程，但也可以通过android:process属性使每个app有多个进程，或者多个app共享某个进程。 有时候通过多进程的方式获取多份内存空间。一般是指定android:process属性，">
+<meta name="keywords" content="android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android的IPC机制">
+<meta property="og:url" content="http://www.hgdendi.tech/2017/05/07/AndroidIPC机制/index.html">
+<meta property="og:site_name" content="HgWorts">
+<meta property="og:description" content="[TOC] IPC机制进程间通信 IPC         InterProcess Communication RPC     Remote Procedure Call  Android默认每个app是一个进程，但也可以通过android:process属性使每个app有多个进程，或者多个app共享某个进程。 有时候通过多进程的方式获取多份内存空间。一般是指定android:process属性，">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/454052-af085ffaf33054ea.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/454052-f45493b4121cd3b5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://ww4.sinaimg.cn/large/006tNc79gw1fbi70eu93yj31kc0wqgxp.jpg">
+<meta property="og:updated_time" content="2017-12-17T15:44:53.083Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android的IPC机制">
+<meta name="twitter:description" content="[TOC] IPC机制进程间通信 IPC         InterProcess Communication RPC     Remote Procedure Call  Android默认每个app是一个进程，但也可以通过android:process属性使每个app有多个进程，或者多个app共享某个进程。 有时候通过多进程的方式获取多份内存空间。一般是指定android:process属性，">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/454052-af085ffaf33054ea.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.hgdendi.tech/2017/05/07/AndroidIPC机制/"/>
+
+
+
+
+
+  <title>Android的IPC机制 | HgWorts</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HgWorts</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Think big thoughts , but relish small pleasures.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.hgdendi.tech/2017/05/07/AndroidIPC机制/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hgDendi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HgWorts">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android的IPC机制</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-07T00:00:00+08:00">
+                2017-05-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/android/" itemprop="url" rel="index">
+                    <span itemprop="name">android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>[TOC]</p>
+<h1 id="IPC机制"><a href="#IPC机制" class="headerlink" title="IPC机制"></a>IPC机制</h1><h2 id="进程间通信"><a href="#进程间通信" class="headerlink" title="进程间通信"></a>进程间通信</h2><blockquote>
+<p><strong>IPC</strong>         InterProcess Communication</p>
+<p><strong>RPC</strong>     Remote Procedure Call</p>
+</blockquote>
+<p>Android默认每个app是一个进程，但也可以通过android:process属性使每个app有多个进程，或者多个app共享某个进程。</p>
+<p>有时候通过多进程的方式获取多份内存空间。一般是指定android:process属性，还有一种非常规的方法，通过JNI在native层去fork一个新的进程。</p>
+<ul>
+<li>进程名以”:“开头的进程属于当前应用的<strong>私有进程</strong>，其他应用的组件不可以和它跑在一个进程中</li>
+<li>进程名不以 “:” 开头的程序属于<strong>全局进程</strong>，其他应用通过ShareUID方式可以和它跑在同一个进程中。<ul>
+<li>如果两个应用需要通过ShareUID跑在同一个进程，需要这两个应用有相同的ShareUID并且签名相同才可以</li>
+<li>在这种情况下，可以互相访问对方的私有数据，比如data目录、组件信息等，当然还可以共享内存数据</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">android:process = ":remote"</span><br><span class="line">android:process = "com.dendi.helloworld.remote"</span><br></pre></td></tr></table></figure>
+<h3 id="多进程的特性"><a href="#多进程的特性" class="headerlink" title="多进程的特性"></a>多进程的特性</h3><blockquote>
+<p>Android为每个进程都分配一个独立的虚拟机，在内存分配上有不同的地址空间，这就导致了在不同的虚拟机中访问一个类的对象会产生多份副本</p>
+<p>故而多进程的APP会拥有独立的虚拟机、Application以及内存空间。</p>
+<p>相当于两个不同的应用采用了SharedUID的模式（Android系统为每个应用分配一个唯一的UID，具有相同UID的应用才能共享数据）</p>
+</blockquote>
+<ul>
+<li>不同的内存空间，数据无法共享</li>
+<li>需要谨慎处理代码中的线程同步</li>
+<li>需要提防多进程并发导致的文件锁和数据库锁时效的问题</li>
+</ul>
+<p>具体问题：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1. 静态成员和单例模式完全失效</span><br><span class="line">2. 线程同步机制失效</span><br><span class="line">3. SharedPreferences可靠性下降(底层通过操作XML文件实现，并发写显然容易出问题)</span><br><span class="line">4. Application会多次重建</span><br></pre></td></tr></table></figure>
+<h2 id="三个基础知识"><a href="#三个基础知识" class="headerlink" title="三个基础知识"></a>三个基础知识</h2><h3 id="Serializable"><a href="#Serializable" class="headerlink" title="Serializable"></a>Serializable</h3><p>Serializable使用简单但是开销很大，序列化和反序列化过程需要大量的IO操作，一般用于将对象序列化到<strong>存储设备</strong>中或者将对象序列化后通过<strong>网络传输</strong>。</p>
+<p>可以通过ObjectOutputStream和ObjectInputStream轻松实现。</p>
+<p>其中serialVersionUID的作用的辅助序列化和反序列化，原则上序列化后的数据中的serialVersionUID只有和当前类的相同才能够被正常的反序列化。</p>
+<p>静态变量和用transient关键字标记的成员变量不参与序列化的过程。</p>
+<h3 id="Parcelable"><a href="#Parcelable" class="headerlink" title="Parcelable"></a>Parcelable</h3><p>Parcelable使用麻烦，但效率很高。</p>
+<ul>
+<li>序列化    writeToParcel</li>
+<li>反序列化 CREATOR</li>
+<li>内容描述符 describeContents<ul>
+<li>都应该返回0</li>
+<li>对象中存在文件描述符时，返回1</li>
+</ul>
+</li>
+</ul>
+<h3 id="Binder"><a href="#Binder" class="headerlink" title="Binder"></a>Binder</h3><p>binder是Android中的一种跨进程通信方式.</p>
+<p>可以理解为一种<strong>虚拟的物理设备</strong>，它的设备驱动是/dev/binder.</p>
+<p>从Android Framework角度来说，Binder是ServiceManager连接各种Manager和相应ManagerService的桥梁。</p>
+<p>从Android应用层来说，Binder是客户端和服务端进行通信的媒介。当bindService的时候，服务端会返回一个包含了服务端业务调用的Binder对象，通过这个Binder对象，客户端就可以获取服务端提供的服务或者数据，这里的服务包括<strong>普通服务</strong>和<strong>基于AIDL</strong>的服务。</p>
+<blockquote>
+<p>Binder更安全，比如socket的ip地址可以进行伪造，而Binder机制从协议本身就支持对通信双方做身份校验，因而大大提升了安全性，这个也是Android权限模型的基础。</p>
+</blockquote>
+<p><img src="http://upload-images.jianshu.io/upload_images/454052-af085ffaf33054ea.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Binder通信模型"></p>
+<p>如下图，伪装。即<strong>代理模式</strong>。对代理对象的操作会通过驱动最终转发到Binder本地对象上去完成，当然使用者无需关心这些细节。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/454052-f45493b4121cd3b5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Binder伪装"></p>
+<p>Binder对象是一个可以跨进程引用的对象，它的实体位于一个进程中，它的引用却遍布于系统的各个进程中。最诱人的是，这个引用和java里引用一样既可以是强类型，也可以是弱类型，而且可以从一个进程传给另一个进程，让大家都能访问同一Server，就像一个对象或引用赋值给另一个引用一样。Binder<strong>模糊了进程边界</strong>，淡化了进程间通信过程，<strong>整个系统仿佛运行于同一个面向对象的程序之中</strong>。</p>
+<p>AILD的本质是系统为我们提供了一种快速实现Binder的工具，仅此而已。</p>
+<h4 id="Service中的Binder"><a href="#Service中的Binder" class="headerlink" title="Service中的Binder"></a>Service中的Binder</h4><p>Android中Binder主要用在Service中，包括AIDL和messager（Messager底层实际就是AIDL）</p>
+<h4 id="为什么是Binder"><a href="#为什么是Binder" class="headerlink" title="为什么是Binder"></a>为什么是Binder</h4><ul>
+<li>可靠性<ul>
+<li>若在底层架设一套协议来实现Clinet-Service通信，增加了系统的复杂性</li>
+<li>在资源有限的手机上实现复杂环境，可靠性难以保证</li>
+</ul>
+</li>
+<li>传输性能<ul>
+<li>Socket主要用于跨网络的进程间通信和本级上的进程间的通信，传输效率低，开销大</li>
+<li>消息队列和管道采用存储-转发格式，数据先从发送方缓存区拷贝到内核开辟的一块缓存区中，然后从内核缓存区拷贝到接收方缓存区，其过程至少有两次拷贝。</li>
+<li>共享内存无需拷贝但是控制复杂。</li>
+<li>IPC方式的数据拷贝次数，共享内存0次，Binder1次，Socket/管道/消息队列 2次。</li>
+</ul>
+</li>
+<li>安全性</li>
+</ul>
+<h2 id="IPC方式"><a href="#IPC方式" class="headerlink" title="IPC方式"></a>IPC方式</h2><blockquote>
+<p>摘自任玉刚的《把玩Android多进程》ppt</p>
+</blockquote>
+<p><img src="https://ww4.sinaimg.cn/large/006tNc79gw1fbi70eu93yj31kc0wqgxp.jpg" alt="Screen Shot 2017-01-07 at 16.37.37"></p>
+<h3 id="Bundle"><a href="#Bundle" class="headerlink" title="Bundle"></a>Bundle</h3><p>可以在一个进程中启动另一个进程的Activity、Service、Receiver</p>
+<h3 id="文件共享"><a href="#文件共享" class="headerlink" title="文件共享"></a>文件共享</h3><p>适合在对数据同步要求不高的进程之间进行通信，并且要妥善处理好并发读、写的问题。</p>
+<p>SharedPreferences因为系统对它的读写有有一定的缓存策略，即在内存中会有一份SharedPreferences文件的缓存，因此在多进程模式下，系统对它的读、写就变得不可靠。</p>
+<h3 id="Messenger"><a href="#Messenger" class="headerlink" title="Messenger"></a>Messenger</h3><p>可以在不同进程中传递Message对象，在Message中放入我们需要传递的数据。</p>
+<p>是一种轻量级的IPC方案，底层实现是AIDL。</p>
+<p>一次只处理一个请求，因此在服务端我们<strong>不用考虑线程同步</strong>的问题。</p>
+<p>通过Messgenger来传递Message，能使用的载体只有what、arg1、arg2、Bundle和replayTo。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Messenger的构造方法</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化</span></span><br><span class="line">Messenger(Handler);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 从服务端获得IBinder后初始化</span></span><br><span class="line">Messenger(IBinder);</span><br><span class="line"></span><br><span class="line"><span class="comment">//服务端</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MessengerService</span> <span class="keyword">extends</span> <span class="title">Service</span></span>&#123;</span><br><span class="line">  	<span class="keyword">private</span> Messenger mMessenger = <span class="keyword">new</span> Messenger(<span class="keyword">new</span> Handler());</span><br><span class="line">  </span><br><span class="line">  	<span class="meta">@Override</span></span><br><span class="line">  	<span class="function"><span class="keyword">public</span> IBinder <span class="title">onBind</span><span class="params">(Intent intent)</span></span>&#123;</span><br><span class="line">      	<span class="keyword">return</span> mMessenger.getBinder();</span><br><span class="line">  	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//客户端</span></span><br><span class="line"><span class="keyword">private</span> mMessenger;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> ServiceConnection mConnection = <span class="keyword">new</span> ServiceConnection()&#123;</span><br><span class="line">  	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onServiceConnected</span><span class="params">(ComponentName className,IBinder service)</span></span>&#123;</span><br><span class="line">      	mMessenger = <span class="keyword">new</span> Messenger(service);</span><br><span class="line">  	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">onCreate()&#123;</span><br><span class="line">  	bindService(intent,mConnection,Context.BIND_AUTO_CREATE);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="AIDL"><a href="#AIDL" class="headerlink" title="AIDL"></a>AIDL</h3><p>使用步骤：</p>
+<ul>
+<li><p>服务端创建Service，实现AIDL接口,并在onBind中返回它</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Server实现AIDL接口</span></span><br><span class="line"><span class="keyword">private</span> Binder mBinder = <span class="keyword">new</span> IBookManager.Stub()&#123;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> IBinder <span class="title">onBind</span><span class="params">(Intent intent)</span></span>&#123;</span><br><span class="line">  	<span class="keyword">return</span> mBinder;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>客户端绑定Service，将服务端返回的Binder对象转换成AIDL接口所属的类型</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> ServiceConnection mConnection = <span class="keyword">new</span> ServiceConnection()&#123;</span><br><span class="line">  	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onServiceConnected</span><span class="params">(ComponentName className,IBinder service)</span></span>&#123;</span><br><span class="line">      	IBookManager bookManager = IBookManager.Stub.asInterface(service);</span><br><span class="line">  	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>需要注意：</p>
+<ol>
+<li><p>对象的跨进程传输本质上是反序列化的过程，通过Binder传递后的对象会是全新的对象，但是这些对象会有一个共同点，他们底层的Binder是同一个。</p>
+<p>所以若要跨进程使用观察者模式，需要使用<strong>RemoteCallbackList</strong>。</p>
+<p>这个类还有一个很有用的功能，就是当客户端进程终止后，能够自动移除客户端所注册的listener。</p>
+</li>
+<li><p>Binder是会意外死亡的</p>
+<ul>
+<li>给Binder设置DeathRecipient监听</li>
+<li>在onServiceDisconnected中重连远程服务</li>
+</ul>
+</li>
+<li><p>远程方法调用发生在binder线程池中，需要小心因为耗时操作导致本端阻塞</p>
+</li>
+<li><p>服务端验证客户端权限</p>
+<ul>
+<li>onBind中通过checkCallingOrsELFpermission(“permission”)检查客户端是否声明该权限</li>
+<li>验证包名，getPackageManager().getPackagesForUid(getCallingUid())</li>
+</ul>
+</li>
+</ol>
+<h3 id="ContentProvider"><a href="#ContentProvider" class="headerlink" title="ContentProvider"></a>ContentProvider</h3><p>底层实现也是Binder,用于不同应用间进行数据共享的方式。</p>
+<h4 id="创建一个ContentProvider"><a href="#创建一个ContentProvider" class="headerlink" title="创建一个ContentProvider"></a>创建一个ContentProvider</h4><p>创建一个自定义的ContentProvider需要继承ContentProvider并实现六个抽象方法：</p>
+<p>另外，是存在多进程并发访问的，故而四大方法需要做好线程<strong>同步</strong>准备。</p>
+<ul>
+<li>onCreate<ul>
+<li>代表ContentProvider的创建，做一些初始化的操作</li>
+</ul>
+</li>
+<li>query</li>
+<li>update</li>
+<li>insert</li>
+<li>delete</li>
+<li>getType<ul>
+<li>返回一个Uri请求所对应的MIME类型，比如图片或者视频等</li>
+<li>不关注这个选项可以返回null或者“<em>/</em>”</li>
+</ul>
+</li>
+</ul>
+<p>需要注册：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">provider</span></span></span><br><span class="line"><span class="tag">	<span class="attr">android:name</span> = <span class="string">".provider.BookProvider"</span></span></span><br><span class="line"><span class="tag">	//唯一标识</span></span><br><span class="line"><span class="tag">	<span class="attr">android:authorities</span>=<span class="string">"com.dendi.chapter.book.provider"</span></span></span><br><span class="line"><span class="tag">	//权限声明</span></span><br><span class="line"><span class="tag">	<span class="attr">android:permission</span>=<span class="string">"com.dendi.Provider"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<p>查询时</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Uri userUri = Uri.parse(<span class="string">"content://com.dendi.chapter.book.provider/user"</span>);</span><br><span class="line">Cursor userCursor = getContentResolver().query(</span><br><span class="line">  	userUri,<span class="keyword">new</span> String[]&#123;<span class="string">"_id"</span>,<span class="string">"name"</span>,<span class="string">"sex"</span>&#125;,<span class="keyword">null</span>,<span class="keyword">null</span>,<span class="keyword">null</span>);</span><br><span class="line"><span class="keyword">while</span>(userCursor.moveToNext())&#123;</span><br><span class="line"> 	<span class="comment">//print</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h4><p>以<strong>表格</strong>的形式来组织数据</p>
+<h3 id="Socket"><a href="#Socket" class="headerlink" title="Socket"></a>Socket</h3><ul>
+<li>流式套接字<ul>
+<li>TCP</li>
+<li>面向连接，提供稳定的双向通信功能（本身提供了超时重传），有很高的稳定性</li>
+</ul>
+</li>
+<li>用户数据报套接字<ul>
+<li>UDP</li>
+<li>无连接，提供不稳定的单向通信功能</li>
+<li>效率更高，但是不能保证数据一定能够正确传输，尤其在网络拥塞的情况下</li>
+</ul>
+</li>
+</ul>
+<p>注意不要在UI线程中访问网络，会抛出异常。</p>
+<p>另外Socket的ip地址是可以伪造的，故而不一定具有安全性。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/android/" rel="tag"># android</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/14/APP启动优化/" rel="next" title="APP启动优化">
+                <i class="fa fa-chevron-left"></i> APP启动优化
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/11/Gradle/" rel="prev" title="Gradle初探">
+                Gradle初探 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="hgDendi" />
+          <p class="site-author-name" itemprop="name">hgDendi</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#IPC机制"><span class="nav-number">1.</span> <span class="nav-text">IPC机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#进程间通信"><span class="nav-number">1.1.</span> <span class="nav-text">进程间通信</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多进程的特性"><span class="nav-number">1.1.1.</span> <span class="nav-text">多进程的特性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三个基础知识"><span class="nav-number">1.2.</span> <span class="nav-text">三个基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Serializable"><span class="nav-number">1.2.1.</span> <span class="nav-text">Serializable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Parcelable"><span class="nav-number">1.2.2.</span> <span class="nav-text">Parcelable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Binder"><span class="nav-number">1.2.3.</span> <span class="nav-text">Binder</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Service中的Binder"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">Service中的Binder</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#为什么是Binder"><span class="nav-number">1.2.3.2.</span> <span class="nav-text">为什么是Binder</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IPC方式"><span class="nav-number">1.3.</span> <span class="nav-text">IPC方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Bundle"><span class="nav-number">1.3.1.</span> <span class="nav-text">Bundle</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件共享"><span class="nav-number">1.3.2.</span> <span class="nav-text">文件共享</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Messenger"><span class="nav-number">1.3.3.</span> <span class="nav-text">Messenger</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AIDL"><span class="nav-number">1.3.4.</span> <span class="nav-text">AIDL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ContentProvider"><span class="nav-number">1.3.5.</span> <span class="nav-text">ContentProvider</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建一个ContentProvider"><span class="nav-number">1.3.5.1.</span> <span class="nav-text">创建一个ContentProvider</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#特性"><span class="nav-number">1.3.5.2.</span> <span class="nav-text">特性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Socket"><span class="nav-number">1.3.6.</span> <span class="nav-text">Socket</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">hgDendi</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

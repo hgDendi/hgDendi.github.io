@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="android," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="ExpandableRecyclerView github:https://github.com/hgDendi/ExpandableRecyclerView 自定义支持二级菜单的RecyclerViewAdapter。 将展开闭合操作封装在了BaseExpandableRecyclerViewAdapter中，使整个使用方式充满弹性。 下方有具体使用方法，一般需要override 6个方法：">
+<meta name="keywords" content="android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RecyclerView实现二级菜单">
+<meta property="og:url" content="http://www.hgdendi.tech/2017/11/12/RecyclerView实现二级菜单/index.html">
+<meta property="og:site_name" content="HgWorts">
+<meta property="og:description" content="ExpandableRecyclerView github:https://github.com/hgDendi/ExpandableRecyclerView 自定义支持二级菜单的RecyclerViewAdapter。 将展开闭合操作封装在了BaseExpandableRecyclerViewAdapter中，使整个使用方式充满弹性。 下方有具体使用方法，一般需要override 6个方法：">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://github.com/hgDendi/ExpandableRecyclerView/blob/master/img/expandableRecyclerView.gif">
+<meta property="og:updated_time" content="2017-12-27T16:14:53.170Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RecyclerView实现二级菜单">
+<meta name="twitter:description" content="ExpandableRecyclerView github:https://github.com/hgDendi/ExpandableRecyclerView 自定义支持二级菜单的RecyclerViewAdapter。 将展开闭合操作封装在了BaseExpandableRecyclerViewAdapter中，使整个使用方式充满弹性。 下方有具体使用方法，一般需要override 6个方法：">
+<meta name="twitter:image" content="https://github.com/hgDendi/ExpandableRecyclerView/blob/master/img/expandableRecyclerView.gif">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.hgdendi.tech/2017/11/12/RecyclerView实现二级菜单/"/>
+
+
+
+
+
+  <title>RecyclerView实现二级菜单 | HgWorts</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HgWorts</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Think big thoughts , but relish small pleasures.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.hgdendi.tech/2017/11/12/RecyclerView实现二级菜单/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hgDendi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HgWorts">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">RecyclerView实现二级菜单</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-12T00:00:00+08:00">
+                2017-11-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/android/" itemprop="url" rel="index">
+                    <span itemprop="name">android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="ExpandableRecyclerView"><a href="#ExpandableRecyclerView" class="headerlink" title="ExpandableRecyclerView"></a>ExpandableRecyclerView</h1><p><img src="https://github.com/hgDendi/ExpandableRecyclerView/blob/master/img/expandableRecyclerView.gif" alt="demo"></p>
+<p>github:<a href="https://github.com/hgDendi/ExpandableRecyclerView" target="_blank" rel="noopener">https://github.com/hgDendi/ExpandableRecyclerView</a></p>
+<p>自定义支持二级菜单的RecyclerViewAdapter。</p>
+<p>将展开闭合操作封装在了<a href="https://github.com/hgDendi/ExpandableRecyclerView/blob/master/expandable-recyclerview-adapter/src/main/java/com/hgdendi/expandablerecycleradapter/BaseExpandableRecyclerViewAdapter.java" target="_blank" rel="noopener">BaseExpandableRecyclerViewAdapter</a>中，使整个使用方式充满弹性。</p>
+<p>下方有具体使用方法，一般需要override 6个方法：</p>
+<ul>
+<li><strong>getGroupCount</strong></li>
+<li><strong>getGroupItem</strong></li>
+<li>onCreateGroupViewHolder</li>
+<li>onCreateChildViewHolder</li>
+<li>onBindGroupViewHolder</li>
+<li>onBindChildViewHolder</li>
+</ul>
+<p>因为onCreateViewHolder和onBindViewHolder本来即是RecyclerViewAdapter需要强制Override的方法，这里按父子关系拆分成了两个方法。而getGroupCount和getGroupItem在大概率情况下都是基于List的简单一行代码即可实现，故而使用起来十分简便。</p>
+<h2 id="Gradle"><a href="#Gradle" class="headerlink" title="Gradle"></a>Gradle</h2><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dependencies&#123;</span><br><span class="line">	compile <span class="string">'com.hgDendi:expandable-recyclerview-adapter:0.0.2'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><ol>
+<li>使用便捷、简洁明了</li>
+<li>最大程度保留RecyclerView的原生机制，滑动到具体条目才进行渲染，不会滑到另一个Group渲染另一个Group下所有子Item</li>
+<li>itemView的部分刷新，可以自定义展开、闭合时的刷新机制，避免GroupItem在展开闭合时刷新整个GroupItem（比如只是简单的箭头指向改变）</li>
+<li>采用泛型，用户自定义传入参数，扩展性更高</li>
+</ol>
+<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><h3 id="定义父子数据结构"><a href="#定义父子数据结构" class="headerlink" title="定义父子数据结构"></a>定义父子数据结构</h3><p>其中GroupBean需要继承自BaseGroupBean并override三个方法。</p>
+<ul>
+<li>getChildCount<ul>
+<li>获取子节点个数</li>
+</ul>
+</li>
+<li>isExpandable<ul>
+<li>是否为可展开的节点</li>
+<li>默认实现可以是判断子节点是否为0，但是也可以做其他处理</li>
+</ul>
+</li>
+<li>getChildAt<ul>
+<li>根据index获取对应的子节点数据结构</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SampleGroupBean</span> <span class="keyword">implements</span> <span class="title">BaseExpandableRecyclerViewAdapter</span>.<span class="title">BaseGroupBean</span>&lt;<span class="title">SampleChildBean</span>&gt; </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getChildCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mList.size();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// whether this group is expandable</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isExpandable</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> getChildCount() &gt; <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">  	<span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> SampleChildBean <span class="title">getChildAt</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mList.size() &lt;= index ? <span class="keyword">null</span> : mList.get(index);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SampleChildBean</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="定义对应的ViewHolder"><a href="#定义对应的ViewHolder" class="headerlink" title="定义对应的ViewHolder"></a>定义对应的ViewHolder</h3><p>其中Group对应的ViewHolder要继承BaseGroupViewHolder并改写onExpandStatusChanged.</p>
+<p>该方法是实现item局部刷新的方法，在展开、闭合时会回调，比如对于大多数情况，开关闭合状态只需要修改左边箭头指向，就无需刷新itemView的其他部分。</p>
+<p>实现原理是使用RecyclerView的payload机制实现局部监听刷新。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">GroupVH</span> <span class="keyword">extends</span> <span class="title">BaseExpandableRecyclerViewAdapter</span>.<span class="title">BaseGroupViewHolder</span> </span>&#123;</span><br><span class="line">    GroupVH(View itemView) &#123;</span><br><span class="line">        <span class="keyword">super</span>(itemView);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// this method is used for partial update.Which means when expand status changed,only a part of this view need to invalidate</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onExpandStatusChanged</span><span class="params">(RecyclerView.Adapter relatedAdapter, <span class="keyword">boolean</span> isExpanding)</span> </span>&#123;</span><br><span class="line">      <span class="comment">// 1.只更新左侧展开、闭合箭头</span></span><br><span class="line">      foldIv.setImageResource(isExpanding ? R.drawable.ic_arrow_expanding : R.drawable.ic_arrow_folding);</span><br><span class="line">      </span><br><span class="line">      <span class="comment">// 2.默认刷新整个Item</span></span><br><span class="line">      relatedAdapter.notifyItemChanged(getAdapterPosition());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ChildVH</span> <span class="keyword">extends</span> <span class="title">RecyclerView</span>.<span class="title">ViewHolder</span> </span>&#123;</span><br><span class="line">    ChildVH(View itemView) &#123;</span><br><span class="line">        <span class="keyword">super</span>(itemView);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="使用自定义Adapter继承基类"><a href="#使用自定义Adapter继承基类" class="headerlink" title="使用自定义Adapter继承基类"></a>使用自定义Adapter继承基类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// !!注意这里继承时候使用的泛型，分别为上面提到的Bean和ViewHolder</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SampleAdapter</span> <span class="keyword">extends</span> <span class="title">BaseExpandableRecyclerViewAdapter</span></span></span><br><span class="line"><span class="class">&lt;<span class="title">SampleGroupBean</span>, <span class="title">SampleChildBean</span>, <span class="title">SampleAdapter</span>.<span class="title">GroupVH</span>, <span class="title">SampleAdapter</span>.<span class="title">ChildVH</span>&gt;</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">    @<span class="title">Override</span></span></span><br><span class="line"><span class="class">    <span class="title">public</span> <span class="title">int</span> <span class="title">getGroupCount</span>() </span>&#123;</span><br><span class="line">        <span class="comment">// 父节点个数</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> GroupBean <span class="title">getGroupItem</span><span class="params">(<span class="keyword">int</span> groupIndex)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 获取父节点</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> GroupVH <span class="title">onCreateGroupViewHolder</span><span class="params">(ViewGroup parent, <span class="keyword">int</span> groupViewType)</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ChildVH <span class="title">onCreateChildViewHolder</span><span class="params">(ViewGroup parent, <span class="keyword">int</span> childViewType)</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onBindGroupViewHolder</span><span class="params">(GroupVH holder, SampleGroupBean sampleGroupBean, <span class="keyword">boolean</span> isExpand)</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onBindChildViewHolder</span><span class="params">(ChildVH holder, SampleGroupBean sampleGroupBean, SampleChildBean sampleChildBean)</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="其他用法"><a href="#其他用法" class="headerlink" title="其他用法"></a>其他用法</h3><h4 id="增加父子的种类"><a href="#增加父子的种类" class="headerlink" title="增加父子的种类"></a>增加父子的种类</h4><p>通过改写getChildType和getGroupType方法进行控制type，该type会在onCreateGroupViewHolder和onCreateChildViewHolder时回传。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">int</span> <span class="title">getGroupType</span><span class="params">(GroupBean groupBean)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">abstract</span> <span class="keyword">public</span> GroupViewHolder <span class="title">onCreateGroupViewHolder</span><span class="params">(ViewGroup parent, <span class="keyword">int</span> groupViewType)</span></span>;</span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">int</span> <span class="title">getChildType</span><span class="params">(GroupBean groupBean, ChildBean childBean)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">abstract</span> <span class="keyword">public</span> ChildViewHolder <span class="title">onCreateChildViewHolder</span><span class="params">(ViewGroup parent, <span class="keyword">int</span> childViewType)</span></span>;</span><br></pre></td></tr></table></figure>
+<h4 id="增加列表为空时候的EmptyView"><a href="#增加列表为空时候的EmptyView" class="headerlink" title="增加列表为空时候的EmptyView"></a>增加列表为空时候的EmptyView</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">adapter.setEmptyViewProducer(<span class="keyword">new</span> ViewProducer() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> RecyclerView.<span class="function">ViewHolder <span class="title">onCreateViewHolder</span><span class="params">(ViewGroup parent)</span> </span>&#123;</span><br><span class="line">        View emptyView = LayoutInflater.from(parent.getContext()).inflate(R.layout.empty, parent, <span class="keyword">false</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> DefaultEmptyViewHolder(emptyView);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onBindViewHolder</span><span class="params">(RecyclerView.ViewHolder holder)</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="增加HeaderView"><a href="#增加HeaderView" class="headerlink" title="增加HeaderView"></a>增加HeaderView</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">adapter.setEmptyViewProducer(<span class="keyword">new</span> ViewProducer() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> RecyclerView.<span class="function">ViewHolder <span class="title">onCreateViewHolder</span><span class="params">(ViewGroup parent)</span> </span>&#123;</span><br><span class="line">        View emptyView = LayoutInflater.from(parent.getContext()).inflate(R.layout.header, parent, <span class="keyword">false</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> DefaultEmptyViewHolder(emptyView);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onBindViewHolder</span><span class="params">(RecyclerView.ViewHolder holder)</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;,<span class="keyword">false</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="监听事件"><a href="#监听事件" class="headerlink" title="监听事件"></a>监听事件</h4><p>可以通过setListener的方式设置监听事件。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ExpandableRecyclerViewOnClickListener</span>&lt;<span class="title">GroupBean</span> <span class="keyword">extends</span> <span class="title">BaseGroupBean</span>, <span class="title">ChildBean</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 长按时的操作</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> groupItem</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="function"><span class="keyword">boolean</span> <span class="title">onGroupLongClicked</span><span class="params">(GroupBean groupItem)</span></span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 在可展开group被点击的时候触发的回调，返回布尔值表示是否拦截该操作</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> groupItem</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> isExpand</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@return</span> true 使点击无效。false 正常执行展开、闭合操作。</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="function"><span class="keyword">boolean</span> <span class="title">onInterceptGroupExpandEvent</span><span class="params">(GroupBean groupItem, <span class="keyword">boolean</span> isExpand)</span></span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 点击GroupView时的操作(该Group的isExpandable返回false才会触发这个回调)</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> groupItem</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">onGroupClicked</span><span class="params">(GroupBean groupItem)</span></span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 点击子View时的操作</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> groupItem</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@param</span> childItem</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">onChildClicked</span><span class="params">(GroupBean groupItem, ChildBean childItem)</span></span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h2><h3 id="父子结构划分"><a href="#父子结构划分" class="headerlink" title="父子结构划分"></a>父子结构划分</h3><ol>
+<li>通过getItemType判断所处类型，在基类中就先划分为四种类型的View。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TYPE_EMPTY = ViewProducer.VIEW_TYPE_EMPTY;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TYPE_HEADER = ViewProducer.VIEW_TYPE_HEADER;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TYPE_GROUP = ViewProducer.VIEW_TYPE_EMPTY &gt;&gt; <span class="number">2</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TYPE_CHILD = ViewProducer.VIEW_TYPE_EMPTY &gt;&gt; <span class="number">3</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TYPE_MASK = TYPE_GROUP | TYPE_CHILD | TYPE_EMPTY | TYPE_HEADER;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过getItemView判断类型，这里默认是使用上面定义的MASK，可以重载使Group和Child中再划分子类，但是不允许和TYPE_MASK冲突，否则会报Exception</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">getItemViewType</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (mIsEmpty) &#123;</span><br><span class="line">        <span class="keyword">return</span> position == <span class="number">0</span> &amp;&amp; mShowHeaderViewWhenEmpty ? TYPE_HEADER : TYPE_EMPTY;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (position == <span class="number">0</span> &amp;&amp; mHeaderViewProducer != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> TYPE_HEADER;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span>[] coord = translateToDoubleIndex(position);</span><br><span class="line">    GroupBean groupBean = getGroupItem(coord[<span class="number">0</span>]);</span><br><span class="line">    <span class="keyword">if</span> (coord[<span class="number">1</span>] &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">int</span> groupType = getGroupType(groupBean);</span><br><span class="line">        <span class="keyword">if</span> ((groupType &amp; TYPE_MASK) == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> groupType | TYPE_GROUP;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(</span><br><span class="line">                String.format(Locale.getDefault(), <span class="string">"GroupType [%d] conflits with MASK [%d]"</span>, groupType, TYPE_MASK));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">int</span> childType = getChildType(groupBean, groupBean.getChildAt(coord[<span class="number">1</span>]));</span><br><span class="line">        <span class="keyword">if</span> ((childType &amp; TYPE_MASK) == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> childType | TYPE_CHILD;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(</span><br><span class="line">                String.format(Locale.getDefault(), <span class="string">"ChildType [%d] conflits with MASK [%d]"</span>, childType, TYPE_MASK));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>在onCreateViewHolder和onBindViewHolder中进行类型判断，调用不同的方法，这些方法在子类中进行重载。注意这里将这三个方法都置为final，防止子类重载，子类只能重载对应不同type的具体方法。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> RecyclerView.<span class="function">ViewHolder <span class="title">onCreateViewHolder</span><span class="params">(ViewGroup parent, <span class="keyword">int</span> viewType)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">switch</span> (viewType) &#123;</span><br><span class="line">        <span class="keyword">case</span> TYPE_EMPTY:</span><br><span class="line">            <span class="keyword">return</span> mEmptyViewProducer.onCreateViewHolder(parent);</span><br><span class="line">        <span class="keyword">case</span> TYPE_HEADER:</span><br><span class="line">            <span class="keyword">return</span> mHeaderViewProducer.onCreateViewHolder(parent);</span><br><span class="line">        <span class="keyword">case</span> TYPE_CHILD:</span><br><span class="line">            <span class="keyword">return</span> onCreateChildViewHolder(parent, viewType ^ TYPE_CHILD);</span><br><span class="line">        <span class="keyword">case</span> TYPE_GROUP:</span><br><span class="line">            <span class="keyword">return</span> onCreateGroupViewHolder(parent, viewType ^ TYPE_GROUP);</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(</span><br><span class="line">                String.format(Locale.getDefault(), <span class="string">"Illegal view type : viewType[%d]"</span>, viewType));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">onBindViewHolder</span><span class="params">(<span class="keyword">final</span> RecyclerView.ViewHolder holder, <span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">    onBindViewHolder(holder, position, <span class="keyword">null</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">onBindViewHolder</span><span class="params">(RecyclerView.ViewHolder holder, <span class="keyword">int</span> position, List&lt;Object&gt; payloads)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">switch</span> (holder.getItemViewType() &amp; TYPE_MASK) &#123;</span><br><span class="line">        <span class="keyword">case</span> TYPE_EMPTY:</span><br><span class="line">            mEmptyViewProducer.onBindViewHolder(holder);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> TYPE_HEADER:</span><br><span class="line">            mHeaderViewProducer.onBindViewHolder(holder);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> TYPE_CHILD:</span><br><span class="line">            <span class="keyword">final</span> <span class="keyword">int</span>[] childCoord = translateToDoubleIndex(position);</span><br><span class="line">            GroupBean groupBean = getGroupItem(childCoord[<span class="number">0</span>]);</span><br><span class="line">            bindChildViewHolder((ChildViewHolder) holder, groupBean, groupBean.getChildAt(childCoord[<span class="number">1</span>]), payloads);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> TYPE_GROUP:</span><br><span class="line">            bindGroupViewHolder((GroupViewHolder) holder,</span><br><span class="line">                getGroupItem(translateToDoubleIndex(position)[<span class="number">0</span>]), payloads);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(</span><br><span class="line">                String.format(Locale.getDefault(), <span class="string">"Illegal view type : position [%d] ,itemViewType[%d]"</span>, position, holder.getItemViewType()));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="展开闭合操作"><a href="#展开闭合操作" class="headerlink" title="展开闭合操作"></a>展开闭合操作</h3><h4 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h4><p>当groupBean的isExpandable返回true的时候，为itemView设置点击事件，进行展开闭合。</p>
+<p>展开闭合的具体原理是在Set中记录展开闭合情况，当发生展开、闭合操作的时候进行更新，并使用notifyItemChange接口进行列表的局部刷新。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> Set&lt;GroupBean&gt; mExpandGroupSet;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">bindGroupViewHolder</span><span class="params">(<span class="keyword">final</span> GroupViewHolder holder, <span class="keyword">final</span> GroupBean groupBean, List&lt;Object&gt; payload)</span> </span>&#123;</span><br><span class="line">  	<span class="comment">// ...</span></span><br><span class="line">    <span class="keyword">if</span> (!groupBean.isExpandable()) &#123;</span><br><span class="line">      <span class="comment">// ...</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        holder.itemView.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">final</span> <span class="keyword">boolean</span> isExpand = mExpandGroupSet.contains(groupBean);</span><br><span class="line">                <span class="keyword">if</span> (mListener == <span class="keyword">null</span> || !mListener.onInterceptGroupExpandEvent(groupBean, isExpand)) &#123;</span><br><span class="line">                <span class="keyword">final</span> <span class="keyword">int</span> adapterPosition = holder.getAdapterPosition();</span><br><span class="line">                holder.onExpandStatusChanged(BaseExpandableRecyclerViewAdapter.<span class="keyword">this</span>, !isExpand);</span><br><span class="line">                    <span class="keyword">if</span> (isExpand) &#123;</span><br><span class="line">                        mExpandGroupSet.remove(groupBean);</span><br><span class="line">                        notifyItemRangeRemoved(adapterPosition + <span class="number">1</span>, groupBean.getChildCount());</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        mExpandGroupSet.add(groupBean);</span><br><span class="line">                        notifyItemRangeInserted(adapterPosition + <span class="number">1</span>, groupBean.getChildCount());</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">  	<span class="comment">// 子类实现</span></span><br><span class="line">    onBindGroupViewHolder(holder, groupBean, isGroupExpand(groupBean));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="局部刷新原理"><a href="#局部刷新原理" class="headerlink" title="局部刷新原理"></a>局部刷新原理</h4><p>定义了Payload，采用Payload机制进行局部刷新。</p>
+<p>在notifyItemChange时传入payload，在onBindViewHolder操作中判断是否带有payload，若带有payload，则执行部分刷新的操作。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Object EXPAND_PAYLOAD = <span class="keyword">new</span> Object();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 局部刷新时调用的接口(已封装好，用户无需调用)</span></span><br><span class="line">notifyItemChanged(position, EXPAND_PAYLOAD);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 处理payload</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">bindGroupViewHolder</span><span class="params">(<span class="keyword">final</span> GroupViewHolder holder, <span class="keyword">final</span> GroupBean groupBean, List&lt;Object&gt; payload)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (payload != <span class="keyword">null</span> &amp;&amp; payload.size() != <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (payload.contains(EXPAND_PAYLOAD)) &#123;</span><br><span class="line">          	<span class="comment">// holder方法有抽象方法，在此方法中实现具体的展开、闭合逻辑</span></span><br><span class="line">            holder.onExpandStatusChanged(BaseExpandableRecyclerViewAdapter.<span class="keyword">this</span>, isGroupExpand(groupBean));</span><br><span class="line">            <span class="keyword">if</span> (payload.size() == <span class="number">1</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    onBindGroupViewHolder(holder, groupBean, isGroupExpand(groupBean), payload);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/android/" rel="tag"># android</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/11/网络/" rel="next" title="网络相关">
+                <i class="fa fa-chevron-left"></i> 网络相关
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/13/如何上传自己的Android库到JCenter/" rel="prev" title="如何上传自己的Android库到JCenter">
+                如何上传自己的Android库到JCenter <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="hgDendi" />
+          <p class="site-author-name" itemprop="name">hgDendi</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ExpandableRecyclerView"><span class="nav-number">1.</span> <span class="nav-text">ExpandableRecyclerView</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Gradle"><span class="nav-number">1.1.</span> <span class="nav-text">Gradle</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优点"><span class="nav-number">1.2.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用方法"><span class="nav-number">1.3.</span> <span class="nav-text">使用方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义父子数据结构"><span class="nav-number">1.3.1.</span> <span class="nav-text">定义父子数据结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定义对应的ViewHolder"><span class="nav-number">1.3.2.</span> <span class="nav-text">定义对应的ViewHolder</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用自定义Adapter继承基类"><span class="nav-number">1.3.3.</span> <span class="nav-text">使用自定义Adapter继承基类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他用法"><span class="nav-number">1.3.4.</span> <span class="nav-text">其他用法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#增加父子的种类"><span class="nav-number">1.3.4.1.</span> <span class="nav-text">增加父子的种类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#增加列表为空时候的EmptyView"><span class="nav-number">1.3.4.2.</span> <span class="nav-text">增加列表为空时候的EmptyView</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#增加HeaderView"><span class="nav-number">1.3.4.3.</span> <span class="nav-text">增加HeaderView</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#监听事件"><span class="nav-number">1.3.4.4.</span> <span class="nav-text">监听事件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现原理"><span class="nav-number">1.4.</span> <span class="nav-text">实现原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#父子结构划分"><span class="nav-number">1.4.1.</span> <span class="nav-text">父子结构划分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#展开闭合操作"><span class="nav-number">1.4.2.</span> <span class="nav-text">展开闭合操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#操作"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#局部刷新原理"><span class="nav-number">1.4.2.2.</span> <span class="nav-text">局部刷新原理</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">hgDendi</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

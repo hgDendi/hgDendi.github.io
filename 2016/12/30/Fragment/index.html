@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="android," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="[TOC]  本质上是view，但会是一个比较重量级的view（具有生命周期）  生命周期注意点： Fragment 的生命周期，除了第一次它创建或销毁之外，统统都是由 Activity 所驱动的。 比如说同一个Activity中多个fragment的hide和show，只会调用到onHiddenChange()，并不会调用到onPause的生命周期！（但是用replace的话会重新创建fragm">
+<meta name="keywords" content="android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Fragment">
+<meta property="og:url" content="http://www.hgdendi.tech/2016/12/30/Fragment/index.html">
+<meta property="og:site_name" content="HgWorts">
+<meta property="og:description" content="[TOC]  本质上是view，但会是一个比较重量级的view（具有生命周期）  生命周期注意点： Fragment 的生命周期，除了第一次它创建或销毁之外，统统都是由 Activity 所驱动的。 比如说同一个Activity中多个fragment的hide和show，只会调用到onHiddenChange()，并不会调用到onPause的生命周期！（但是用replace的话会重新创建fragm">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://ww2.sinaimg.cn/large/006tNc79gw1fbaculez38j30x81ywwnl.jpg">
+<meta property="og:updated_time" content="2017-08-27T15:50:57.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Fragment">
+<meta name="twitter:description" content="[TOC]  本质上是view，但会是一个比较重量级的view（具有生命周期）  生命周期注意点： Fragment 的生命周期，除了第一次它创建或销毁之外，统统都是由 Activity 所驱动的。 比如说同一个Activity中多个fragment的hide和show，只会调用到onHiddenChange()，并不会调用到onPause的生命周期！（但是用replace的话会重新创建fragm">
+<meta name="twitter:image" content="https://ww2.sinaimg.cn/large/006tNc79gw1fbaculez38j30x81ywwnl.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.hgdendi.tech/2016/12/30/Fragment/"/>
+
+
+
+
+
+  <title>Fragment | HgWorts</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">HgWorts</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Think big thoughts , but relish small pleasures.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.hgdendi.tech/2016/12/30/Fragment/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hgDendi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HgWorts">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Fragment</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-30T00:00:00+08:00">
+                2016-12-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/android/" itemprop="url" rel="index">
+                    <span itemprop="name">android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>[TOC]</p>
+<blockquote>
+<p>本质上是view，但会是一个比较重量级的view（具有生命周期）</p>
+</blockquote>
+<h2 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h2><p>注意点：</p>
+<p>Fragment 的生命周期，除了第一次它创建或销毁之外，<strong>统统都是由 Activity 所驱动的</strong>。</p>
+<p>比如说同一个Activity中多个fragment的hide和show，只会调用到onHiddenChange()，并不会调用到onPause的生命周期！（但是用replace的话会重新创建fragment）</p>
+<p>系统通过Fragment的setUserVisibleHint(boolean)来控制是否显示，故而若要在<strong>ViewPager中实现懒加载</strong>，最好将其实现在setUserVisibileHint()中。（ViewPager默认加载相邻的fragment，setOffscreenPageLimit只能设置大于等于1的数字）</p>
+<p>下面说很有名的一张生命周期图：</p>
+<p><img src="https://ww2.sinaimg.cn/large/006tNc79gw1fbaculez38j30x81ywwnl.jpg" alt="complete_android_fragment_lifecycle"></p>
+<h2 id="FragmentManager"><a href="#FragmentManager" class="headerlink" title="FragmentManager"></a>FragmentManager</h2><ul>
+<li>管理Activity中的所有的fragment</li>
+<li>所有fragment被放入一个栈中，每一个fragment都有一个FragmentState实例，相当于snapshot。</li>
+<li>内存重启时会把每个Fragment的state存储起来，最终存储到Activity的savedInstanceState中</li>
+<li>对于Fragment<ul>
+<li>getFragmentManager，获取父Fragment的FragmentManager（如果已是父Fragment，则会获得Activity的）</li>
+<li>getChildFragmentManager，获取当前Fragment（可能是嵌套子Fragment）的FragmentManager</li>
+</ul>
+</li>
+</ul>
+<h3 id="FragmentTransaction"><a href="#FragmentTransaction" class="headerlink" title="FragmentTransaction"></a>FragmentTransaction</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Fragment fragment = <span class="keyword">new</span> Fragment();</span><br><span class="line">FragmentTransaction transaction = getFragmentManager().beginTransaction();</span><br><span class="line">transaction.replace(R.id.fragment_container,fragment)</span><br><span class="line">  .addToBackStack()</span><br><span class="line">  .commit();</span><br></pre></td></tr></table></figure>
+<ul>
+<li>addToBackStack表示将此事务压入栈中，在用户按下back键时会进行回退操作<ul>
+<li>在上例中表示回到嵌入fragment之前的状态。</li>
+</ul>
+</li>
+<li>执行hide() show()，会调用到onHiddenChanged(),不会调用onDestroyView()等。</li>
+<li>add() replace()不要在同一阶级的FragmentManager里混搭使用</li>
+<li>此commit为异步操作,加入队列。否则请使用commit</li>
+</ul>
+<h2 id="与Activity的交互"><a href="#与Activity的交互" class="headerlink" title="与Activity的交互"></a>与Activity的交互</h2><h3 id="Activity-gt-Fragment"><a href="#Activity-gt-Fragment" class="headerlink" title="Activity -&gt; Fragment"></a>Activity -&gt; Fragment</h3><ol>
+<li><p>使用argument进行传值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//in activity</span></span><br><span class="line">fragment.setArguments(Bundle);</span><br><span class="line"></span><br><span class="line"><span class="comment">//in fragment</span></span><br><span class="line">getArgument();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用fragmentmanager获取实例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fragmentManager.findFragmnetById();</span><br><span class="line">fragmentManager.findFragmentByTag();</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="Fragment-gt-Activity"><a href="#Fragment-gt-Activity" class="headerlink" title="Fragment -&gt; Activity"></a>Fragment -&gt; Activity</h3><ol>
+<li><p>建立一个callback借口，由Activity来实现。这也是Android模版中的用法。</p>
+<p>也有比较暴力的方法是直接持有Activity引用的，这点一般不会出问题，但是从面向对象角度来说要尽量避免。</p>
+<p>​</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DendiFragment</span> <span class="keyword">extends</span> <span class="title">Fragment</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> Callbacks mCallbacks;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Callbacks</span></span>&#123;</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onItemClicked</span><span class="params">(Integer id)</span></span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAttach</span><span class="params">(Activity activity)</span></span>&#123;</span><br><span class="line">		<span class="comment">//TODO</span></span><br><span class="line">		mCallbacks = (Callbacks)activity;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDetach</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="comment">//TODO</span></span><br><span class="line">		mCallbacks = <span class="keyword">null</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>getActivity()获得宿主Activity</p>
+<p><strong>需要注意</strong>，如果当前Fragment已经onDetach()，则此方法会返回null。</p>
+<p>要避免异步任务中getActivity时返回空指针（同样也要注意如果使用引用可能造成的内存泄漏）</p>
+</li>
+</ol>
+<h2 id="内存重启"><a href="#内存重启" class="headerlink" title="内存重启"></a>内存重启</h2><p>系统回收会把Activity的状态保存下来，Activity的FragmentManager负责把Activity中的Fragment保存起来。</p>
+<p>内存重启时FragmentManager会把每个Fragment的state存储起来，最终存储到Activity的savedInstanceState中。</p>
+<p>保存的状态包括argument，故而getArgument()仍然可以拿到正确的数据。</p>
+<p>另外需要注意内存重启情况下需要判断onCreate采取正常流程还是恢复流程（恢复流程的话fragment会储存在FragmentManager中，不需要重新new）</p>
+<h3 id="LifeCycle"><a href="#LifeCycle" class="headerlink" title="LifeCycle"></a>LifeCycle</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">*ActivityA中嵌一个FragmentA，</span></span><br><span class="line"><span class="comment">*如果此时启动ActivityB，且ActivityA因为内存不足或其他原因被回收的时候，</span></span><br><span class="line"><span class="comment">*从B回到A，会回调这样的生命周期：</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line">ActivityB.onPause();</span><br><span class="line"></span><br><span class="line">ActivityA.onCreate();</span><br><span class="line">FragmentA.onAttach();</span><br><span class="line">ActivityA.onAttachFragment();</span><br><span class="line">FragmentA.onCreate();</span><br><span class="line">FragmentA.onViewCreated();</span><br><span class="line">ActivityA.onStart();</span><br><span class="line">FragmentA.onStart();</span><br><span class="line">ActivityA.onRestoreInstanceState();</span><br><span class="line">ActivityA.onResume();</span><br><span class="line">FragmentA.onResume();</span><br><span class="line"></span><br><span class="line">ActivityB.onStop();</span><br><span class="line">ActivityB.onDestroy();</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">*ActivityA中嵌一个FragmentA，</span></span><br><span class="line"><span class="comment">*按下home，且ActivityA因为内存不足或其他原因被回收的时候，</span></span><br><span class="line"><span class="comment">*从屏幕回到A，会回调这样的声明周期：</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line">ActivityA.onCreate();</span><br><span class="line">FragmentA.onAttach();</span><br><span class="line">FragmentA.onCreate();</span><br><span class="line">ActivityA.onStart();</span><br><span class="line">FragmentA.onStart();</span><br><span class="line">ActivityA.onResume();</span><br><span class="line">FragmentA.onResume();</span><br></pre></td></tr></table></figure>
+<h3 id="Fragment-Overlap"><a href="#Fragment-Overlap" class="headerlink" title="Fragment Overlap"></a>Fragment Overlap</h3><p>当Fragment所在Activity被意外清理掉时，会从栈底向栈顶的顺序恢复fragments,并且全部都是以show()的方式，所以会看到界面重叠。（针对hide和show方式进行Fragment展示的场景，24版本以下在内存重启时没有保存mHidden字段）</p>
+<p>也有可能是因为onCreate()中又执行了一遍。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span></span>&#123;</span><br><span class="line">  	<span class="comment">//todo</span></span><br><span class="line">  	</span><br><span class="line">  	<span class="keyword">if</span>(savedInstanceState != <span class="keyword">null</span>)&#123;</span><br><span class="line">  		<span class="comment">//可以使用getFragments()获取栈内所有Fragment</span></span><br><span class="line">      	getFragemntManager().beginTransaction().show(XX).hide(XX).commit();</span><br><span class="line">  	&#125;</span><br><span class="line">  	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Fragment-State-Loss"><a href="#Fragment-State-Loss" class="headerlink" title="Fragment State Loss"></a>Fragment State Loss</h3><p>FragmentManager的每一个操作前(增加、移除、改变生命周期状态)，都会调用一个方法来检查状态是否被保存过：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">*	在onSaveInstanceState()</span></span><br><span class="line"><span class="comment">* 	android.support.v4.app.Fragment#onStop</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">checkStateLoss</span><span class="params">()</span></span>&#123;</span><br><span class="line">  	<span class="keyword">if</span> (mStateSaved) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(</span><br><span class="line">                    <span class="string">"Can not perform this action after onSaveInstanceState"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (mNoTransactionsBecause != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(</span><br><span class="line">                    <span class="string">"Can not perform this action inside of "</span> + mNoTransactionsBecause);</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果是使用transaction的过程中报错，建议将事务放到onResumeFragment或者onPostResume中执行。</p>
+<h2 id="Extra"><a href="#Extra" class="headerlink" title="Extra"></a>Extra</h2><h3 id="OnActivityResult"><a href="#OnActivityResult" class="headerlink" title="OnActivityResult"></a>OnActivityResult</h3><p>Fragment的onActivityResult只能接受fragment.startActivityForResult，同样的，fragment.startActivityForResult（）返回的事件不会被该framgnet所属的activity的onActivityResult()接收到</p>
+<h3 id="Remove出栈"><a href="#Remove出栈" class="headerlink" title="Remove出栈"></a>Remove出栈</h3><p>加入回退栈，不能使用remove，需要使用popBackStack（）进行出栈</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/android/" rel="tag"># android</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/30/Activity/" rel="next" title="Activity">
+                <i class="fa fa-chevron-left"></i> Activity
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/04/Android通讯录实现/" rel="prev" title="简单的通讯录实现ContactsList">
+                简单的通讯录实现ContactsList <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="hgDendi" />
+          <p class="site-author-name" itemprop="name">hgDendi</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#生命周期"><span class="nav-number">1.</span> <span class="nav-text">生命周期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FragmentManager"><span class="nav-number">2.</span> <span class="nav-text">FragmentManager</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#FragmentTransaction"><span class="nav-number">2.1.</span> <span class="nav-text">FragmentTransaction</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#与Activity的交互"><span class="nav-number">3.</span> <span class="nav-text">与Activity的交互</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Activity-gt-Fragment"><span class="nav-number">3.1.</span> <span class="nav-text">Activity -&gt; Fragment</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Fragment-gt-Activity"><span class="nav-number">3.2.</span> <span class="nav-text">Fragment -&gt; Activity</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存重启"><span class="nav-number">4.</span> <span class="nav-text">内存重启</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#LifeCycle"><span class="nav-number">4.1.</span> <span class="nav-text">LifeCycle</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Fragment-Overlap"><span class="nav-number">4.2.</span> <span class="nav-text">Fragment Overlap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Fragment-State-Loss"><span class="nav-number">4.3.</span> <span class="nav-text">Fragment State Loss</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Extra"><span class="nav-number">5.</span> <span class="nav-text">Extra</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#OnActivityResult"><span class="nav-number">5.1.</span> <span class="nav-text">OnActivityResult</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Remove出栈"><span class="nav-number">5.2.</span> <span class="nav-text">Remove出栈</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">hgDendi</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
