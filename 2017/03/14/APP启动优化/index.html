@@ -94,20 +94,18 @@
 
 
 
-<meta name="description" content="[TOC] APP启动优化启动方式冷启动 后台没有该应用的进程，这时系统会重新创建一个新的进程分配给该应用，这个启动方式就是冷启动。  整体流程  application以及activity初始化是一个比较复杂的过程，而白屏或黑屏就是这个过程的产物。 在应用程序刚启动到应用程序初始化完全之间有一段时间空隙，这时候系统创建了一个空白窗口，叫StartingWindow。这个窗口是一个临时窗口，对应的">
+<meta name="description" content="[TOC] APP启动优化启动方式冷启动 后台没有该应用的进程，这时系统会重新创建一个新的进程分配给该应用，这个启动方式就是冷启动。  application以及activity初始化是一个比较复杂的过程，而白屏或黑屏就是这个过程的产物。 在应用程序刚启动到应用程序初始化完全之间有一段时间空隙，这时候系统创建了一个空白窗口，叫StartingWindow。这个窗口是一个临时窗口，对应的Window">
 <meta name="keywords" content="android">
 <meta property="og:type" content="article">
 <meta property="og:title" content="APP启动优化">
 <meta property="og:url" content="http://www.hgworts.tech/2017/03/14/APP启动优化/index.html">
 <meta property="og:site_name" content="HgWorts">
-<meta property="og:description" content="[TOC] APP启动优化启动方式冷启动 后台没有该应用的进程，这时系统会重新创建一个新的进程分配给该应用，这个启动方式就是冷启动。  整体流程  application以及activity初始化是一个比较复杂的过程，而白屏或黑屏就是这个过程的产物。 在应用程序刚启动到应用程序初始化完全之间有一段时间空隙，这时候系统创建了一个空白窗口，叫StartingWindow。这个窗口是一个临时窗口，对应的">
+<meta property="og:description" content="[TOC] APP启动优化启动方式冷启动 后台没有该应用的进程，这时系统会重新创建一个新的进程分配给该应用，这个启动方式就是冷启动。  application以及activity初始化是一个比较复杂的过程，而白屏或黑屏就是这个过程的产物。 在应用程序刚启动到应用程序初始化完全之间有一段时间空隙，这时候系统创建了一个空白窗口，叫StartingWindow。这个窗口是一个临时窗口，对应的Window">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://mmbiz.qpic.cn/mmbiz_png/y5HvXaQmpqlaGgGLbnvDx2euvnOhxXDZa5p6rLCHqpicauy0NjMl3mLcrVfaD9QyZ0M7jZsE2oyQ5uzyWOT2icsg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1">
-<meta property="og:updated_time" content="2018-01-01T15:56:49.485Z">
+<meta property="og:updated_time" content="2018-01-24T16:05:44.233Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="APP启动优化">
-<meta name="twitter:description" content="[TOC] APP启动优化启动方式冷启动 后台没有该应用的进程，这时系统会重新创建一个新的进程分配给该应用，这个启动方式就是冷启动。  整体流程  application以及activity初始化是一个比较复杂的过程，而白屏或黑屏就是这个过程的产物。 在应用程序刚启动到应用程序初始化完全之间有一段时间空隙，这时候系统创建了一个空白窗口，叫StartingWindow。这个窗口是一个临时窗口，对应的">
-<meta name="twitter:image" content="http://mmbiz.qpic.cn/mmbiz_png/y5HvXaQmpqlaGgGLbnvDx2euvnOhxXDZa5p6rLCHqpicauy0NjMl3mLcrVfaD9QyZ0M7jZsE2oyQ5uzyWOT2icsg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1">
+<meta name="twitter:description" content="[TOC] APP启动优化启动方式冷启动 后台没有该应用的进程，这时系统会重新创建一个新的进程分配给该应用，这个启动方式就是冷启动。  application以及activity初始化是一个比较复杂的过程，而白屏或黑屏就是这个过程的产物。 在应用程序刚启动到应用程序初始化完全之间有一段时间空隙，这时候系统创建了一个空白窗口，叫StartingWindow。这个窗口是一个临时窗口，对应的Window">
 
 
 
@@ -358,8 +356,6 @@
 <h1 id="APP启动优化"><a href="#APP启动优化" class="headerlink" title="APP启动优化"></a>APP启动优化</h1><h2 id="启动方式"><a href="#启动方式" class="headerlink" title="启动方式"></a>启动方式</h2><h3 id="冷启动"><a href="#冷启动" class="headerlink" title="冷启动"></a>冷启动</h3><blockquote>
 <p>后台没有该应用的进程，这时系统会重新创建一个新的进程分配给该应用，这个启动方式就是冷启动。</p>
 </blockquote>
-<p>整体流程</p>
-<p><img src="http://mmbiz.qpic.cn/mmbiz_png/y5HvXaQmpqlaGgGLbnvDx2euvnOhxXDZa5p6rLCHqpicauy0NjMl3mLcrVfaD9QyZ0M7jZsE2oyQ5uzyWOT2icsg/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt="流程"></p>
 <p>application以及activity初始化是一个比较复杂的过程，而白屏或黑屏就是这个过程的产物。</p>
 <p>在应用程序刚启动到应用程序初始化完全之间有一段时间空隙，这时候系统创建了一个空白窗口，叫StartingWindow。这个窗口是一个临时窗口，对应的WindowType是TYPE_APPLICATION_STARTING。应用程序加载完第一帧后，这个窗口就会被移除。</p>
 <p>Window的顶层是DecorView，所以StartingWindow显示一个空DecorView，但是会给这个DecorView应用当前Activity指定的Theme，如果这个activity没有指定Theme就用application的，如果Theme是白色的，屏幕就是白色的；如果是Dark，就会显示黑屏。</p>

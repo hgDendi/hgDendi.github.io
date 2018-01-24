@@ -1174,8 +1174,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Groovy/" itemprop="url" rel="index">
-                    <span itemprop="name">Groovy</span>
+                  <a href="/categories/groovy/" itemprop="url" rel="index">
+                    <span itemprop="name">groovy</span>
                   </a>
                 </span>
 
@@ -1709,8 +1709,6 @@
 <h1 id="APP启动优化"><a href="#APP启动优化" class="headerlink" title="APP启动优化"></a>APP启动优化</h1><h2 id="启动方式"><a href="#启动方式" class="headerlink" title="启动方式"></a>启动方式</h2><h3 id="冷启动"><a href="#冷启动" class="headerlink" title="冷启动"></a>冷启动</h3><blockquote>
 <p>后台没有该应用的进程，这时系统会重新创建一个新的进程分配给该应用，这个启动方式就是冷启动。</p>
 </blockquote>
-<p>整体流程</p>
-<p><img src="http://mmbiz.qpic.cn/mmbiz_png/y5HvXaQmpqlaGgGLbnvDx2euvnOhxXDZa5p6rLCHqpicauy0NjMl3mLcrVfaD9QyZ0M7jZsE2oyQ5uzyWOT2icsg/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt="流程"></p>
 <p>application以及activity初始化是一个比较复杂的过程，而白屏或黑屏就是这个过程的产物。</p>
 <p>在应用程序刚启动到应用程序初始化完全之间有一段时间空隙，这时候系统创建了一个空白窗口，叫StartingWindow。这个窗口是一个临时窗口，对应的WindowType是TYPE_APPLICATION_STARTING。应用程序加载完第一帧后，这个窗口就会被移除。</p>
 <p>Window的顶层是DecorView，所以StartingWindow显示一个空DecorView，但是会给这个DecorView应用当前Activity指定的Theme，如果这个activity没有指定Theme就用application的，如果Theme是白色的，屏幕就是白色的；如果是Dark，就会显示黑屏。</p>
@@ -2704,7 +2702,7 @@
 <blockquote>
 <p>已经加载的类信息、常量、静态变量以及方法代码的内存区域</p>
 </blockquote>
-<h3 id="堆区"><a href="#堆区" class="headerlink" title="堆区"></a>堆区</h3><p>Java堆用来存放对象实例，几乎所有的对象实例都在这里分配内存。Java堆存储的对象被垃圾收集器管理，这些受管理的对象无需也无法显示的销毁。</p>
+<h3 id="堆区"><a href="#堆区" class="headerlink" title="堆区"></a>堆区</h3><p>Java堆用来存放对象实例，几乎所有的对象实例都在这里分配内存。Java堆存储的对象被垃圾收集器管理，这些受管理的对象无需也无法显式的销毁。</p>
 <p>从内存回收的角度，Java堆可以粗略的分为新生代和老年代。从内存分配的角度Java堆中可能划分出多个线程私有的分配缓冲区。不管如何划分，Java堆存储的内容是不变的，进行划分是为了能更快的回收或者分配内存。</p>
 <h4 id="对象在堆内存的布局"><a href="#对象在堆内存的布局" class="headerlink" title="对象在堆内存的布局"></a>对象在堆内存的布局</h4><ul>
 <li>对象头<ul>
@@ -2791,7 +2789,7 @@
 <li>该类对应的java.lang.Class对象没有任何地方被引用，无法再任何地方通过反射访问该类的方法</li>
 </ul>
 <h2 id="ClassLoader"><a href="#ClassLoader" class="headerlink" title="ClassLoader"></a>ClassLoader</h2><p>程序在启动的时候，并不会一次性加载所有要用的class文件，而是根据程序的需要，通过Java的类加载机制来动态加载某个class文件到内存当中的，从而只有class文件被载入到了内存之后，才能被其他class文件所引用。所以ClassLoader就是用来动态加载class文件到内存当中的。</p>
-
+<h3 id="Bootstrap-ClassLoader"><a href="#Bootstrap-ClassLoader" class="headerlink" title="Bootstrap ClassLoader"></a>Bootstrap ClassLoader</h3><h3 id="Extension-ClassLoader"><a href="#Extension-ClassLoader" class="headerlink" title="Extension ClassLoader"></a>Extension ClassLoader</h3><h3 id="App-ClassLoader"><a href="#App-ClassLoader" class="headerlink" title="App ClassLoader"></a>App ClassLoader</h3>
           
         
       
