@@ -3,8 +3,10 @@ layout: post
 comments: true
 title: "Android的IPC机制"
 date: 2017-05-07
-categories: android
-tags: [android]
+categories:
+- android
+tags:
+- android
 ---
 
 [TOC]

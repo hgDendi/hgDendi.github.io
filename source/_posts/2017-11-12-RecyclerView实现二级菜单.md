@@ -3,8 +3,10 @@ layout: post
 comments: true
 title: "RecyclerView实现二级菜单"
 date: 2017-11-12
-categories: android
-tags: [android]
+categories:
+- android
+tags:
+- android
 ---
 
 # ExpandableRecyclerView

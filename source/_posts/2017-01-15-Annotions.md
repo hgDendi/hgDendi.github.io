@@ -3,8 +3,10 @@ layout: post
 comments: true
 title: "Java Annotations"
 date: 2017-01-15
-categories: java
-tags: [java]
+categories:
+- java
+tags:
+- java
 ---
 
 [TOC]
