@@ -208,6 +208,26 @@
         </li>
       
         
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
@@ -246,6 +266,228 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.hgworts.tech/2017/01/15/Annotions/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hgDendi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HgWorts">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/01/15/Annotions/" itemprop="url">Java Annotations</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-15T00:00:00+08:00">
+                2017-01-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>[TOC]</p>
+<blockquote>
+<p>注解为我们在代码中添加信息提供了一种形式化的方法，使我们可以在稍后某个时刻非常方便的使用这些数据</p>
+<p>也称元数据</p>
+</blockquote>
+<h2 id="定义注解"><a href="#定义注解" class="headerlink" title="定义注解"></a>定义注解</h2><blockquote>
+<p>注解的定义看起来很像接口的定义</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Demo&#123;</span><br><span class="line">  <span class="function">String <span class="title">value</span><span class="params">()</span></span>; <span class="comment">//方法的形式表示属性,没有默认值的话需要手动赋值</span></span><br><span class="line">  <span class="function">String <span class="title">value2</span><span class="params">()</span> <span class="keyword">default</span> "helloWorld"</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 等价于,本质上是一个集成了Annotation接口的接口</span></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Demo</span> <span class="keyword">extends</span> <span class="title">java</span>.<span class="title">lang</span>.<span class="title">annotation</span>.<span class="title">Annotation</span></span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="元注解：（修饰注解的注解）"><a href="#元注解：（修饰注解的注解）" class="headerlink" title="元注解：（修饰注解的注解）"></a>元注解：（修饰注解的注解）</h3><ul>
+<li>@Target<ul>
+<li>用来定义注解应用于什么地方</li>
+<li>CONSTRUCTOR</li>
+<li>FIELD</li>
+<li>LOCAL_VARIABLE</li>
+<li>METHOD</li>
+<li>PACKAGE</li>
+<li>PARAMETER</li>
+<li>TYPE</li>
+</ul>
+</li>
+<li>@Rectetion<ul>
+<li>定义注解在哪一个级别可用<ul>
+<li>SOURCE<ul>
+<li>将被编译器丢弃</li>
+</ul>
+</li>
+<li>CLASS<ul>
+<li>注解在class文件中可用，但会被VM丢弃</li>
+<li>编译时注解</li>
+</ul>
+</li>
+<li>RUNTIME<ul>
+<li>可使用反射</li>
+<li>运行时注解</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>@Document<ul>
+<li>将此注解包含在JavaDoc中</li>
+</ul>
+</li>
+<li>@Inherited<ul>
+<li>允许子类继承父类中的注释</li>
+</ul>
+</li>
+</ul>
+<h3 id="marker-annotation-标注注解"><a href="#marker-annotation-标注注解" class="headerlink" title="marker annotation 标注注解"></a>marker annotation 标注注解</h3><ul>
+<li>没有元素的注解</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(ElementType.Method)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Test&#123;&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="注解元素"><a href="#注解元素" class="headerlink" title="注解元素"></a>注解元素</h3><p>注解元素可用的类型：</p>
+<ul>
+<li><p>所有基本类型</p>
+</li>
+<li><p>String</p>
+</li>
+<li><p>Class</p>
+</li>
+<li><p>enum</p>
+</li>
+<li><p>Annotation</p>
+</li>
+<li><p>数组</p>
+<blockquote>
+<p>元素不能有不确定的值，要么具有默认值，要么在使用注解时提供元素的值，且不能以null作为其值</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="运行时注解和编译时注解"><a href="#运行时注解和编译时注解" class="headerlink" title="运行时注解和编译时注解"></a>运行时注解和编译时注解</h3><h4 id="运行时注解"><a href="#运行时注解" class="headerlink" title="运行时注解"></a>运行时注解</h4><p>在程序运行时通过反射来获取注解和注解的属性值。但是因为大量使用反射，对程序会有性能上的影响。</p>
+<p>调用Class对象、Method对象、Field对象的getAnnotation(Class<a> annotationType)</a></p>
+<h4 id="编译时注解"><a href="#编译时注解" class="headerlink" title="编译时注解"></a>编译时注解</h4><p>在代码编译时通过APT（Annotation Processing Tool）获取注解和注解的属性值，并据此生成Java代码。在程序运行时只要调用编译时生成的代码即可，不需要再通过反射去解析注解。比如Dagger、ButterKnife等。</p>
+<h3 id="比如使用注解来实现一个简陋版的ButterKnife"><a href="#比如使用注解来实现一个简陋版的ButterKnife" class="headerlink" title="比如使用注解来实现一个简陋版的ButterKnife"></a>比如使用注解来实现一个简陋版的ButterKnife</h3><blockquote>
+<p>例子来自<a href="http://www.jianshu.com/p/bc70d5d71a61" target="_blank" rel="noopener">Ryon</a></p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Annotation</span></span><br><span class="line"><span class="meta">@Target</span>(ElementType.FIELD)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> ViewInject &#123;  </span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">value</span><span class="params">()</span> <span class="keyword">default</span> 0</span>;  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Activity</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">autoInjectAllField</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">        <span class="keyword">try</span> &#123;  </span><br><span class="line">            Class&lt;?&gt; clazz = <span class="keyword">this</span>.getClass();  </span><br><span class="line">            Field[] fields = clazz.getDeclaredFields();</span><br><span class="line">            <span class="keyword">for</span> (Field field : fields) &#123;  </span><br><span class="line">                <span class="comment">// 查看这个字段是否有我们自定义的注解类标志的  </span></span><br><span class="line">                <span class="keyword">if</span> (field.isAnnotationPresent(ViewInject.class)) &#123;  </span><br><span class="line">                    ViewInject inject = field.getAnnotation(ViewInject.class);  </span><br><span class="line">                    <span class="keyword">int</span> id = inject.value();  </span><br><span class="line">                    <span class="keyword">if</span> (id &gt; <span class="number">0</span>) &#123;  </span><br><span class="line">                        field.setAccessible(<span class="keyword">true</span>);  </span><br><span class="line">                        field.set(<span class="keyword">this</span>, <span class="keyword">this</span>.findViewById(id));<span class="comment">//给我们要找的字段设置值  </span></span><br><span class="line">                    &#125;  </span><br><span class="line">                &#125;  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125; <span class="keyword">catch</span> (IllegalAccessException e) &#123;  </span><br><span class="line">            e.printStackTrace();  </span><br><span class="line">        &#125; <span class="keyword">catch</span> (IllegalArgumentException e) &#123;  </span><br><span class="line">            e.printStackTrace();  </span><br><span class="line">        &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Android中的View"><a href="#Android中的View" class="headerlink" title="Android中的View"></a>Android中的View</h3><p>。Android中可以使用IntDef注解来声明常量值（配合BitMask使用更酸爽）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Toast</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> String TAG = <span class="string">"Toast"</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">boolean</span> localLOGV = <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** <span class="doctag">@hide</span> */</span></span><br><span class="line">    <span class="comment">/*定义部分*/</span></span><br><span class="line">    <span class="meta">@IntDef</span>(&#123;LENGTH_SHORT, LENGTH_LONG&#125;)</span><br><span class="line">    <span class="meta">@Retention</span>(RetentionPolicy.SOURCE)</span><br><span class="line">    <span class="keyword">public</span> <span class="meta">@interface</span> Duration &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> LENGTH_SHORT = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> LENGTH_LONG = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*作为类型使用时*/</span></span><br><span class="line">     <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Set how long to show the view for.</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span> #LENGTH_SHORT</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span> #LENGTH_LONG</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setDuration</span><span class="params">(@Duration <span class="keyword">int</span> duration)</span> </span>&#123;</span><br><span class="line">        mDuration = duration;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*做为返回值时*/</span></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Return the duration.</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span> #setDuration</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Duration</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getDuration</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mDuration;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
     
       
 
@@ -465,228 +707,6 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">draw</span><span class="params">(Canvas canvas)</span> </span>&#123;</span><br><span class="line">  . . . </span><br><span class="line">  <span class="comment">// 绘制背景，只有dirtyOpaque为false时才进行绘制，下同</span></span><br><span class="line">  <span class="keyword">int</span> saveCount;</span><br><span class="line">  <span class="keyword">if</span> (!dirtyOpaque) &#123;</span><br><span class="line">    drawBackground(canvas);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  . . . </span><br><span class="line"></span><br><span class="line">  <span class="comment">// 绘制自身内容</span></span><br><span class="line">  <span class="keyword">if</span> (!dirtyOpaque) onDraw(canvas);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 绘制子View</span></span><br><span class="line">  dispatchDraw(canvas);</span><br><span class="line"></span><br><span class="line">   . . .</span><br><span class="line">  <span class="comment">// 绘制滚动条等</span></span><br><span class="line">  onDrawForeground(canvas);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="requestLayout"><a href="#requestLayout" class="headerlink" title="requestLayout()"></a>requestLayout()</h4><p>调用measure()和layout()</p>
 <p>具体细节推荐<a href="http://www.jianshu.com/p/060b5f68da79" target="_blank" rel="noopener">此文</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.hgworts.tech/2017/01/15/Annotions/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="hgDendi">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HgWorts">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/01/15/Annotions/" itemprop="url">Java Annotations</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-15T00:00:00+08:00">
-                2017-01-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>[TOC]</p>
-<blockquote>
-<p>注解为我们在代码中添加信息提供了一种形式化的方法，使我们可以在稍后某个时刻非常方便的使用这些数据</p>
-<p>也称元数据</p>
-</blockquote>
-<h2 id="定义注解"><a href="#定义注解" class="headerlink" title="定义注解"></a>定义注解</h2><blockquote>
-<p>注解的定义看起来很像接口的定义</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Demo&#123;</span><br><span class="line">  <span class="function">String <span class="title">value</span><span class="params">()</span></span>; <span class="comment">//方法的形式表示属性,没有默认值的话需要手动赋值</span></span><br><span class="line">  <span class="function">String <span class="title">value2</span><span class="params">()</span> <span class="keyword">default</span> "helloWorld"</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 等价于,本质上是一个集成了Annotation接口的接口</span></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Demo</span> <span class="keyword">extends</span> <span class="title">java</span>.<span class="title">lang</span>.<span class="title">annotation</span>.<span class="title">Annotation</span></span>&#123;&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="元注解：（修饰注解的注解）"><a href="#元注解：（修饰注解的注解）" class="headerlink" title="元注解：（修饰注解的注解）"></a>元注解：（修饰注解的注解）</h3><ul>
-<li>@Target<ul>
-<li>用来定义注解应用于什么地方</li>
-<li>CONSTRUCTOR</li>
-<li>FIELD</li>
-<li>LOCAL_VARIABLE</li>
-<li>METHOD</li>
-<li>PACKAGE</li>
-<li>PARAMETER</li>
-<li>TYPE</li>
-</ul>
-</li>
-<li>@Rectetion<ul>
-<li>定义注解在哪一个级别可用<ul>
-<li>SOURCE<ul>
-<li>将被编译器丢弃</li>
-</ul>
-</li>
-<li>CLASS<ul>
-<li>注解在class文件中可用，但会被VM丢弃</li>
-<li>编译时注解</li>
-</ul>
-</li>
-<li>RUNTIME<ul>
-<li>可使用反射</li>
-<li>运行时注解</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>@Document<ul>
-<li>将此注解包含在JavaDoc中</li>
-</ul>
-</li>
-<li>@Inherited<ul>
-<li>允许子类继承父类中的注释</li>
-</ul>
-</li>
-</ul>
-<h3 id="marker-annotation-标注注解"><a href="#marker-annotation-标注注解" class="headerlink" title="marker annotation 标注注解"></a>marker annotation 标注注解</h3><ul>
-<li>没有元素的注解</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(ElementType.Method)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Test&#123;&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="注解元素"><a href="#注解元素" class="headerlink" title="注解元素"></a>注解元素</h3><p>注解元素可用的类型：</p>
-<ul>
-<li><p>所有基本类型</p>
-</li>
-<li><p>String</p>
-</li>
-<li><p>Class</p>
-</li>
-<li><p>enum</p>
-</li>
-<li><p>Annotation</p>
-</li>
-<li><p>数组</p>
-<blockquote>
-<p>元素不能有不确定的值，要么具有默认值，要么在使用注解时提供元素的值，且不能以null作为其值</p>
-</blockquote>
-</li>
-</ul>
-<h3 id="运行时注解和编译时注解"><a href="#运行时注解和编译时注解" class="headerlink" title="运行时注解和编译时注解"></a>运行时注解和编译时注解</h3><h4 id="运行时注解"><a href="#运行时注解" class="headerlink" title="运行时注解"></a>运行时注解</h4><p>在程序运行时通过反射来获取注解和注解的属性值。但是因为大量使用反射，对程序会有性能上的影响。</p>
-<p>调用Class对象、Method对象、Field对象的getAnnotation(Class<a> annotationType)</a></p>
-<h4 id="编译时注解"><a href="#编译时注解" class="headerlink" title="编译时注解"></a>编译时注解</h4><p>在代码编译时通过APT（Annotation Processing Tool）获取注解和注解的属性值，并据此生成Java代码。在程序运行时只要调用编译时生成的代码即可，不需要再通过反射去解析注解。比如Dagger、ButterKnife等。</p>
-<h3 id="比如使用注解来实现一个简陋版的ButterKnife"><a href="#比如使用注解来实现一个简陋版的ButterKnife" class="headerlink" title="比如使用注解来实现一个简陋版的ButterKnife"></a>比如使用注解来实现一个简陋版的ButterKnife</h3><blockquote>
-<p>例子来自<a href="http://www.jianshu.com/p/bc70d5d71a61" target="_blank" rel="noopener">Ryon</a></p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Annotation</span></span><br><span class="line"><span class="meta">@Target</span>(ElementType.FIELD)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> ViewInject &#123;  </span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">value</span><span class="params">()</span> <span class="keyword">default</span> 0</span>;  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Activity</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">autoInjectAllField</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">        <span class="keyword">try</span> &#123;  </span><br><span class="line">            Class&lt;?&gt; clazz = <span class="keyword">this</span>.getClass();  </span><br><span class="line">            Field[] fields = clazz.getDeclaredFields();</span><br><span class="line">            <span class="keyword">for</span> (Field field : fields) &#123;  </span><br><span class="line">                <span class="comment">// 查看这个字段是否有我们自定义的注解类标志的  </span></span><br><span class="line">                <span class="keyword">if</span> (field.isAnnotationPresent(ViewInject.class)) &#123;  </span><br><span class="line">                    ViewInject inject = field.getAnnotation(ViewInject.class);  </span><br><span class="line">                    <span class="keyword">int</span> id = inject.value();  </span><br><span class="line">                    <span class="keyword">if</span> (id &gt; <span class="number">0</span>) &#123;  </span><br><span class="line">                        field.setAccessible(<span class="keyword">true</span>);  </span><br><span class="line">                        field.set(<span class="keyword">this</span>, <span class="keyword">this</span>.findViewById(id));<span class="comment">//给我们要找的字段设置值  </span></span><br><span class="line">                    &#125;  </span><br><span class="line">                &#125;  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125; <span class="keyword">catch</span> (IllegalAccessException e) &#123;  </span><br><span class="line">            e.printStackTrace();  </span><br><span class="line">        &#125; <span class="keyword">catch</span> (IllegalArgumentException e) &#123;  </span><br><span class="line">            e.printStackTrace();  </span><br><span class="line">        &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Android中的View"><a href="#Android中的View" class="headerlink" title="Android中的View"></a>Android中的View</h3><p>。Android中可以使用IntDef注解来声明常量值（配合BitMask使用更酸爽）</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Toast</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> String TAG = <span class="string">"Toast"</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">boolean</span> localLOGV = <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** <span class="doctag">@hide</span> */</span></span><br><span class="line">    <span class="comment">/*定义部分*/</span></span><br><span class="line">    <span class="meta">@IntDef</span>(&#123;LENGTH_SHORT, LENGTH_LONG&#125;)</span><br><span class="line">    <span class="meta">@Retention</span>(RetentionPolicy.SOURCE)</span><br><span class="line">    <span class="keyword">public</span> <span class="meta">@interface</span> Duration &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> LENGTH_SHORT = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> LENGTH_LONG = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*作为类型使用时*/</span></span><br><span class="line">     <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Set how long to show the view for.</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span> #LENGTH_SHORT</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span> #LENGTH_LONG</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setDuration</span><span class="params">(@Duration <span class="keyword">int</span> duration)</span> </span>&#123;</span><br><span class="line">        mDuration = duration;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*做为返回值时*/</span></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Return the duration.</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span> #setDuration</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Duration</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getDuration</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mDuration;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
           
         
@@ -1676,6 +1696,209 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.hgworts.tech/2016/12/30/Fragment/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hgDendi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HgWorts">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/12/30/Fragment/" itemprop="url">Fragment</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-30T00:00:00+08:00">
+                2016-12-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/android/" itemprop="url" rel="index">
+                    <span itemprop="name">android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>[TOC]</p>
+<blockquote>
+<p>本质上是view，但会是一个比较重量级的view（具有生命周期）</p>
+</blockquote>
+<h2 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h2><p>注意点：</p>
+<p>Fragment 的生命周期，除了第一次它创建或销毁之外，<strong>统统都是由 Activity 所驱动的</strong>。</p>
+<p>比如说同一个Activity中多个fragment的hide和show，只会调用到onHiddenChange()，并不会调用到onPause的生命周期！（但是用replace的话会重新创建fragment）</p>
+<p>系统通过Fragment的setUserVisibleHint(boolean)来控制是否显示，故而若要在<strong>ViewPager中实现懒加载</strong>，最好将其实现在setUserVisibileHint()中。（ViewPager默认加载相邻的fragment，setOffscreenPageLimit只能设置大于等于1的数字）</p>
+<p>下面说很有名的一张生命周期图：</p>
+<p><img src="https://ww2.sinaimg.cn/large/006tNc79gw1fbaculez38j30x81ywwnl.jpg" alt="complete_android_fragment_lifecycle"></p>
+<h2 id="FragmentManager"><a href="#FragmentManager" class="headerlink" title="FragmentManager"></a>FragmentManager</h2><ul>
+<li>管理Activity中的所有的fragment</li>
+<li>所有fragment被放入一个栈中，每一个fragment都有一个FragmentState实例，相当于snapshot。</li>
+<li>内存重启时会把每个Fragment的state存储起来，最终存储到Activity的savedInstanceState中</li>
+<li>对于Fragment<ul>
+<li>getFragmentManager，获取父Fragment的FragmentManager（如果已是父Fragment，则会获得Activity的）</li>
+<li>getChildFragmentManager，获取当前Fragment（可能是嵌套子Fragment）的FragmentManager</li>
+</ul>
+</li>
+</ul>
+<h3 id="FragmentTransaction"><a href="#FragmentTransaction" class="headerlink" title="FragmentTransaction"></a>FragmentTransaction</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Fragment fragment = <span class="keyword">new</span> Fragment();</span><br><span class="line">FragmentTransaction transaction = getFragmentManager().beginTransaction();</span><br><span class="line">transaction.replace(R.id.fragment_container,fragment)</span><br><span class="line">  .addToBackStack()</span><br><span class="line">  .commit();</span><br></pre></td></tr></table></figure>
+<ul>
+<li>addToBackStack表示将此事务压入栈中，在用户按下back键时会进行回退操作<ul>
+<li>在上例中表示回到嵌入fragment之前的状态。</li>
+</ul>
+</li>
+<li>执行hide() show()，会调用到onHiddenChanged(),不会调用onDestroyView()等。</li>
+<li>add() replace()不要在同一阶级的FragmentManager里混搭使用</li>
+<li>此commit为异步操作,加入队列。否则请使用commit</li>
+</ul>
+<h2 id="与Activity的交互"><a href="#与Activity的交互" class="headerlink" title="与Activity的交互"></a>与Activity的交互</h2><h3 id="Activity-gt-Fragment"><a href="#Activity-gt-Fragment" class="headerlink" title="Activity -&gt; Fragment"></a>Activity -&gt; Fragment</h3><ol>
+<li><p>使用argument进行传值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//in activity</span></span><br><span class="line">fragment.setArguments(Bundle);</span><br><span class="line"></span><br><span class="line"><span class="comment">//in fragment</span></span><br><span class="line">getArgument();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用fragmentmanager获取实例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fragmentManager.findFragmnetById();</span><br><span class="line">fragmentManager.findFragmentByTag();</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="Fragment-gt-Activity"><a href="#Fragment-gt-Activity" class="headerlink" title="Fragment -&gt; Activity"></a>Fragment -&gt; Activity</h3><ol>
+<li><p>建立一个callback借口，由Activity来实现。这也是Android模版中的用法。</p>
+<p>也有比较暴力的方法是直接持有Activity引用的，这点一般不会出问题，但是从面向对象角度来说要尽量避免。</p>
+<p>​</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DendiFragment</span> <span class="keyword">extends</span> <span class="title">Fragment</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> Callbacks mCallbacks;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Callbacks</span></span>&#123;</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onItemClicked</span><span class="params">(Integer id)</span></span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAttach</span><span class="params">(Activity activity)</span></span>&#123;</span><br><span class="line">		<span class="comment">//TODO</span></span><br><span class="line">		mCallbacks = (Callbacks)activity;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDetach</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="comment">//TODO</span></span><br><span class="line">		mCallbacks = <span class="keyword">null</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>getActivity()获得宿主Activity</p>
+<p><strong>需要注意</strong>，如果当前Fragment已经onDetach()，则此方法会返回null。</p>
+<p>要避免异步任务中getActivity时返回空指针（同样也要注意如果使用引用可能造成的内存泄漏）</p>
+</li>
+</ol>
+<h2 id="内存重启"><a href="#内存重启" class="headerlink" title="内存重启"></a>内存重启</h2><p>系统回收会把Activity的状态保存下来，Activity的FragmentManager负责把Activity中的Fragment保存起来。</p>
+<p>内存重启时FragmentManager会把每个Fragment的state存储起来，最终存储到Activity的savedInstanceState中。</p>
+<p>保存的状态包括argument，故而getArgument()仍然可以拿到正确的数据。</p>
+<p>另外需要注意内存重启情况下需要判断onCreate采取正常流程还是恢复流程（恢复流程的话fragment会储存在FragmentManager中，不需要重新new）</p>
+<h3 id="LifeCycle"><a href="#LifeCycle" class="headerlink" title="LifeCycle"></a>LifeCycle</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">*ActivityA中嵌一个FragmentA，</span></span><br><span class="line"><span class="comment">*如果此时启动ActivityB，且ActivityA因为内存不足或其他原因被回收的时候，</span></span><br><span class="line"><span class="comment">*从B回到A，会回调这样的生命周期：</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line">ActivityB.onPause();</span><br><span class="line"></span><br><span class="line">ActivityA.onCreate();</span><br><span class="line">FragmentA.onAttach();</span><br><span class="line">ActivityA.onAttachFragment();</span><br><span class="line">FragmentA.onCreate();</span><br><span class="line">FragmentA.onViewCreated();</span><br><span class="line">ActivityA.onStart();</span><br><span class="line">FragmentA.onStart();</span><br><span class="line">ActivityA.onRestoreInstanceState();</span><br><span class="line">ActivityA.onResume();</span><br><span class="line">FragmentA.onResume();</span><br><span class="line"></span><br><span class="line">ActivityB.onStop();</span><br><span class="line">ActivityB.onDestroy();</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">*ActivityA中嵌一个FragmentA，</span></span><br><span class="line"><span class="comment">*按下home，且ActivityA因为内存不足或其他原因被回收的时候，</span></span><br><span class="line"><span class="comment">*从屏幕回到A，会回调这样的声明周期：</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line">ActivityA.onCreate();</span><br><span class="line">FragmentA.onAttach();</span><br><span class="line">FragmentA.onCreate();</span><br><span class="line">ActivityA.onStart();</span><br><span class="line">FragmentA.onStart();</span><br><span class="line">ActivityA.onResume();</span><br><span class="line">FragmentA.onResume();</span><br></pre></td></tr></table></figure>
+<h3 id="Fragment-Overlap"><a href="#Fragment-Overlap" class="headerlink" title="Fragment Overlap"></a>Fragment Overlap</h3><p>当Fragment所在Activity被意外清理掉时，会从栈底向栈顶的顺序恢复fragments,并且全部都是以show()的方式，所以会看到界面重叠。（针对hide和show方式进行Fragment展示的场景，24版本以下在内存重启时没有保存mHidden字段）</p>
+<p>也有可能是因为onCreate()中又执行了一遍。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span></span>&#123;</span><br><span class="line">  	<span class="comment">//todo</span></span><br><span class="line">  	</span><br><span class="line">  	<span class="keyword">if</span>(savedInstanceState != <span class="keyword">null</span>)&#123;</span><br><span class="line">  		<span class="comment">//可以使用getFragments()获取栈内所有Fragment</span></span><br><span class="line">      	getFragemntManager().beginTransaction().show(XX).hide(XX).commit();</span><br><span class="line">  	&#125;</span><br><span class="line">  	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Fragment-State-Loss"><a href="#Fragment-State-Loss" class="headerlink" title="Fragment State Loss"></a>Fragment State Loss</h3><p>FragmentManager的每一个操作前(增加、移除、改变生命周期状态)，都会调用一个方法来检查状态是否被保存过：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">*	在onSaveInstanceState()</span></span><br><span class="line"><span class="comment">* 	android.support.v4.app.Fragment#onStop</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">checkStateLoss</span><span class="params">()</span></span>&#123;</span><br><span class="line">  	<span class="keyword">if</span> (mStateSaved) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(</span><br><span class="line">                    <span class="string">"Can not perform this action after onSaveInstanceState"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (mNoTransactionsBecause != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(</span><br><span class="line">                    <span class="string">"Can not perform this action inside of "</span> + mNoTransactionsBecause);</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果是使用transaction的过程中报错，建议将事务放到onResumeFragment或者onPostResume中执行。</p>
+<h2 id="Extra"><a href="#Extra" class="headerlink" title="Extra"></a>Extra</h2><h3 id="OnActivityResult"><a href="#OnActivityResult" class="headerlink" title="OnActivityResult"></a>OnActivityResult</h3><p>Fragment的onActivityResult只能接受fragment.startActivityForResult，同样的，fragment.startActivityForResult（）返回的事件不会被该framgnet所属的activity的onActivityResult()接收到</p>
+<h3 id="Remove出栈"><a href="#Remove出栈" class="headerlink" title="Remove出栈"></a>Remove出栈</h3><p>加入回退栈，不能使用remove，需要使用popBackStack（）进行出栈</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://www.hgworts.tech/2016/12/30/Activity/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1969,209 +2192,6 @@
 <h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><h4 id="普通动画"><a href="#普通动画" class="headerlink" title="普通动画"></a>普通动画</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//ActivityA</span></span><br><span class="line">startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(<span class="keyword">this</span>).toBundle());</span><br><span class="line"></span><br><span class="line"><span class="comment">//ActivityB先声明后设置</span></span><br><span class="line">A在代码中声明</span><br><span class="line">getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);</span><br><span class="line">B在xml中声明</span><br><span class="line">&lt;item name="android:windowContentTransitions"&gt;true&lt;/item&gt;</span><br><span class="line"></span><br><span class="line">具体设置:</span><br><span class="line">getWindow().setEnterTransition(<span class="keyword">new</span> Explode());</span><br><span class="line">getWindow().setExitTransition(<span class="keyword">new</span> Slide());</span><br></pre></td></tr></table></figure>
 <h4 id="淡出效果"><a href="#淡出效果" class="headerlink" title="淡出效果"></a>淡出效果</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">在ActivityA和ActivityB中同时定义</span><br><span class="line">android:transitionName=<span class="string">"XXX"</span></span><br><span class="line"></span><br><span class="line">如果只需要一个共享元素，可以在ActivityA中：</span><br><span class="line">startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(<span class="keyword">this</span>,view,<span class="string">"share"</span>).toBundle());</span><br><span class="line"></span><br><span class="line">如果需要多个共享元素</span><br><span class="line">startActivity(intent,</span><br><span class="line">    ActivityOptions.makeSceneTransitionAnimation(</span><br><span class="line">        <span class="keyword">this</span>,</span><br><span class="line">        Pair.Create(view,<span class="string">"share"</span>),Pair.create(fab,<span class="string">"fab"</span>)</span><br><span class="line">    ).toBundle()</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
 <h4 id="定义在Theme中"><a href="#定义在Theme中" class="headerlink" title="定义在Theme中"></a>定义在Theme中</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"AppTheme"</span> <span class="attr">parent</span>=<span class="string">"Theme.AppCompat.Light.DarkActionBar"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="xml">    <span class="comment">&lt;!-- Customize your theme here. --&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:windowAnimationStyle"</span>&gt;</span>@style/ActivityAnimTheme<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"ActivityAnimTheme"</span> <span class="attr">parent</span>=<span class="string">"@android:style/Animation.Activity"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:activityOpenEnterAnimation"</span>&gt;</span>@anim/activity_right_in<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:activityOpenExitAnimation"</span>&gt;</span>@anim/activity_right_out<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:activityCloseEnterAnimation"</span>&gt;</span>@anim/activity_right_in<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:activityCloseExitAnimation"</span>&gt;</span>@anim/activity_right_out<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"></span><br><span class="line">//下面是xml的sample</span><br><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">set</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">translate</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:duration</span>=<span class="string">"500"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:fromXDelta</span>=<span class="string">"100%"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:fromYDelta</span>=<span class="string">"0"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:interpolator</span>=<span class="string">"@android:anim/accelerate_decelerate_interpolator"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:toXDelta</span>=<span class="string">"0%"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:toYDelta</span>=<span class="string">"0"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">set</span>&gt;</span></span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.hgworts.tech/2016/12/30/Fragment/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="hgDendi">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HgWorts">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/12/30/Fragment/" itemprop="url">Fragment</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-12-30T00:00:00+08:00">
-                2016-12-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/android/" itemprop="url" rel="index">
-                    <span itemprop="name">android</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>[TOC]</p>
-<blockquote>
-<p>本质上是view，但会是一个比较重量级的view（具有生命周期）</p>
-</blockquote>
-<h2 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h2><p>注意点：</p>
-<p>Fragment 的生命周期，除了第一次它创建或销毁之外，<strong>统统都是由 Activity 所驱动的</strong>。</p>
-<p>比如说同一个Activity中多个fragment的hide和show，只会调用到onHiddenChange()，并不会调用到onPause的生命周期！（但是用replace的话会重新创建fragment）</p>
-<p>系统通过Fragment的setUserVisibleHint(boolean)来控制是否显示，故而若要在<strong>ViewPager中实现懒加载</strong>，最好将其实现在setUserVisibileHint()中。（ViewPager默认加载相邻的fragment，setOffscreenPageLimit只能设置大于等于1的数字）</p>
-<p>下面说很有名的一张生命周期图：</p>
-<p><img src="https://ww2.sinaimg.cn/large/006tNc79gw1fbaculez38j30x81ywwnl.jpg" alt="complete_android_fragment_lifecycle"></p>
-<h2 id="FragmentManager"><a href="#FragmentManager" class="headerlink" title="FragmentManager"></a>FragmentManager</h2><ul>
-<li>管理Activity中的所有的fragment</li>
-<li>所有fragment被放入一个栈中，每一个fragment都有一个FragmentState实例，相当于snapshot。</li>
-<li>内存重启时会把每个Fragment的state存储起来，最终存储到Activity的savedInstanceState中</li>
-<li>对于Fragment<ul>
-<li>getFragmentManager，获取父Fragment的FragmentManager（如果已是父Fragment，则会获得Activity的）</li>
-<li>getChildFragmentManager，获取当前Fragment（可能是嵌套子Fragment）的FragmentManager</li>
-</ul>
-</li>
-</ul>
-<h3 id="FragmentTransaction"><a href="#FragmentTransaction" class="headerlink" title="FragmentTransaction"></a>FragmentTransaction</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Fragment fragment = <span class="keyword">new</span> Fragment();</span><br><span class="line">FragmentTransaction transaction = getFragmentManager().beginTransaction();</span><br><span class="line">transaction.replace(R.id.fragment_container,fragment)</span><br><span class="line">  .addToBackStack()</span><br><span class="line">  .commit();</span><br></pre></td></tr></table></figure>
-<ul>
-<li>addToBackStack表示将此事务压入栈中，在用户按下back键时会进行回退操作<ul>
-<li>在上例中表示回到嵌入fragment之前的状态。</li>
-</ul>
-</li>
-<li>执行hide() show()，会调用到onHiddenChanged(),不会调用onDestroyView()等。</li>
-<li>add() replace()不要在同一阶级的FragmentManager里混搭使用</li>
-<li>此commit为异步操作,加入队列。否则请使用commit</li>
-</ul>
-<h2 id="与Activity的交互"><a href="#与Activity的交互" class="headerlink" title="与Activity的交互"></a>与Activity的交互</h2><h3 id="Activity-gt-Fragment"><a href="#Activity-gt-Fragment" class="headerlink" title="Activity -&gt; Fragment"></a>Activity -&gt; Fragment</h3><ol>
-<li><p>使用argument进行传值</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//in activity</span></span><br><span class="line">fragment.setArguments(Bundle);</span><br><span class="line"></span><br><span class="line"><span class="comment">//in fragment</span></span><br><span class="line">getArgument();</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用fragmentmanager获取实例</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fragmentManager.findFragmnetById();</span><br><span class="line">fragmentManager.findFragmentByTag();</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h3 id="Fragment-gt-Activity"><a href="#Fragment-gt-Activity" class="headerlink" title="Fragment -&gt; Activity"></a>Fragment -&gt; Activity</h3><ol>
-<li><p>建立一个callback借口，由Activity来实现。这也是Android模版中的用法。</p>
-<p>也有比较暴力的方法是直接持有Activity引用的，这点一般不会出问题，但是从面向对象角度来说要尽量避免。</p>
-<p>​</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DendiFragment</span> <span class="keyword">extends</span> <span class="title">Fragment</span></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> Callbacks mCallbacks;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Callbacks</span></span>&#123;</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onItemClicked</span><span class="params">(Integer id)</span></span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAttach</span><span class="params">(Activity activity)</span></span>&#123;</span><br><span class="line">		<span class="comment">//TODO</span></span><br><span class="line">		mCallbacks = (Callbacks)activity;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDetach</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="comment">//TODO</span></span><br><span class="line">		mCallbacks = <span class="keyword">null</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>getActivity()获得宿主Activity</p>
-<p><strong>需要注意</strong>，如果当前Fragment已经onDetach()，则此方法会返回null。</p>
-<p>要避免异步任务中getActivity时返回空指针（同样也要注意如果使用引用可能造成的内存泄漏）</p>
-</li>
-</ol>
-<h2 id="内存重启"><a href="#内存重启" class="headerlink" title="内存重启"></a>内存重启</h2><p>系统回收会把Activity的状态保存下来，Activity的FragmentManager负责把Activity中的Fragment保存起来。</p>
-<p>内存重启时FragmentManager会把每个Fragment的state存储起来，最终存储到Activity的savedInstanceState中。</p>
-<p>保存的状态包括argument，故而getArgument()仍然可以拿到正确的数据。</p>
-<p>另外需要注意内存重启情况下需要判断onCreate采取正常流程还是恢复流程（恢复流程的话fragment会储存在FragmentManager中，不需要重新new）</p>
-<h3 id="LifeCycle"><a href="#LifeCycle" class="headerlink" title="LifeCycle"></a>LifeCycle</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">*ActivityA中嵌一个FragmentA，</span></span><br><span class="line"><span class="comment">*如果此时启动ActivityB，且ActivityA因为内存不足或其他原因被回收的时候，</span></span><br><span class="line"><span class="comment">*从B回到A，会回调这样的生命周期：</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line">ActivityB.onPause();</span><br><span class="line"></span><br><span class="line">ActivityA.onCreate();</span><br><span class="line">FragmentA.onAttach();</span><br><span class="line">ActivityA.onAttachFragment();</span><br><span class="line">FragmentA.onCreate();</span><br><span class="line">FragmentA.onViewCreated();</span><br><span class="line">ActivityA.onStart();</span><br><span class="line">FragmentA.onStart();</span><br><span class="line">ActivityA.onRestoreInstanceState();</span><br><span class="line">ActivityA.onResume();</span><br><span class="line">FragmentA.onResume();</span><br><span class="line"></span><br><span class="line">ActivityB.onStop();</span><br><span class="line">ActivityB.onDestroy();</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">*ActivityA中嵌一个FragmentA，</span></span><br><span class="line"><span class="comment">*按下home，且ActivityA因为内存不足或其他原因被回收的时候，</span></span><br><span class="line"><span class="comment">*从屏幕回到A，会回调这样的声明周期：</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line">ActivityA.onCreate();</span><br><span class="line">FragmentA.onAttach();</span><br><span class="line">FragmentA.onCreate();</span><br><span class="line">ActivityA.onStart();</span><br><span class="line">FragmentA.onStart();</span><br><span class="line">ActivityA.onResume();</span><br><span class="line">FragmentA.onResume();</span><br></pre></td></tr></table></figure>
-<h3 id="Fragment-Overlap"><a href="#Fragment-Overlap" class="headerlink" title="Fragment Overlap"></a>Fragment Overlap</h3><p>当Fragment所在Activity被意外清理掉时，会从栈底向栈顶的顺序恢复fragments,并且全部都是以show()的方式，所以会看到界面重叠。（针对hide和show方式进行Fragment展示的场景，24版本以下在内存重启时没有保存mHidden字段）</p>
-<p>也有可能是因为onCreate()中又执行了一遍。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span></span>&#123;</span><br><span class="line">  	<span class="comment">//todo</span></span><br><span class="line">  	</span><br><span class="line">  	<span class="keyword">if</span>(savedInstanceState != <span class="keyword">null</span>)&#123;</span><br><span class="line">  		<span class="comment">//可以使用getFragments()获取栈内所有Fragment</span></span><br><span class="line">      	getFragemntManager().beginTransaction().show(XX).hide(XX).commit();</span><br><span class="line">  	&#125;</span><br><span class="line">  	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Fragment-State-Loss"><a href="#Fragment-State-Loss" class="headerlink" title="Fragment State Loss"></a>Fragment State Loss</h3><p>FragmentManager的每一个操作前(增加、移除、改变生命周期状态)，都会调用一个方法来检查状态是否被保存过：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">*	在onSaveInstanceState()</span></span><br><span class="line"><span class="comment">* 	android.support.v4.app.Fragment#onStop</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">checkStateLoss</span><span class="params">()</span></span>&#123;</span><br><span class="line">  	<span class="keyword">if</span> (mStateSaved) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(</span><br><span class="line">                    <span class="string">"Can not perform this action after onSaveInstanceState"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (mNoTransactionsBecause != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(</span><br><span class="line">                    <span class="string">"Can not perform this action inside of "</span> + mNoTransactionsBecause);</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如果是使用transaction的过程中报错，建议将事务放到onResumeFragment或者onPostResume中执行。</p>
-<h2 id="Extra"><a href="#Extra" class="headerlink" title="Extra"></a>Extra</h2><h3 id="OnActivityResult"><a href="#OnActivityResult" class="headerlink" title="OnActivityResult"></a>OnActivityResult</h3><p>Fragment的onActivityResult只能接受fragment.startActivityForResult，同样的，fragment.startActivityForResult（）返回的事件不会被该framgnet所属的activity的onActivityResult()接收到</p>
-<h3 id="Remove出栈"><a href="#Remove出栈" class="headerlink" title="Remove出栈"></a>Remove出栈</h3><p>加入回退栈，不能使用remove，需要使用popBackStack（）进行出栈</p>
-
           
         
       
