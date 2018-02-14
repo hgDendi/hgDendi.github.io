@@ -139,6 +139,15 @@
 
 
 
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-89798235-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
 
 
 
@@ -244,6 +253,239 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.hgworts.tech/2017/01/15/Annotions/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hgDendi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HgWorts">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/01/15/Annotions/" itemprop="url">Java Annotations</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-15T00:00:00+08:00">
+                2017-01-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/01/15/Annotions/" class="leancloud_visitors" data-flag-title="Java Annotations">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>[TOC]</p>
+<blockquote>
+<p>注解为我们在代码中添加信息提供了一种形式化的方法，使我们可以在稍后某个时刻非常方便的使用这些数据</p>
+<p>也称元数据</p>
+</blockquote>
+<h2 id="定义注解"><a href="#定义注解" class="headerlink" title="定义注解"></a>定义注解</h2><blockquote>
+<p>注解的定义看起来很像接口的定义</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Demo&#123;</span><br><span class="line">  <span class="function">String <span class="title">value</span><span class="params">()</span></span>; <span class="comment">//方法的形式表示属性,没有默认值的话需要手动赋值</span></span><br><span class="line">  <span class="function">String <span class="title">value2</span><span class="params">()</span> <span class="keyword">default</span> "helloWorld"</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 等价于,本质上是一个集成了Annotation接口的接口</span></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Demo</span> <span class="keyword">extends</span> <span class="title">java</span>.<span class="title">lang</span>.<span class="title">annotation</span>.<span class="title">Annotation</span></span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="元注解：（修饰注解的注解）"><a href="#元注解：（修饰注解的注解）" class="headerlink" title="元注解：（修饰注解的注解）"></a>元注解：（修饰注解的注解）</h3><ul>
+<li>@Target<ul>
+<li>用来定义注解应用于什么地方</li>
+<li>CONSTRUCTOR</li>
+<li>FIELD</li>
+<li>LOCAL_VARIABLE</li>
+<li>METHOD</li>
+<li>PACKAGE</li>
+<li>PARAMETER</li>
+<li>TYPE</li>
+</ul>
+</li>
+<li>@Rectetion<ul>
+<li>定义注解在哪一个级别可用<ul>
+<li>SOURCE<ul>
+<li>将被编译器丢弃</li>
+</ul>
+</li>
+<li>CLASS<ul>
+<li>注解在class文件中可用，但会被VM丢弃</li>
+<li>编译时注解</li>
+</ul>
+</li>
+<li>RUNTIME<ul>
+<li>可使用反射</li>
+<li>运行时注解</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>@Document<ul>
+<li>将此注解包含在JavaDoc中</li>
+</ul>
+</li>
+<li>@Inherited<ul>
+<li>允许子类继承父类中的注释</li>
+</ul>
+</li>
+</ul>
+<h3 id="marker-annotation-标注注解"><a href="#marker-annotation-标注注解" class="headerlink" title="marker annotation 标注注解"></a>marker annotation 标注注解</h3><ul>
+<li>没有元素的注解</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(ElementType.Method)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Test&#123;&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="注解元素"><a href="#注解元素" class="headerlink" title="注解元素"></a>注解元素</h3><p>注解元素可用的类型：</p>
+<ul>
+<li><p>所有基本类型</p>
+</li>
+<li><p>String</p>
+</li>
+<li><p>Class</p>
+</li>
+<li><p>enum</p>
+</li>
+<li><p>Annotation</p>
+</li>
+<li><p>数组</p>
+<blockquote>
+<p>元素不能有不确定的值，要么具有默认值，要么在使用注解时提供元素的值，且不能以null作为其值</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="运行时注解和编译时注解"><a href="#运行时注解和编译时注解" class="headerlink" title="运行时注解和编译时注解"></a>运行时注解和编译时注解</h3><h4 id="运行时注解"><a href="#运行时注解" class="headerlink" title="运行时注解"></a>运行时注解</h4><p>在程序运行时通过反射来获取注解和注解的属性值。但是因为大量使用反射，对程序会有性能上的影响。</p>
+<p>调用Class对象、Method对象、Field对象的getAnnotation(Class<a> annotationType)</a></p>
+<h4 id="编译时注解"><a href="#编译时注解" class="headerlink" title="编译时注解"></a>编译时注解</h4><p>在代码编译时通过APT（Annotation Processing Tool）获取注解和注解的属性值，并据此生成Java代码。在程序运行时只要调用编译时生成的代码即可，不需要再通过反射去解析注解。比如Dagger、ButterKnife等。</p>
+<h3 id="比如使用注解来实现一个简陋版的ButterKnife"><a href="#比如使用注解来实现一个简陋版的ButterKnife" class="headerlink" title="比如使用注解来实现一个简陋版的ButterKnife"></a>比如使用注解来实现一个简陋版的ButterKnife</h3><blockquote>
+<p>例子来自<a href="http://www.jianshu.com/p/bc70d5d71a61" target="_blank" rel="noopener">Ryon</a></p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Annotation</span></span><br><span class="line"><span class="meta">@Target</span>(ElementType.FIELD)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> ViewInject &#123;  </span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">value</span><span class="params">()</span> <span class="keyword">default</span> 0</span>;  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Activity</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">autoInjectAllField</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">        <span class="keyword">try</span> &#123;  </span><br><span class="line">            Class&lt;?&gt; clazz = <span class="keyword">this</span>.getClass();  </span><br><span class="line">            Field[] fields = clazz.getDeclaredFields();</span><br><span class="line">            <span class="keyword">for</span> (Field field : fields) &#123;  </span><br><span class="line">                <span class="comment">// 查看这个字段是否有我们自定义的注解类标志的  </span></span><br><span class="line">                <span class="keyword">if</span> (field.isAnnotationPresent(ViewInject.class)) &#123;  </span><br><span class="line">                    ViewInject inject = field.getAnnotation(ViewInject.class);  </span><br><span class="line">                    <span class="keyword">int</span> id = inject.value();  </span><br><span class="line">                    <span class="keyword">if</span> (id &gt; <span class="number">0</span>) &#123;  </span><br><span class="line">                        field.setAccessible(<span class="keyword">true</span>);  </span><br><span class="line">                        field.set(<span class="keyword">this</span>, <span class="keyword">this</span>.findViewById(id));<span class="comment">//给我们要找的字段设置值  </span></span><br><span class="line">                    &#125;  </span><br><span class="line">                &#125;  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125; <span class="keyword">catch</span> (IllegalAccessException e) &#123;  </span><br><span class="line">            e.printStackTrace();  </span><br><span class="line">        &#125; <span class="keyword">catch</span> (IllegalArgumentException e) &#123;  </span><br><span class="line">            e.printStackTrace();  </span><br><span class="line">        &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Android中的View"><a href="#Android中的View" class="headerlink" title="Android中的View"></a>Android中的View</h3><p>。Android中可以使用IntDef注解来声明常量值（配合BitMask使用更酸爽）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Toast</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> String TAG = <span class="string">"Toast"</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">boolean</span> localLOGV = <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** <span class="doctag">@hide</span> */</span></span><br><span class="line">    <span class="comment">/*定义部分*/</span></span><br><span class="line">    <span class="meta">@IntDef</span>(&#123;LENGTH_SHORT, LENGTH_LONG&#125;)</span><br><span class="line">    <span class="meta">@Retention</span>(RetentionPolicy.SOURCE)</span><br><span class="line">    <span class="keyword">public</span> <span class="meta">@interface</span> Duration &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> LENGTH_SHORT = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> LENGTH_LONG = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*作为类型使用时*/</span></span><br><span class="line">     <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Set how long to show the view for.</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span> #LENGTH_SHORT</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span> #LENGTH_LONG</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setDuration</span><span class="params">(@Duration <span class="keyword">int</span> duration)</span> </span>&#123;</span><br><span class="line">        mDuration = duration;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*做为返回值时*/</span></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Return the duration.</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span> #setDuration</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Duration</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getDuration</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mDuration;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
     
       
 
@@ -474,239 +716,6 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">draw</span><span class="params">(Canvas canvas)</span> </span>&#123;</span><br><span class="line">  . . . </span><br><span class="line">  <span class="comment">// 绘制背景，只有dirtyOpaque为false时才进行绘制，下同</span></span><br><span class="line">  <span class="keyword">int</span> saveCount;</span><br><span class="line">  <span class="keyword">if</span> (!dirtyOpaque) &#123;</span><br><span class="line">    drawBackground(canvas);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  . . . </span><br><span class="line"></span><br><span class="line">  <span class="comment">// 绘制自身内容</span></span><br><span class="line">  <span class="keyword">if</span> (!dirtyOpaque) onDraw(canvas);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 绘制子View</span></span><br><span class="line">  dispatchDraw(canvas);</span><br><span class="line"></span><br><span class="line">   . . .</span><br><span class="line">  <span class="comment">// 绘制滚动条等</span></span><br><span class="line">  onDrawForeground(canvas);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="requestLayout"><a href="#requestLayout" class="headerlink" title="requestLayout()"></a>requestLayout()</h4><p>调用measure()和layout()</p>
 <p>具体细节推荐<a href="http://www.jianshu.com/p/060b5f68da79" target="_blank" rel="noopener">此文</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.hgworts.tech/2017/01/15/Annotions/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="hgDendi">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HgWorts">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/01/15/Annotions/" itemprop="url">Java Annotations</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-15T00:00:00+08:00">
-                2017-01-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/01/15/Annotions/" class="leancloud_visitors" data-flag-title="Java Annotations">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>[TOC]</p>
-<blockquote>
-<p>注解为我们在代码中添加信息提供了一种形式化的方法，使我们可以在稍后某个时刻非常方便的使用这些数据</p>
-<p>也称元数据</p>
-</blockquote>
-<h2 id="定义注解"><a href="#定义注解" class="headerlink" title="定义注解"></a>定义注解</h2><blockquote>
-<p>注解的定义看起来很像接口的定义</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Demo&#123;</span><br><span class="line">  <span class="function">String <span class="title">value</span><span class="params">()</span></span>; <span class="comment">//方法的形式表示属性,没有默认值的话需要手动赋值</span></span><br><span class="line">  <span class="function">String <span class="title">value2</span><span class="params">()</span> <span class="keyword">default</span> "helloWorld"</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 等价于,本质上是一个集成了Annotation接口的接口</span></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Demo</span> <span class="keyword">extends</span> <span class="title">java</span>.<span class="title">lang</span>.<span class="title">annotation</span>.<span class="title">Annotation</span></span>&#123;&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="元注解：（修饰注解的注解）"><a href="#元注解：（修饰注解的注解）" class="headerlink" title="元注解：（修饰注解的注解）"></a>元注解：（修饰注解的注解）</h3><ul>
-<li>@Target<ul>
-<li>用来定义注解应用于什么地方</li>
-<li>CONSTRUCTOR</li>
-<li>FIELD</li>
-<li>LOCAL_VARIABLE</li>
-<li>METHOD</li>
-<li>PACKAGE</li>
-<li>PARAMETER</li>
-<li>TYPE</li>
-</ul>
-</li>
-<li>@Rectetion<ul>
-<li>定义注解在哪一个级别可用<ul>
-<li>SOURCE<ul>
-<li>将被编译器丢弃</li>
-</ul>
-</li>
-<li>CLASS<ul>
-<li>注解在class文件中可用，但会被VM丢弃</li>
-<li>编译时注解</li>
-</ul>
-</li>
-<li>RUNTIME<ul>
-<li>可使用反射</li>
-<li>运行时注解</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>@Document<ul>
-<li>将此注解包含在JavaDoc中</li>
-</ul>
-</li>
-<li>@Inherited<ul>
-<li>允许子类继承父类中的注释</li>
-</ul>
-</li>
-</ul>
-<h3 id="marker-annotation-标注注解"><a href="#marker-annotation-标注注解" class="headerlink" title="marker annotation 标注注解"></a>marker annotation 标注注解</h3><ul>
-<li>没有元素的注解</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(ElementType.Method)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Test&#123;&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="注解元素"><a href="#注解元素" class="headerlink" title="注解元素"></a>注解元素</h3><p>注解元素可用的类型：</p>
-<ul>
-<li><p>所有基本类型</p>
-</li>
-<li><p>String</p>
-</li>
-<li><p>Class</p>
-</li>
-<li><p>enum</p>
-</li>
-<li><p>Annotation</p>
-</li>
-<li><p>数组</p>
-<blockquote>
-<p>元素不能有不确定的值，要么具有默认值，要么在使用注解时提供元素的值，且不能以null作为其值</p>
-</blockquote>
-</li>
-</ul>
-<h3 id="运行时注解和编译时注解"><a href="#运行时注解和编译时注解" class="headerlink" title="运行时注解和编译时注解"></a>运行时注解和编译时注解</h3><h4 id="运行时注解"><a href="#运行时注解" class="headerlink" title="运行时注解"></a>运行时注解</h4><p>在程序运行时通过反射来获取注解和注解的属性值。但是因为大量使用反射，对程序会有性能上的影响。</p>
-<p>调用Class对象、Method对象、Field对象的getAnnotation(Class<a> annotationType)</a></p>
-<h4 id="编译时注解"><a href="#编译时注解" class="headerlink" title="编译时注解"></a>编译时注解</h4><p>在代码编译时通过APT（Annotation Processing Tool）获取注解和注解的属性值，并据此生成Java代码。在程序运行时只要调用编译时生成的代码即可，不需要再通过反射去解析注解。比如Dagger、ButterKnife等。</p>
-<h3 id="比如使用注解来实现一个简陋版的ButterKnife"><a href="#比如使用注解来实现一个简陋版的ButterKnife" class="headerlink" title="比如使用注解来实现一个简陋版的ButterKnife"></a>比如使用注解来实现一个简陋版的ButterKnife</h3><blockquote>
-<p>例子来自<a href="http://www.jianshu.com/p/bc70d5d71a61" target="_blank" rel="noopener">Ryon</a></p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Annotation</span></span><br><span class="line"><span class="meta">@Target</span>(ElementType.FIELD)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> ViewInject &#123;  </span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">value</span><span class="params">()</span> <span class="keyword">default</span> 0</span>;  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Activity</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">autoInjectAllField</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">        <span class="keyword">try</span> &#123;  </span><br><span class="line">            Class&lt;?&gt; clazz = <span class="keyword">this</span>.getClass();  </span><br><span class="line">            Field[] fields = clazz.getDeclaredFields();</span><br><span class="line">            <span class="keyword">for</span> (Field field : fields) &#123;  </span><br><span class="line">                <span class="comment">// 查看这个字段是否有我们自定义的注解类标志的  </span></span><br><span class="line">                <span class="keyword">if</span> (field.isAnnotationPresent(ViewInject.class)) &#123;  </span><br><span class="line">                    ViewInject inject = field.getAnnotation(ViewInject.class);  </span><br><span class="line">                    <span class="keyword">int</span> id = inject.value();  </span><br><span class="line">                    <span class="keyword">if</span> (id &gt; <span class="number">0</span>) &#123;  </span><br><span class="line">                        field.setAccessible(<span class="keyword">true</span>);  </span><br><span class="line">                        field.set(<span class="keyword">this</span>, <span class="keyword">this</span>.findViewById(id));<span class="comment">//给我们要找的字段设置值  </span></span><br><span class="line">                    &#125;  </span><br><span class="line">                &#125;  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125; <span class="keyword">catch</span> (IllegalAccessException e) &#123;  </span><br><span class="line">            e.printStackTrace();  </span><br><span class="line">        &#125; <span class="keyword">catch</span> (IllegalArgumentException e) &#123;  </span><br><span class="line">            e.printStackTrace();  </span><br><span class="line">        &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Android中的View"><a href="#Android中的View" class="headerlink" title="Android中的View"></a>Android中的View</h3><p>。Android中可以使用IntDef注解来声明常量值（配合BitMask使用更酸爽）</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Toast</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> String TAG = <span class="string">"Toast"</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">boolean</span> localLOGV = <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** <span class="doctag">@hide</span> */</span></span><br><span class="line">    <span class="comment">/*定义部分*/</span></span><br><span class="line">    <span class="meta">@IntDef</span>(&#123;LENGTH_SHORT, LENGTH_LONG&#125;)</span><br><span class="line">    <span class="meta">@Retention</span>(RetentionPolicy.SOURCE)</span><br><span class="line">    <span class="keyword">public</span> <span class="meta">@interface</span> Duration &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> LENGTH_SHORT = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> LENGTH_LONG = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*作为类型使用时*/</span></span><br><span class="line">     <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Set how long to show the view for.</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span> #LENGTH_SHORT</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span> #LENGTH_LONG</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setDuration</span><span class="params">(@Duration <span class="keyword">int</span> duration)</span> </span>&#123;</span><br><span class="line">        mDuration = duration;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*做为返回值时*/</span></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Return the duration.</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span> #setDuration</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Duration</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getDuration</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mDuration;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
           
         
