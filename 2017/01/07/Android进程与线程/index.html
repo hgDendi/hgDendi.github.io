@@ -105,7 +105,7 @@
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/454052-f45493b4121cd3b5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://static.oschina.net/uploads/space/2013/0621/174442_0BNr_182175.jpg">
 <meta property="og:image" content="https://ww3.sinaimg.cn/large/006tNc79gw1fbi70dhzluj30yk0oggo4.jpg">
-<meta property="og:updated_time" content="2018-01-24T16:04:19.394Z">
+<meta property="og:updated_time" content="2018-02-18T11:51:34.158Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android进程与线程">
 <meta name="twitter:description" content="围绕Android中的进程与线程做了简要的概述。  按照操作系统中的描述  线程是CPU调度的最小单元，同时线程是一种有限的系统资源 而进程一般指一个执行单元，在PC和移动设备上指一个程序或者一个应用 一个程序至少有一个进程，一个进程至少有一个线程 操作系统并没有将多个线程看做多个独立的应用，来实现进程间的调度和管理以及资源分配，这就是进程和线程的重要区别  差别进程是系统进行资源分配和调度的一">
@@ -118,7 +118,7 @@
   var CONFIG = {
     root: '/',
     scheme: 'Mist',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":true,"onmobile":false},
     fancybox: true,
     tabs: true,
     motion: false,
@@ -225,7 +225,7 @@
       
         
         <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
+          <a href="/resume/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
@@ -535,6 +535,31 @@
 </li>
 </ul>
 <p>有时候在并发编程时可以考虑<strong>不变模式</strong>，让对象的状态是不变的，如果希望修改对象的状态，就会创建对象的副本并将改变写入副本而不改变原来的对象，这样就不会出现状态不一致的情况。比如String就采用了这样的设计。</p>
+<h4 id="几种常见的锁"><a href="#几种常见的锁" class="headerlink" title="几种常见的锁"></a>几种常见的锁</h4><ul>
+<li>自旋锁<ul>
+<li>可以使线程在没有取得锁的时候，不被挂起，而转去执行一个空循环。</li>
+</ul>
+</li>
+<li>阻塞锁<ul>
+<li>没得到锁的线程等待或者挂起</li>
+</ul>
+</li>
+<li>可重入锁<ul>
+<li>一个线程可多次获取该锁</li>
+</ul>
+</li>
+<li>悲观锁<ul>
+<li>每次去拿数据的时候都认为别人会修改，所以会阻塞全部其他线程 </li>
+</ul>
+</li>
+<li>乐观锁<ul>
+<li>每次去拿数据的时候都认为别人不会修改，所以不会上锁，但是在更新的时候会判断一下在此期间别人有没有去更新这个数据</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>  其中lock和sync属于阻塞锁+可重入锁+悲观锁</p>
+</blockquote>
 <h3 id="UI-Main-thread"><a href="#UI-Main-thread" class="headerlink" title="UI / Main thread"></a>UI / Main thread</h3><p>系统启动时创建的线程，用来处理页面的绘制。</p>
 <p><strong>不可以把耗时操作放在ui线程中</strong>，如网络请求、数据库的读写等等，阻塞超过5s会发生<strong>ANR错误</strong>。</p>
 <p>因为Android UI toolkit<strong>不是线程安全</strong>的，故而所有的页面绘制都必须放在UI线程中做。</p>
@@ -833,7 +858,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#差别"><span class="nav-number">1.</span> <span class="nav-text">差别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程"><span class="nav-number">2.</span> <span class="nav-text">进程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Foreground-process"><span class="nav-number">2.1.</span> <span class="nav-text">Foreground process</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Visible-process"><span class="nav-number">2.2.</span> <span class="nav-text">Visible process</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Service-process"><span class="nav-number">2.3.</span> <span class="nav-text">Service process</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Background-process"><span class="nav-number">2.4.</span> <span class="nav-text">Background process</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Empty-process"><span class="nav-number">2.5.</span> <span class="nav-text">Empty process</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#额外说明"><span class="nav-number">2.6.</span> <span class="nav-text">额外说明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程间通信"><span class="nav-number">3.</span> <span class="nav-text">进程间通信</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多进程的特性"><span class="nav-number">3.1.</span> <span class="nav-text">多进程的特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多进程App适用场景"><span class="nav-number">3.2.</span> <span class="nav-text">多进程App适用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程间通信方式"><span class="nav-number">3.3.</span> <span class="nav-text">进程间通信方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Parcelable和Serializable"><span class="nav-number">3.4.</span> <span class="nav-text">Parcelable和Serializable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Binder"><span class="nav-number">3.5.</span> <span class="nav-text">Binder</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程"><span class="nav-number">4.</span> <span class="nav-text">线程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Android中的线程"><span class="nav-number">4.1.</span> <span class="nav-text">Android中的线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线程间通信"><span class="nav-number">4.2.</span> <span class="nav-text">线程间通信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#锁"><span class="nav-number">4.3.</span> <span class="nav-text">锁</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ReentrantLock和条件对象"><span class="nav-number">4.3.1.</span> <span class="nav-text">ReentrantLock和条件对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Synchronized"><span class="nav-number">4.3.2.</span> <span class="nav-text">Synchronized</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Volatile"><span class="nav-number">4.3.3.</span> <span class="nav-text">Volatile</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UI-Main-thread"><span class="nav-number">4.4.</span> <span class="nav-text">UI / Main thread</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在非UI线程中更新UI"><span class="nav-number">4.5.</span> <span class="nav-text">在非UI线程中更新UI</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简单情况"><span class="nav-number">4.5.1.</span> <span class="nav-text">简单情况</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Handler介绍"><span class="nav-number">4.5.2.</span> <span class="nav-text">Handler介绍</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Thread类"><span class="nav-number">4.6.</span> <span class="nav-text">Thread类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AsyncTask"><span class="nav-number">4.7.</span> <span class="nav-text">AsyncTask</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ThreadPoolExecutor"><span class="nav-number">4.8.</span> <span class="nav-text">ThreadPoolExecutor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代价"><span class="nav-number">4.9.</span> <span class="nav-text">代价</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ThreadLocal"><span class="nav-number">5.</span> <span class="nav-text">ThreadLocal</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Sample"><span class="nav-number">5.1.</span> <span class="nav-text">Sample</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一个简易实现"><span class="nav-number">5.2.</span> <span class="nav-text">一个简易实现</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#差别"><span class="nav-number">1.</span> <span class="nav-text">差别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程"><span class="nav-number">2.</span> <span class="nav-text">进程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Foreground-process"><span class="nav-number">2.1.</span> <span class="nav-text">Foreground process</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Visible-process"><span class="nav-number">2.2.</span> <span class="nav-text">Visible process</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Service-process"><span class="nav-number">2.3.</span> <span class="nav-text">Service process</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Background-process"><span class="nav-number">2.4.</span> <span class="nav-text">Background process</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Empty-process"><span class="nav-number">2.5.</span> <span class="nav-text">Empty process</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#额外说明"><span class="nav-number">2.6.</span> <span class="nav-text">额外说明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程间通信"><span class="nav-number">3.</span> <span class="nav-text">进程间通信</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多进程的特性"><span class="nav-number">3.1.</span> <span class="nav-text">多进程的特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多进程App适用场景"><span class="nav-number">3.2.</span> <span class="nav-text">多进程App适用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程间通信方式"><span class="nav-number">3.3.</span> <span class="nav-text">进程间通信方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Parcelable和Serializable"><span class="nav-number">3.4.</span> <span class="nav-text">Parcelable和Serializable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Binder"><span class="nav-number">3.5.</span> <span class="nav-text">Binder</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程"><span class="nav-number">4.</span> <span class="nav-text">线程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Android中的线程"><span class="nav-number">4.1.</span> <span class="nav-text">Android中的线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线程间通信"><span class="nav-number">4.2.</span> <span class="nav-text">线程间通信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#锁"><span class="nav-number">4.3.</span> <span class="nav-text">锁</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ReentrantLock和条件对象"><span class="nav-number">4.3.1.</span> <span class="nav-text">ReentrantLock和条件对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Synchronized"><span class="nav-number">4.3.2.</span> <span class="nav-text">Synchronized</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Volatile"><span class="nav-number">4.3.3.</span> <span class="nav-text">Volatile</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#几种常见的锁"><span class="nav-number">4.3.4.</span> <span class="nav-text">几种常见的锁</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UI-Main-thread"><span class="nav-number">4.4.</span> <span class="nav-text">UI / Main thread</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在非UI线程中更新UI"><span class="nav-number">4.5.</span> <span class="nav-text">在非UI线程中更新UI</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简单情况"><span class="nav-number">4.5.1.</span> <span class="nav-text">简单情况</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Handler介绍"><span class="nav-number">4.5.2.</span> <span class="nav-text">Handler介绍</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Thread类"><span class="nav-number">4.6.</span> <span class="nav-text">Thread类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AsyncTask"><span class="nav-number">4.7.</span> <span class="nav-text">AsyncTask</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ThreadPoolExecutor"><span class="nav-number">4.8.</span> <span class="nav-text">ThreadPoolExecutor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代价"><span class="nav-number">4.9.</span> <span class="nav-text">代价</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ThreadLocal"><span class="nav-number">5.</span> <span class="nav-text">ThreadLocal</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Sample"><span class="nav-number">5.1.</span> <span class="nav-text">Sample</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一个简易实现"><span class="nav-number">5.2.</span> <span class="nav-text">一个简易实现</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -885,6 +910,8 @@
     
       <div class="back-to-top">
         <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
         
       </div>
     
